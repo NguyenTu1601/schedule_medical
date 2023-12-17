@@ -23,6 +23,12 @@ const apiResources: any = {
       verb: 'POST',
       baseUrl: staticEnv.ACC_NEW_API_URL,
     },
+    getProfile: {
+      url: '/api/User/getProfile',
+      verb: 'GET',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
   },
   user: {
     listUser: {
@@ -51,6 +57,49 @@ const apiResources: any = {
       url: '/api/Doctor/getListDoctor',
       verb: 'GET',
       baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
+    createSchedule: {
+      url: '/api/Doctor/createSchedule',
+      verb: 'POST',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
+  },
+  clinic: {
+    listClinic: {
+      url: '/api/Clinic/getListClinic',
+      verb: 'GET',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
+    createClinic: {
+      url: '/api/Clinic/createClinic',
+      verb: 'POST',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    }
+  },
+  file: {
+    upload: {
+      url: '/SalesUpERP/upSvl',
+      verb: 'POST',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
+  },
+  specialty: {
+    listSpecialty: {
+      url: '/api/Specialty/getListSpecialty',
+      verb: 'GET',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
+    createSpecialty: {
+      url: '/api/Specialty/createSpecialty',
+      verb: 'POST',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
     },
   },
   medicine: {

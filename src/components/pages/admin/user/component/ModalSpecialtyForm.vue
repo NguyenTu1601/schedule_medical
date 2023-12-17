@@ -1,59 +1,25 @@
 <template lang="pug">
 div.overflow-y-auto
-  div.text-base.font-bold User information
-  div.flex.gap-8.mt-8
+  div.text-base.font-bold Specialty information
+  div.flex.gap-8.mt-4
     div.flex-1
       div.text-sm Name
-      input(type='text' v-model="formUser.name" placeholder='name' class='outline-none p-2 text-sm border border-[#DEE3ED] rounded-[4px] w-full mt-1')
+      input(type='text' placeholder='name' v-model="formSpecialty.name" class='outline-none p-2 text-sm border border-[#DEE3ED] rounded-[4px] w-full mt-1')
     div.flex-1
-      div.text-sm Birthday
-      el-date-picker.w-full.mt-1(v-model="formUser.birthday"
-        type="date"
-        placeholder="Pick a day"
-        size="large"
-        )
-      //- input(type='text' v-model="formUser.last_name" placeholder='last name' class='outline-none p-2 text-sm border border-[#DEE3ED] rounded-[4px] w-full mt-1')
-  div.flex.gap-8.mt-4
-    div.flex-1
-      div.text-sm Email
-      input(type='text' placeholder='email' v-model="formUser.email" class='outline-none p-2 text-sm border border-[#DEE3ED] rounded-[4px] w-full mt-1')
-    div.flex-1
-      div.text-sm Phone number
-      input(type='text' placeholder='phone number' v-model="formUser.phone" class='outline-none p-2 text-sm border border-[#DEE3ED] rounded-[4px] w-full mt-1')
-  div.flex.gap-8.mt-4
-    div.flex-1
-      div.text-sm Address
-      input(type='text' placeholder='address' v-model="formUser.address" class='outline-none p-2 text-sm border border-[#DEE3ED] rounded-[4px] w-full mt-1')
-    div.flex-1
-      div.text-sm Gender
-      el-select.mt-1.w-full(v-model="formUser.gender" placeholder="Gender" size="large")
-        el-option(value='1' label='Nam')
-        el-option(value='2' label='Nữ')
-        el-option(value='3' label='Khác')
+      div.text-sm Mã
+      input(type='text' placeholder='mã' v-model="formSpecialty.ma" class='outline-none p-2 text-sm border border-[#DEE3ED] rounded-[4px] w-full mt-1')
+  div.mt-4.font-semibold.text-base  Short description
   div.flex.gap-8.mt-2
-    div.flex-1.sh
-      div.text-sm Vai trò
-      el-select.mt-1.w-full(v-model="formUser.role" placeholder="Vai trò" size="large")
-        el-option(v-for='role in listRole' :value='role.id' :label='role.ten')
     div.flex-1
-      div.text-sm Password
-      input(type='password' v-model="formUser.password" class='outline-none p-2 text-sm border border-[#DEE3ED] rounded-[4px] w-full mt-1')
+      VueEditor(v-model='formSpecialty.shortDescription' :editorOptions="editorSettings")
+    div.flex-1.border.p-4(class='border-[#DEE3ED] rounded-[4px]')
+      div(v-html='formSpecialty.shortDescription')
+  div.mt-2.font-semibold.text-base  Description
   div.flex.gap-8.mt-2
-    div.flex-1.sh
-      div.text-sm Username
-      input(type='text' placeholder='username' v-model="formUser.username" class='outline-none p-2 text-sm border border-[#DEE3ED] rounded-[4px] w-full mt-1')
     div.flex-1
-      div(v-if='formUser.role &&(formUser.role===2||formUser.role===3)')
-        div.text-sm Phòng khám
-        el-select.mt-1.w-full(v-model="formUser.clinic" placeholder="Gender" size="large")
-          el-option(v-for='clinic in listClinic' :value='clinic.id' :label='clinic.name')
-  div.mt-2
-    div.text-sm Ảnh
-    div.mt-2
-      div.px-2.p-1.flex.justify-center(class='bg-[#DA151A] text-white text-sm w-fit cursor-pointer rounded-[10px] items-center gap-2' @click="selectFile")
-        img.h-6.w-6.shrink-0(src='../assets/upload.svg')
-        div Upload
-
+      VueEditor(v-model='formSpecialty.description' :editorOptions="editorSettings")
+    div.flex-1.border.p-4(class='border-[#DEE3ED] rounded-[4px]')
+      div(v-html='formSpecialty.description')
   div.flex.justify-end.gap-4.items-center.w-full.mt-4
     div.cursor-pointer.px-4.py-2.border(class='font-bold text-sm rounded-[10px]' @click="handleCancel") Cancel
     div.cursor-pointer.px-4.py-2.border(class='font-bold text-sm rounded-[10px] border-[#DA151A] text-[#DA151A] hover:bg-[#DA151A] hover:text-white' @click="handleSave")
@@ -84,15 +50,12 @@ const props = defineProps({
     type: Boolean,
     default: null,
   },
-  typeEdit: {
-    type: String,
-    default: 'user',
-  },
-  formUser: {
+  formSpecialty: {
     type: Object,
     default: null
   }
 })
+
 const editorSettings = ref({
   modules: {
     clipboard: {
@@ -101,10 +64,7 @@ const editorSettings = ref({
   }
 })
 
-const listRole = ref([])
-const listHocVi = ref([])
 const isLoadingCreate = ref(false)
-const listClinic = ref([])
 const img = ref()
 const fileSelect = ref(null)
 
@@ -120,13 +80,10 @@ const fileSelect = ref(null)
 //   birthday: ''
 // })
 
-const formUser = computed(() => {
-  return props.formUser
+const formSpecialty = computed(() => {
+  return props.formSpecialty
 })
 
-watch(formUser, () => {
-  // console.log(formUser)
-})
 
 function customQuillClipboardMatcher(node, delta) {
   delta.ops = delta.ops.map((op) => {
@@ -137,35 +94,9 @@ function customQuillClipboardMatcher(node, delta) {
   return delta
 }
 
-async function getListRole() {
-  await UserApis.getListRole().then(res => {
-    listRole.value = res.content
-  })
-}
-async function getListHocvi() {
-  await UserApis.getListHocvi().then(res => {
-    listHocVi.value = res.content
-  })
-}
-async function getListClinic() {
-  await UserApis.getListClinic().then(res => {
-    listClinic.value = res.content
-  })
-}
-
-async function createUser() {
+async function handleCreateSpecialty() {
   isLoadingCreate.value = true
-  const form = {
-    name: formUser.value.name,
-    ngaysinh: formatDate(formUser.value.birthday),
-    email: formUser.value.email,
-    password: formUser.value.password,
-    gender: formUser.value.gender,
-    phonenumber: formUser.value.phone,
-    username: formUser.value.username,
-    roleid: formUser.value.role
-  }
-  await UserApis.createUser(form).then(res => {
+  await UserApis.createSpecialty(formSpecialty.value).then(res => {
     if (res.result === 1) {
       ElNotification({
         title: 'Success',
@@ -192,6 +123,7 @@ async function createUser() {
     isLoadingCreate.value = false
   })
 }
+
 const onSelectFile = async (e: Event) => {
   let files: File[] = [...(e.target as HTMLInputElement).files]
 
@@ -225,15 +157,13 @@ const selectFile = () => {
 function handleCancel() {
   emits('cancel', 'cancel')
 }
-onMounted(() => {
-  console.log('aa')
-  getListRole()
-  getListClinic()
-})
 
 function handleSave() {
-  createUser()
+  handleCreateSpecialty()
 }
+onMounted(() => {
+})
+
 
 function formatDate(dateStr) {
   const dateObj = +new Date(dateStr);

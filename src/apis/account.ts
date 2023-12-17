@@ -34,9 +34,24 @@ export function signUp(form: any): Promise<any> {
     });
 }
 
+export function getProfile(): Promise<any> {
+  return http
+    .callApi({
+      resource: 'account.getProfile',
+    })
+    .then((res) => {
+      return res.data;
+    })
+    .catch((res) => {
+      const error = (res as any).response.data;
+      return Promise.reject(error);
+    });
+}
+
 
 
 export default {
   login,
   signUp,
+  getProfile
 };

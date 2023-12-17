@@ -52,7 +52,8 @@ const formDeFault = {
   gender: '',
   birthday: '',
   shortDescription: '',
-  description: ''
+  description: '',
+  clinicId: ''
 }
 
 const formUser = ref({
@@ -66,7 +67,8 @@ const formUser = ref({
   gender: '',
   birthday: '',
   shortDescription: '',
-  description: ''
+  description: '',
+  clinicId: ''
 })
 watch(formUser, () => {
   console.log(formUser.value)

@@ -72,6 +72,60 @@ export function createMedicine(form): Promise<any> {
       return res.data;
     });
 }
+export function createScheduleDoctor(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'doctor.createSchedule',
+      data: {
+        body: form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
+export function getListClinic(): Promise<any> {
+  return http
+    .callApi({
+      resource: 'clinic.listClinic',
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
+export function createClinic(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'clinic.createClinic',
+      data: {
+        body: form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
+export function getListSpecialty(): Promise<any> {
+  return http
+    .callApi({
+      resource: 'specialty.listSpecialty',
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
+export function createSpecialty(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'specialty.createSpecialty',
+      data: {
+        body: form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
 export default {
   getListUser,
   getListRole,
@@ -79,5 +133,10 @@ export default {
   getListHocvi,
   getListDoctor,
   getListMedicine,
-  createMedicine
+  createMedicine,
+  createScheduleDoctor,
+  getListClinic,
+  createClinic,
+  getListSpecialty,
+  createSpecialty
 };

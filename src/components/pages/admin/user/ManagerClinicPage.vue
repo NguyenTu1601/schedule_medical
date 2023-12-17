@@ -1,30 +1,24 @@
 <template lang="pug">
 div
   div.font-bold(class='text-[18px]') Clinic Manager
-  div.flex.gap-2.justify-center.items-center.w-fit.mt-4(class='rounded-[10px] px-4 py-2 cursor-pointer border border-[#C80815]' @click="handleAddUser")
-    img.w-6.h-6.shrink-0(src='./assets/add.svg')
-    div.text-sm.font-bold(class='text-[#C80815]') Add user
-  table.w-full.mt-4
-    tr(class='bg-[#C80815] text-white text-sm font-bold')
-      td.p-2(class='') Username
-      td.p-2(class='') Email
-      td.p-2(class='') Name
-      td.p-2(class='') Address 
-      td.p-2(class='') Status 
-      td.p-2(class='w-[80px]') Actions
-    tr(v-for='item in listUser')
-      td {{item.username}}
-      td {{item.email}}
-      td {{item.name}}
-      td 32/01 Tran Thai Tong, Quang Ngai
-      td {{ item.trangthai }}
-      td
-        div.flex.justify-between
-          img.w-6.h-6.shrink-0.cursor-pointer(src='./assets/edit.svg' @click='handleEdit')
-          img.w-6.h-6.shrink-0.cursor-pointer(src='./assets/delete.svg')
-  el-dialog(v-model="isShowModalFormUser" title="" width='1200px')
-    ModalUserForm(v-if='isShowModalFormUser' @cancel='handleCancel' v-model:isEdit= 'isEdit' :formUser='formUser' :typeEdit='typeEdit')
-    div(v-else)
+  div.mt-10.font-semibold.text-base Tên phòng khám
+  div.border.mt-2(class='border-[#DEE3ED] rounded-[4px] px-4 py-2')
+    input.w-full(v-model='formClinic.name')
+  div.mt-4.font-semibold.text-base Địa chỉ
+  div.border.mt-2(class='border-[#DEE3ED] rounded-[4px] px-4 py-2')
+    input.w-full(v-model='formClinic.address')
+  div.mt-4.font-semibold.text-base  Short description
+  div.flex.gap-8.mt-2
+    div.flex-1
+      VueEditor(v-model='formClinic.shortDescription' :editorOptions="editorSettings")
+    div.flex-1.border.p-4(class='border-[#DEE3ED] rounded-[4px]')
+      div(v-html='formClinic.shortDescription')
+  div.mt-2.font-semibold.text-base  Description
+  div.flex.gap-8.mt-2
+    div.flex-1
+      VueEditor(v-model='formClinic.description' :editorOptions="editorSettings")
+    div.flex-1.border.p-4(class='border-[#DEE3ED] rounded-[4px]')
+      div(v-html='formClinic.description')
 </template>
 
 <script setup lang="ts">
@@ -33,73 +27,34 @@ import ModalUserForm from './component/ModalUserForm.vue'
 import { useRoute, useRouter } from 'vue-router';
 import UserApis from '@/apis/user'
 import { onMounted } from 'vue';
+import { VueEditor } from "vue3-editor";
 
-const route = useRoute()
-const router = useRouter()
-
-const listUser = ref([])
-const isShowModalFormUser = ref(false)
-const isEdit = ref(false)
-
-const formUser = reactive({
+const formClinic = ref({
   name: '',
-  username: '',
-  email: '',
-  phone: '',
   address: '',
-  role: '',
-  password: '',
-  gender: '',
-  birthday: '',
   shortDescription: '',
   description: ''
 })
-watch(formUser, () => {
-  console.log(formUser)
-})
 
-const role = computed(() => {
-  return route.params.role
-})
-
-function reset() {
-  formUser.name = ''
-  formUser.username = ''
-  formUser.email = ''
-  formUser.phone = ''
-  formUser.address = ''
-  formUser.role = ''
-  formUser.password = ''
-  formUser.gender = ''
-  formUser.birthday = ''
-}
-
-async function getListUser() {
-  const form = {
-    userid: '0'
+const editorSettings = ref({
+  modules: {
+    clipboard: {
+      matchers: [[Node.ELEMENT_NODE, customQuillClipboardMatcher]]
+    }
   }
-  await UserApis.getListUser(form).then(res => {
-    console.log(res.content)
-    listUser.value = res.content
-  })
-}
-function handleAddUser() {
-  isShowModalFormUser.value = true
-}
-
-function handleEdit() {
-  isShowModalFormUser.value = true
-}
-
-function handleCancel(val) {
-  isShowModalFormUser.value = false
-  isEdit.value = false
-  getListUser()
-}
-
-onMounted(() => {
-  getListUser()
 })
+
+
+function customQuillClipboardMatcher(node, delta) {
+  delta.ops = delta.ops.map((op) => {
+    return {
+      insert: op.insert
+    }
+  })
+  return delta
+}
+
+
 </script>
 
 <style scoped >

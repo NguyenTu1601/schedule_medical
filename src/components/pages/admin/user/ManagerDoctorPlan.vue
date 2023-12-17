@@ -15,7 +15,9 @@ div
             :disabled-date="disabledDate"
           )
       div.w-full.flex.justify-center.mt-4
-        div.text-base.text-white.cursor-pointer(class='bg-[#C52428] px-4 py-2 rounded-[10px]') Lưu thông tin
+        div.text-base.text-white.cursor-pointer( v-if='!isLoading' class='bg-[#C52428] px-4 py-2 rounded-[10px] w-[130px] flex justify-center' @click='handleSave') Lưu thông tin
+        div.text-base.text-white.cursor-pointer(v-else class='bg-[#C52428] px-4 py-2 rounded-[10px] w-[130px] flex justify-center' )
+          img.w-6.h-6.shrink-0(src='./assets/loading.svg')
     div(class='flex-[4]') 
       div(class='border border-[#DEE3ED] w-fit rounded-full px-4 py-2 text-base cursor-pointer' :class='[{"!border-[#DA151A]":isExist("0")}]' @click='handleSelectTime("0")') Ca sáng
       div(class='border border-[#DEE3ED] w-fit rounded-full px-4 py-2 text-base cursor-pointer mt-2' :class='[{"!border-[#DA151A]":isExist("1")}]' @click='handleSelectTime("1")') Ca Chiều
@@ -74,9 +76,14 @@ div
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import dayjs from 'dayjs'
+import UserApis from '@/apis/user'
+import useAccount from "@/compositions/useAccount";
+
+const { account, getAccount } = useAccount()
 
 const day = ref()
 const listTime = ref([])
+const isLoading = ref(false)
 
 const nextMonday = computed(() => {
   var today = new Date();
@@ -122,6 +129,20 @@ function next() {
 function prev() {
   mondayToView.value = mondayToView.value - 604800000
 
+}
+
+async function handleSave() {
+  isLoading.value = true
+  const form = {
+    doctorId: account.value.id,
+    date: dayjs(day.value).format('YYYY-MM-DD'),
+    time: listTime.value
+  }
+  await UserApis.createScheduleDoctor(form).then((res) => {
+    isLoading.value = false
+  }).catch(err => {
+    isLoading.value = false
+  })
 }
 </script>
 
