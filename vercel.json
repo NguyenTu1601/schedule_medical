@@ -1,9 +1,3 @@
 {
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "http://schedule-medical.vercel.app/:splat",
-      "status": 301
-    }
-  ]
+"rewrites": [{ "source": "/(.*)", "destination": "/" }]
 }
