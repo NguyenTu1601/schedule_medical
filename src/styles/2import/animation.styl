@@ -1,0 +1,301 @@
+.slideUp
+  -webkit-animation conditionalOpen 0.5s normal forwards ease-in-out
+  -moz-animation conditionalOpen 0.5s normal forwards ease-in-out
+  animation conditionalOpen 0.5s normal forwards ease-in-out
+  -webkit-transform-origin 100% 0%
+  -moz-transform-origin 100% 0%
+  transform-origin 100% 0%
+
+.slideDown
+  -webkit-animation conditionalClose 0.5s normal forwards ease-in-out
+  -moz-animation conditionalClose 0.5s normal forwards ease-in-out
+  animation conditionalClose 0.5s normal forwards ease-in-out
+  -webkit-transform-origin 50% 0%
+  -moz-transform-origin 50% 0%
+  transform-origin 50% 0%
+
+// Opening and closing motion for conditional fieldset
+@keyframes conditionalOpen
+  from
+    height 45px
+
+  to
+    height 300px
+
+@keyframes conditionalOpen
+  from
+    height 45px
+
+  to
+    height 300px
+
+@keyframes conditionalOpen
+  from
+    height 45px
+
+  to
+    height 300px
+
+@keyframes conditionalClose
+  from
+    height 300px
+
+  to
+    height 45px
+
+@keyframes conditionalClose
+  from
+    height 300px
+
+  to
+    height 45px
+
+@keyframes conditionalClose
+  from
+    height 300px
+
+  to
+    height 45px
+
+.animation-bounce:hover .bounceQuickOut
+  animation bounceQuickOut 0.5s linear 0s 1 normal
+
+.animation-bounce:hover .bounceQuickIn
+  animation bounceQuickIn 0.5s linear 0s 1 normal
+
+@keyframes bounceQuickOut
+  0%
+    transform scale(1)
+    -webkit-transform scale(1)
+
+  50%
+    transform scale(1.2)
+    -webkit-transform scale(1.2)
+
+  100%
+    transform scale(1)
+    -webkit-transform scale(1)
+
+@keyframes bounceQuickIn
+  0%
+    transform scale(1)
+    -webkit-transform scale(1)
+
+  50%
+    transform scale(0.8)
+    -webkit-transform scale(0.8)
+
+  100%
+    transform scale(1)
+    -webkit-transform scale(1)
+
+
+
+.lds-grid {
+  background #F6F6F6
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-grid div {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  animation: lds-grid 1.2s linear infinite;
+}
+.lds-grid div:nth-child(1) {
+  top: 8px;
+  left: 8px;
+  animation-delay: 0s;
+}
+.lds-grid div:nth-child(2) {
+  top: 8px;
+  left: 32px;
+  animation-delay: -0.4s;
+}
+.lds-grid div:nth-child(3) {
+  top: 8px;
+  left: 56px;
+  animation-delay: -0.8s;
+}
+.lds-grid div:nth-child(4) {
+  top: 32px;
+  left: 8px;
+  animation-delay: -0.4s;
+}
+.lds-grid div:nth-child(5) {
+  top: 32px;
+  left: 32px;
+  animation-delay: -0.8s;
+}
+.lds-grid div:nth-child(6) {
+  top: 32px;
+  left: 56px;
+  animation-delay: -1.2s;
+}
+.lds-grid div:nth-child(7) {
+  top: 56px;
+  left: 8px;
+  animation-delay: -0.8s;
+}
+.lds-grid div:nth-child(8) {
+  top: 56px;
+  left: 32px;
+  animation-delay: -1.2s;
+}
+.lds-grid div:nth-child(9) {
+  top: 56px;
+  left: 56px;
+  animation-delay: -1.6s;
+}
+@keyframes lds-grid {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.lds-ripple {
+  display: inline-block;
+  position: relative;
+  width: 74px;
+  height: 74px;
+}
+.lds-ripple div {
+  position: absolute;
+  border: 4px solid red;
+  opacity: 1;
+  border-radius: 50%;
+  animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+.lds-ripple div:nth-child(2) {
+  animation-delay: -0.5s;
+}
+@keyframes lds-ripple {
+  0% {
+    top: 36px;
+    left: 36px;
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+  4.9% {
+    top: 36px;
+    left: 36px;
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+  5% {
+    top: 36px;
+    left: 36px;
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  100% {
+    top: 0px;
+    left: 0px;
+    width: 72px;
+    height: 72px;
+    opacity: 0;
+  }
+}
+
+
+
+.btn-up-animation
+  letter-spacing: .05rem
+  position: relative
+  border-radius: .3rem
+  position: relative
+  transition: .2s all ease-in-out
+    
+  &:before
+    display: block
+    position: absolute
+    background: transparent
+    border: none
+    border-radius: .3rem
+    transform: translateY(5px) scale(.9)
+    content: ''
+    height: 5px
+    z-index: -1
+    bottom: -1%
+    left: 0
+    right: 0
+    transition: .2s all ease-in-out
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22)
+      
+  &:hover:before
+    transform: translateY(8px) scale(.8)
+    opacity: .8
+    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22)
+    
+  &:hover
+    transform: translateY(-5px)
+
+  
+
+.animation-radiate {
+  width: 7px;
+  height: 7px;
+  cursor: pointer;
+  position: relative;
+  animation: radiate 1.5s infinite;
+}
+
+.animation-radiate::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+}
+
+.animation-radiate:hover::after {
+  animation: radiate .5s;
+}
+
+.animation-radiate, .animation-radiate::after {
+  background: white;
+  border-radius: 50%;
+}
+
+
+@keyframes radiate {
+  to {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+
+.blinker { 
+  animation-name: blinker;
+  // animation-iteration-count: infinite;
+  animation-timing-function: cubic-bezier(1,0,0,1);
+  animation-duration: 1s;
+  box-shadow: 0 0 10px rgba(white,.3);
+  border-radius: 3px;
+}
+
+@keyframes blinker { 
+  from { opacity: 1.0; } to { opacity: 0.0; }
+}
+
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity .5s
+}
+
+.fade-enter,
+.fade-leave-to {
+    opacity: 0
+}
+
+

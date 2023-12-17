@@ -1,0 +1,53 @@
+.el-popper.picker-cus-mobile
+  @media (max-width: 650px)
+    left 0 !important
+    overflow auto
+    .el-date-range-picker__time-header
+      display block
+      .el-icon
+        display none !important
+    .el-picker-panel__body
+      overflow hidden
+      .el-picker-panel__content 
+        float inherit
+        margin-left calc((100vw - 323px) / 2)
+        border 0 !important
+    .el-picker-panel__footer
+      text-align left
+.el-popper.availability-picker-cus-mobile
+  .el-date-range-picker__header 
+    div
+      display none
+    p 
+      text-transform capitalize
+      font-weight bold
+      font-size 18px
+      color #41454F
+
+.search-dialog
+  .el-dialog__body
+    padding-left 10px
+    padding-right 10px
+    padding-top 0px
+.map-dialog.el-dialog
+  @media (max-width: 1024px)
+    width calc(100% - 20px) !important
+    
+
+.el-popper.availability-picker-cus-mobile
+   @media (max-width: 650px)
+    position fixed !important
+    left 0 !important
+    top 0px !important
+    .el-picker-panel__body
+      overflow hidden
+      .el-picker-panel__content 
+        float inherit
+        margin-left calc((100vw - 323px) / 2)
+        border 0 !important
+
+.el-input.is-disabled .el-input__inner
+  color black !important
+  border none !important
+  box-shadow none !important
+  background #F4F4F4 !important

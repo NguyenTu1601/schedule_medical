@@ -1,0 +1,315 @@
+.box
+  border-radius 8px
+  border 1px solid var(--surface-surface-variant, #EFE8E8);
+  padding-top 16px
+  padding-bottom 16px
+  padding-left 24px
+  padding-right 24px
+  display flex
+  flex-direction column;
+  gap 24px
+  max-width 752px
+  width 100%
+  margin-left auto
+  margin-right auto
+
+.text-title
+  font-size 16px
+  font-weight 500
+  line-height 24px
+  color var(--surface-on-surface, #1F1F1F)
+
+.line
+  width full
+  height 1px
+  background #EFE8E8
+
+.box-img
+  width 128px
+  height 128px
+  display flex
+  flex-direction column
+  gap 8px
+  border-radius 8px
+  align-items center
+  justify-content center
+  border 1px solid var(--surface-on-surface-variant, #796D6D)
+  padding 10px
+  cursor pointer
+
+.box-input
+  width 100%
+  border-radius 12px
+  border 1px solid var(--out-line-out-line, #9B9393)
+  padding-top 8px
+  padding-bottom 8px
+  padding-left 12px
+  padding-right 12px
+  height 56px
+  position relative
+
+.input-animation-new 
+  width 100%
+  border 1px solid var(--out-line-out-line, #9B9393)
+  border-radius 12px
+  height 56px
+  input, textarea
+    padding 8px 12px 8px 16px
+    border-radius 12px
+    color:  #1F1F1F
+  input:focus ~ label,
+  input:valid ~ label
+    transform translateY(-30px)
+    font-size 12px
+  .input-valid ~ label, .active-input
+    transform translateY(-30px)
+    font-size 12px
+
+  label
+    position absolute
+    bottom 16px
+    left 12px
+    padding: 0 4px
+    background: #fff
+    pointer-events none
+    transition all 0.3s ease
+    color: #796D6D
+    font-size: 16px
+
+.el-select-v2
+  .el-select-v2__wrapper
+    height:  100% !important
+    border: none !important
+    .el-select-v2__selection
+      margin-left: 12px
+      .el-select-v2__selected-item
+        .el-tag
+          height: 32px
+          margin: 0 10px 0 0 !important
+          border-radius: 8px !important
+          border: 1px solid var(--out-line-out-line, #9B9393);
+          background-color: transparent !important
+          color #1F1F1F 
+
+.time-event
+  .el-select
+    .select-trigger
+      height: 100%
+      .el-input
+        height: 100%
+        .el-input__inner
+          color #796D6D
+          border: transparent !important
+          box-shadow: none !important
+          height: 100%
+          .el-input.is-focus .el-input__inner
+            box-shadow: none !important
+          &:focus 
+            box-shadow none !important
+        .el-input.is-focus .el-input__inner
+          box-shadow none !important
+  .el-input
+    .el-input__inner
+      height: 100%
+      color #796D6D
+      border: transparent !important
+      box-shadow: none !important
+
+.btn-event
+  height: 40px
+  padding: 0 16px
+  border-radius: 36px
+  font-size: 14px
+  font-weight: 500
+  display: flex
+  justify-content: center
+  align-items: center
+  cursor pointer
+
+.btn-event.btn-cancel
+  border 1px solid rgba(31, 31, 31, 0.48)
+  color: #E91D23
+.btn-event.btn-cancel:hover
+  background: linear-gradient(0deg, rgba(233, 29, 35, 0.08) 0%, rgba(233, 29, 35, 0.08) 100%), #FFF;
+.btn-event.btn-disable
+  border: 1px solid rgba(31, 31, 31, 0.12);
+  color: rgba(31, 31, 31, 0.38);
+
+.btn-event.btn-save
+  background: var(--primary-primary, #E91D23);
+  color: #fff;
+.btn-event.btn-save:hover
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.08) 100%), #E91D23;
+  box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.30);
+.btn-event.btn-save.btn-disable 
+  background: rgba(31, 31, 31, 0.12);
+  color: rgba(31, 31, 31, 0.38);
+
+.btn-event.btn-noborder
+  color #E91D23
+.btn-event.btn-noborder:hover
+  background: rgba(233, 29, 35, 0.08)
+.btn-event.btn-noborder.btn-disable
+  color: rgba(31, 31, 31, 0.38)
+
+.event-detail
+  .el-overlay
+    .el-overlay-dialog
+      .el-dialog
+        overflow: hidden !important
+        .el-dialog__body
+          padding: 0 !important
+          overflow: hidden !important
+.ticket
+  .el-select
+    height: 56px
+    .select-trigger
+      height: 100%
+      .el-input
+        height: 100%
+        .el-input__inner
+          height: 100%
+          border-radius 12px
+          border 1px solid var(--out-line-out-line, #9B9393)
+          box-shadow none !important
+        &:focus 
+          box-shadow none !important
+        .el-input.is-focus .el-input__inner
+          box-shadow none !important
+        .el-input__inner:focus
+          box-shadow none !important
+.radioPublish
+  .el-radio-group
+    display: flex 
+    flex-direction: column
+    align-items: flex-start
+    .el-radio
+      margin-right: 12px !important
+      .el-radio__input.is-checked .el-radio__inner
+          border-color: #E91D23 !important
+          background: #E91D23 !important
+      .el-radio__label
+        display: none !important
+
+.checkbox-event
+  .el-checkbox
+    .is-checked+.el-checkbox__label
+      color: #1F1F1F !important
+    .el-checkbox__input.is-checked .el-checkbox__inner
+      background linear-gradient(133.57deg, #9A0B0F -0.06%, #FF2010 100%) !important
+      border-color #E91D23
+    .el-checkbox__input.is-indeterminate .el-checkbox__inner
+      background linear-gradient(133.57deg, #9A0B0F -0.06%, #FF2010 100%) !important
+      border-color #E91D23
+  .el-checkbox-group
+    display: flex
+    flex-direction: column
+    .el-checkbox
+      border-bottom: 1px solid #EFE8E8;
+      padding-bottom: 12px;
+      margin-bottom: 12px
+      margin-right: 0 !important
+
+.checkbox-publish.el-checkbox
+  .el-checkbox__input.is-checked+.el-checkbox__label
+    color #1F1F1F
+  .el-checkbox__input.is-checked .el-checkbox__inner
+    background linear-gradient(133.57deg, #9A0B0F -0.06%, #FF2010 100%) !important
+    border-color #E91D23
+
+.tab-event
+  width 160px
+  height: 48px
+  font-size: 16px
+  font-weight: 500
+  line-height: 24px
+  color: #1F1F1F
+  display: flex
+  justify-content: center
+  align-items: center
+  cursor pointer
+.tab-event.active
+  border-bottom: 2px solid #E91D23
+  color: #E91D23
+.tab-event:hover
+  background: rgba(31, 31, 31, 0.08);
+
+.btn-radio
+  .el-radio-group
+    display: flex
+    flex-direction: column
+    align-items: flex-start
+    .el-radio
+      .el-radio__input.is-checked+.el-radio__label
+        color #1F1F1F
+      .el-radio__input.is-checked .el-radio__inner
+        background linear-gradient(133.57deg, #9A0B0F -0.06%, #FF2010 100%) !important
+        border-color #E91D23
+.tab-ticket
+  width 50%
+  height 100%
+  display flex
+  align-items center
+  justify-content center
+  cursor pointer
+.tab-ticket:hover
+  background rgba(31, 31, 31, 0.08)
+.tab-ticket.active
+  background rgba(233, 29, 35, 0.08)
+  color #E91D23
+
+.table-sections
+  .el-overlay
+    .el-drawer
+      .el-drawer__body
+        padding: 0
+        .el-input
+          width: 100% !important
+          .el-input__prefix
+              svg
+                flex-shrink: 0;
+                width: 24px
+                height: 24px
+                color: #796D6D
+          .el-input__inner
+            border-radius: 12px
+            padding-top: 10px
+            padding-bottom: 10px
+            height: 42px
+            width: 100% !important
+            .icon
+              width: 24px !important
+              height: 24px !important
+             
+.checkbox-publish.el-checkbox
+  .el-checkbox__input.is-checked+.el-checkbox__label
+    color #1F1F1F
+  .el-checkbox__input.is-checked .el-checkbox__inner
+    background linear-gradient(133.57deg, #9A0B0F -0.06%, #FF2010 100%) !important
+    border-color #E91D23
+
+.operation
+  width 40px
+  height 40px
+  display flex
+  justify-content center
+  align-items center
+  border-radius 50%
+  cursor pointer
+.operation:hover
+    background: rgba(31, 31, 31, 0.08)
+
+.event-section-form
+  .el-overlay
+    .el-overlay-dialog
+      .el-dialog
+        border-radius: 28px 
+        .el-dialog__header
+          padding: 0
+        .el-dialog__footer
+          padding: 0
+        .el-dialog__body
+          padding: 0
+
+.el-popper.is-pure.is-light.el-select__popper
+  z-index 5000 !important

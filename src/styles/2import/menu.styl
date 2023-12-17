@@ -1,0 +1,34 @@
+.menu-position
+  left 50% 
+  top 0
+  transform translateX(-50%)
+  .router-link-exact-active
+    color #E91D23
+    // border-bottom 3px solid #E91D23
+    // border-radius 0px 0px 3px 3px
+    svg path 
+      fill red
+  .menu-link-child
+    // border-bottom 3px solid transparent
+    // border-radius 0px 0px 3px 3px
+    transition all .3s
+
+  .menu-link-child:hover, .router-link-exact-active.menu-link-child
+    .bottom-bar
+        opacity 1
+    // border-bottom 3px solid #E91D23
+    // border-radius 0px 0px 3px 3px
+    svg path 
+      fill red
+ 
+    color #E91D23
+  
+.router-link-exact-active.menu-link-child-1,
+.menu-link-child-1:hover 
+  background: linear-gradient(0deg, rgba(233, 29, 35, 0.08), rgba(233, 29, 35, 0.08)), #FFFFFF
+
+.bottom-bar 
+  height 3px
+  background #E91D23
+  border-radius 100px 100px 0px 0px
+  width 100%
