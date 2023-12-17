@@ -1,0 +1,39 @@
+.el-select.select-dropdown
+  .el-input.is-focus
+    .el-input__inner
+      box-shadow none !important
+  &:hover
+    input
+      box-shadow none !important
+      border-color #EF8144 !important
+  input
+    &.el-input__inner
+      font-size: 16px
+      box-shadow none !important
+      height: 56px
+      border: 1px solid black;
+      box-shadow:none
+      border-radius: 8px !important
+      padding-left: 1.5rem !important
+      padding-top: 15px !important
+      &::-webkit-input-placeholder
+        font-size: 16px;
+        color: #41454F;
+      &:-moz-placeholder
+        font-size: 16px;
+        color: #41454F;
+      &::-moz-placeholder
+        font-size: 16px;
+        color: #41454F;
+      &:-ms-input-placeholder
+        font-size: 16px;
+        color: #41454F;
+  .el-icon
+    color:#41454F !important
+    font-size: 20px !important
+    font-weight: bold !important
+
+.el-select.select-dropdown.select-dropdown-country input.el-input__inner
+  @media (max-width: 767px)
+    padding-left: 4px !important
+    padding-right: 4px !important

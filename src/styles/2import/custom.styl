@@ -1,0 +1,287 @@
+body
+  color #0F0F0F
+  font-family 'Manrope'
+
+.font-merriweather
+  font-family 'Merriweather'
+
+.size-10
+  font-size 10px
+
+.size-11
+  font-size 10px
+
+.size-12
+  font-size 12px
+
+.size-13
+  font-size 13px
+
+.size-14
+  font-size 14px
+
+.size-16
+  font-size 16px
+
+.size-18
+  font-size 18px
+
+.size-20
+  font-size 20px
+
+.size-22
+  font-size 22px
+
+.size-24
+  font-size 24px
+
+.size-25
+  font-size 25px
+
+.size-28
+  font-size 28px
+
+.size-35
+  font-size 35px
+
+.size-38
+  font-size 38px
+
+.size-44
+  font-size 44px
+
+.size-48
+  font-size 48px
+
+.size-57
+  font-size 57px
+
+.rounded-10
+  border-radius 10px
+
+.hr-custom
+  border-bottom 1px solid #E2E2E5
+
+.hover-style:hover
+  background #EF8144 !important
+  color white !important
+
+  svg
+    rect
+      fill white
+
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: black !important;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: black !important;
+}
+
+.hover-opacity:hover
+  opacity 0.8
+  cursor pointer
+
+.text-html
+  white-space break-spaces
+
+.box-shadow-forbes
+  box-shadow 0px 3px 16px rgba(0, 0, 0, 0.08)
+  border-radius 8px
+
+.box-shadow-forbes2
+  box-shadow: 2px 2px 9px 8px #e6e1e1;
+  border-radius 8px
+
+textarea:focus, input:focus{
+  outline: none;
+}
+
+.radio-forbes
+  .el-radio__input
+    .el-radio__inner
+      height 16px
+      width 16px
+    &.is-checked
+      .el-radio__inner
+        border-color #41454F
+        background white
+        &::after
+          background #E91D23 !important
+          height 8px
+          width 8px
+
+.el-collapse, .el-collapse-item, .el-collapse-item__header, .el-collapse-item__wrap
+  border none !important
+  background initial !important
+.el-collapse.summary-collapse
+  .el-collapse-item__header
+    font-size 20px
+    font-weight 600
+
+.el-collapse.admin-sidebar-collapse
+  .el-collapse-item__header
+    background initial
+    color white
+  .el-collapse-item__content
+    padding-bottom 0px
+  .el-icon
+    margin-right 24px !important
+
+.checkbox-forbes-sm.el-checkbox
+  .el-checkbox__input.is-checked .el-checkbox__inner
+    background linear-gradient(133.57deg, #9A0B0F -0.06%, #FF2010 100%) !important
+    border-color #E91D23
+  .el-checkbox__input.is-checked+.el-checkbox__label
+    color black
+  .el-checkbox__label
+    font-weight 600
+
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+    
+.capitalize-first-letter::first-letter
+  text-transform capitalize
+
+.el-select.el-select-n-border.el-select-admin
+  .el-input__inner
+    padding-left 24px !important
+.el-select.el-select-n-border
+  .el-input__inner
+    padding-left 0px !important
+    box-shadow none !important
+    &:focus 
+      box-shadow none !important
+  .el-input.is-focus .el-input__inner
+    box-shadow none !important
+
+.min-h-full
+  min-height calc(100vh - 365px)
+
+.hr-white
+  border 1px solid #9F9F9F
+
+.link-menu.router-link-active
+  font-weight 600 !important
+  // color #C91414 !important
+
+.bg-quickom-new
+  background #4169E1
+  
+.bg-quickom  
+  background linear-gradient(340.96deg, #BA0017 0%, #460A08 100%)
+
+.quillWrapper
+  // border 1px solid #DCDFE6 !important
+  border-radius 8px
+  overflow hidden !important
+.ql-toolbar.ql-snow
+  border-color #DCDFE6 !important
+  border-radius 8px 8px 0 0 !important
+.ql-container.ql-snow
+  border-color #DCDFE6 !important
+  border-radius 0 0 8px 8px !important
+
+.ql-editor
+  min-height 139px !important
+
+svg.svgLight 
+  path 
+    fill white
+
+.break-word
+  word-break break-word
+
+.one-line
+  word-break break-all
+  white-space nowrap
+
+img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+}
+
+.box-shadow-home
+  // box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--surface-surface-variant, #EFE8E8);
+  border-radius: 12px;
+  transition transform .2s
+.box-shadow-home:hover 
+  // transform: scale(1.04);
+  box-shadow: 0px 12px 20px 0px rgba(0, 0, 0, 0.08), 0px 8px 12px 6px rgba(0, 0, 0, 0.15), 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+.scale-animation
+  transition transform .2s
+
+.scale-animation:hover 
+  transform: scale(1.2);
+
+.box-shadow-header
+  box-shadow: 0px 4px 8px 3px rgba(155, 155, 155, 0.15), 0px 1px 3px rgba(155, 155, 155, 0.3);
+
+.box-shadow-header-opposite
+  box-shadow: 0px -4px -1px 3px rgba(155, 155, 155, 0.15), 0px -1px 3px rgba(155, 155, 155, 0.3);
+
+.flex-0-auto
+  flex 0 0 auto
+
+.button-red
+  background #E91D23
+  color white
+  border 1px solid #E91D23
+  cursor pointer
+  transition all .3s
+  &:hover
+    background white
+    color #E91D23
+    svg path 
+      fill #E91D23
+    
+.button-white
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+  background white !important
+  color #E91D23 !important
+  transition all .3s
+  svg path 
+    fill #E91D23
+  
+  &:hover
+    background #E91D23 !important
+    color white !important
+    svg path 
+      fill white
+
+.home
+  .el-carousel__indicators
+    .el-carousel__indicator
+      .el-carousel__button
+        width 8px
+        height: 8px
+        border-radius: 50%
+        background-color: white !important
+    .el-carousel__indicator.is-active
+      .el-carousel__button
+        background-color: #E91D23 !important
+    
+.home
+  .swiper 
+    border-radius: 28px
+    .swiper-pagination
+      .swiper-pagination-bullet-active
+        background: #E91D23!important

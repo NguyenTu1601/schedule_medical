@@ -1,0 +1,26 @@
+
+.input-animation 
+  height 50px
+  input, textarea
+    padding 19px 16px 7px
+  input:focus ~ label,
+  input:valid ~ label
+    transform translateY(-13px)
+    font-size 10px
+  .input-valid ~ label, .active-input
+    transform translateY(-13px)
+    font-size 10px
+
+  label
+    position absolute
+    bottom 16px
+    left 16px
+    pointer-events none
+    transition all 0.3s ease
+
+.input-normal
+  height 50px
+  padding-left 16px
+  padding-right 16px
+
+
