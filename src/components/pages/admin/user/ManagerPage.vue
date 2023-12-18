@@ -8,6 +8,7 @@ div
   ManagerClinicPage(v-else-if='role==="admin-clinic"')
   ManagerAllClinic(v-else-if='role==="clinic"')
   ManagerSpecialty(v-else-if='role==="specialty"')
+  ManagerBookingDoctor(v-else-if='role==="booking-doctor"')
 </template>
 
 <script setup lang="ts">
@@ -22,6 +23,7 @@ import ManagerMedicine from './ManagerMedicine.vue';
 import ManagerPatient from './ManagerPatient.vue';
 import ManagerAllClinic from './ManagerAllClinic.vue';
 import ManagerSpecialty from './ManagerSpecialty.vue';
+import ManagerBookingDoctor from './ManagerBookingDoctor.vue';
 
 const { account, getAccount } = useAccount()
 

@@ -1,26 +1,56 @@
 <template lang="pug">
 div.overflow-y-auto
-  div.text-base.font-bold Thêm thông tin thuốc
+  div.text-xl.font-bold Thông tin bệnh án
+  div.mt-4.text-lg.font-bold Thông tin bệnh nhân:
+  div.mt-4.flex
+    div.flex-1
+      div.text-base.font-semibold Mã lịch hẹn:
+      div.text-base {{ detailBooking?.code }}
+    div.flex-1
+      div.text-base.font-semibold Số thứ tự:
+      div.text-base {{ detailBooking?.stt }}
+  div.mt-2.flex
+    div.flex-1
+      div.text-base.font-semibold Nhóm máu:
+      div.text-base {{ detailBooking?.nhommau }}
+    div.flex-1
+      div.text-base.font-semibold Triệu chứng
+      div.text-base {{ detailBooking?.health_status }}
+  div.mt-2.flex
+    div.flex-1
+      div.text-base.font-semibold Tên bệnh nhân:
+      div.text-base {{ detailBooking?.patientName }}
+    div.flex-1
+      div.text-base.font-semibold Tái khám:
+      div.text-base {{ detailBooking?.isTaikham }}
+  div.mt-2.flex
+    div.flex-1
+      div.text-base.font-semibold Tuổi:
+      div.text-base {{ detailBooking?.age }}
+    div.flex-1
+  div.mt-4.text-lg.font-bold Đơn thuốc:
+  div.flex.gap-8.mt-4
+    div.flex-1
+      div.text-sm Triệu chứng
+      input(type='text' placeholder='' v-model="diagnostic" class='outline-none p-2 text-sm border border-[#DEE3ED] rounded-[4px] w-full mt-1')
+    div.flex-1
+      div.text-sm Ngày tái khám
+      el-date-picker.w-full.mt-1(v-model="taikhamDate"
+        type="date"
+        placeholder="ngày tái khám"
+        size="large"
+        )
   div(class='mt-4')
     table.w-full
       tr(class='bg-[#C80815] text-white text-sm font-bold')
         td.p-2(class='') Tên thuốc
-        td.p-2(class='') Mã thuốc
-        td.p-2(class='') Đơn vị tính
-        td.p-2(class='') Description
-        td.p-2(class='') Hành động
+        td.p-2(class='') số lượng
+        td.p-2(class='w-[100px]') Hành động
       tr(v-for='(item,idx) in listMedicine')
         td.p-2(class='') 
-          input(v-model='item.name' class='border border-[#DEE3ED] px-2 py-1 rounded-[4px]')
+          input.w-full(v-model='item.name' class='border border-[#DEE3ED] px-2 py-1 rounded-[4px]')
         td.p-2(class='')
-          input(v-model='item.code' class='border border-[#DEE3ED] px-2 py-1 rounded-[4px]')
-        td.p-2(class='')
-          //- input(v-model='item.unit' class='border border-[#DEE3ED] px-2 py-1 rounded-[4px]')
-          el-select.mt-1.w-full(v-model="item.unit" size="large")
-            el-option(value='Viên' label='Viên')
-            el-option(value='Tuýp' label='Tuýp')
-        td.p-2(class='')
-          input(v-model='item.description' class='border border-[#DEE3ED] px-2 py-1 rounded-[4px]')
+          input.w-full(v-model='item.description' class='border border-[#DEE3ED] px-2 py-1 rounded-[4px]')
         td
           div.flex.justify-between(v-if='idx===listMedicine.length-1')
             img.w-6.h-6.shrink-0.cursor-pointer(src='../assets/add-black.svg' @click='handleAdd')
@@ -39,6 +69,8 @@ import UserApis from '@/apis/user'
 import dayjs from 'dayjs'
 
 const emits = defineEmits(['cancel'])
+const props = defineProps(['bookingId'])
+
 
 const listMedicine = ref([{
   name: '',
@@ -48,6 +80,13 @@ const listMedicine = ref([{
   amout: 2.5
 }])
 const isLoading = ref(false)
+const detailBooking = ref()
+const diagnostic = ref('')
+const taikhamDate = ref()
+
+const bookingId = computed(() => {
+  return props.bookingId
+})
 
 function handleAdd() {
   listMedicine.value.push({
@@ -79,6 +118,20 @@ function handleSave() {
     handleCancel('save')
   })
 }
+
+async function getDetailBooking() {
+  const form = {
+    bookingId: bookingId.value
+  }
+  await UserApis.getDetailBooking(form).then(res => {
+    detailBooking.value = res.content[0]
+    console.log(detailBooking.value)
+  })
+}
+onMounted(() => {
+  console.log(bookingId.value)
+  getDetailBooking()
+})
 </script>
 
 <style scoped>

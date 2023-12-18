@@ -5,7 +5,7 @@ div
       div.flex
         div.flex-1
           div.font-semibold.text-base Tên bác sĩ
-          div.mt-1.font-medium.text-base Nguyễn Tú
+          div.mt-1.font-medium.text-base {{account?.name}}
         div.flex-1.pr-4
           div.font-semibold.text-base Chọn ngày
           el-date-picker.w-full.mt-1(v-model="day"
@@ -19,8 +19,9 @@ div
         div.text-base.text-white.cursor-pointer(v-else class='bg-[#C52428] px-4 py-2 rounded-[10px] w-[130px] flex justify-center' )
           img.w-6.h-6.shrink-0(src='./assets/loading.svg')
     div(class='flex-[4]') 
-      div(class='border border-[#DEE3ED] w-fit rounded-full px-4 py-2 text-base cursor-pointer' :class='[{"!border-[#DA151A]":isExist("0")}]' @click='handleSelectTime("0")') Ca sáng
-      div(class='border border-[#DEE3ED] w-fit rounded-full px-4 py-2 text-base cursor-pointer mt-2' :class='[{"!border-[#DA151A]":isExist("1")}]' @click='handleSelectTime("1")') Ca Chiều
+      div.flex.gap-2
+        div(class='border border-[#DEE3ED] w-fit rounded-full px-4 py-2 text-base cursor-pointer' :class='[{"!border-[#DA151A]":isExist("0")}]' @click='handleSelectTime("0")') Ca sáng
+        div(class='border border-[#DEE3ED] w-fit rounded-full px-4 py-2 text-base cursor-pointer' :class='[{"!border-[#DA151A]":isExist("1")}]' @click='handleSelectTime("1")') Ca Chiều
   div.mt-10.flex
     div(class='w-[80px] shrink-0 px-[10px] flex items-center justify-center')
       div(class='bg-[#C52428] w-[60px] h-[60px] flex items-center justify-center rounded-full shrink-0 cursor-pointer' @click="prev")

@@ -104,7 +104,7 @@ const apiResources: any = {
   },
   medicine: {
     listMedicine: {
-      url: '/api/Medicine/getListMedicine',
+      url: '/api/Medicine/getListMedicine?keyword={keyword}',
       verb: 'GET',
       baseUrl: staticEnv.ACC_NEW_API_URL,
       requiredToken: true,
@@ -112,6 +112,20 @@ const apiResources: any = {
     createMedicine: {
       url: '/api/Medicine/createMedicine',
       verb: 'POST',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    }
+  },
+  booking: {
+    listAccess: {
+      url: '/api/Booking/getListBookingAccess?macode={macode}',
+      verb: 'GET',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
+    detailBooking: {
+      url: '/api/Booking/getDetailBooking?bookingId={bookingId}',
+      verb: 'GET',
       baseUrl: staticEnv.ACC_NEW_API_URL,
       requiredToken: true,
     }

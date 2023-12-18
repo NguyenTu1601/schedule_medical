@@ -1,42 +1,32 @@
 <template lang="pug">
 div
-  div.mt-10.flex.gap-4
-    div(class='flex-[3]')
-      div.text-lg.font-semibold Đơn vị tính
-      el-select.mt-2.w-full(v-model="donvi" placeholder="Tat ca" size="large")
-        el-option(value='1' label='Tất cả')
-        el-option(value='2' label='Tuýp')
-        el-option(value='3' label='Viên')
-      div.text-lg.font-semibold.mt-4 Thuốc
-      div.mt-2.flex(class='border border-[#DEE3ED] px-4 py-2 rounded-[4px]')
+  div.gap-4
+    div.text-base.font-semibold.mt-4 Quản lý thuốc
+    div.flex.justify-start.mt-4
+      div(class='px-4 py-2 text-lg font-semibold text-white bg-[#C80815] rounded-[10px] cursor-pointer' @click="handleAdd") Thêm thuốc
+    div.flex.justify-end
+      div.mt-2.flex(class='border border-[#DEE3ED] px-4 py-2 rounded-[4px] w-[600px]')
         input.outline-none.text-base.w-full(v-model='medicine')
         img(class='w-6 h-6 shrink-0' src='./assets/search.svg')
-      div.mt-10.flex.w-full
-        div.w-full.font-semibold.text-lg Tổng số thuốc
-        div.w-fit.text-lg 0
-      div.mt-1.flex.w-full
-        div.w-full.font-semibold.text-lg Tổng loại Tuýp
-        div.w-fit.text-lg 0
-      div.mt-1.flex.w-full
-        div.w-full.font-semibold.text-lg Tổng loại Viên
-        div.w-fit.text-lg 0
-      div.flex.justify-center.mt-4
-        div(class='px-4 py-2 text-lg font-semibold text-white bg-[#C80815] rounded-[10px] cursor-pointer' @click="handleAdd") Thêm thuốc
-    div(class='flex-[7]')
-      table.w-full
-        tr(class='bg-[#C80815] text-white text-sm font-bold')
-          td.p-2(class='') Tên thuốc
-          td.p-2(class='') Mã thuốc
-          td.p-2(class='') Đơn vị tính
-          td.p-2(class='') Trạng thái
-          td.p-2(class='') Tên bệnh viện
-          td.p-2(class='') Thao tác
-        tr(v-for='item in listMedicine')
-          td.p-2(class='') {{ item.name }}
-          td.p-2(class='') {{ item.code }}
-          td.p-2(class='') {{ item.unit }}
-          td.p-2(class='') {{ item.trangthaitext }}
-          td.p-2(class='') {{ item.clinicName }}
+
+  table.w-full.mt-4
+    tr(class='bg-[#C80815] text-white text-sm font-bold')
+      td.p-2(class='') Tên thuốc
+      td.p-2(class='') Mã thuốc
+      td.p-2(class='') Đơn vị tính
+      td.p-2(class='') Trạng thái
+      td.p-2(class='') Tên bệnh viện
+      td.p-2(class='w-[100px]') Thao tác
+    tr(v-for='item in listMedicine')
+      td.p-2(class='') {{ item.name }}
+      td.p-2(class='') {{ item.code }}
+      td.p-2(class='') {{ item.unit }}
+      td.p-2(class='') {{ item.trangthaitext }}
+      td.p-2(class='') {{ item.clinicName }}
+      td
+        div.flex.justify-between
+          img.w-6.h-6.shrink-0.cursor-pointer(src='./assets/edit.svg' @click='handleEdit')
+          img.w-6.h-6.shrink-0.cursor-pointer(src='./assets/delete.svg')
   el-dialog(v-model="isShow" title="" width='1000px')
     ModalMedicine(v-if='isShow' @cancel='handleCancel' @save='handleSave')
     div(v-else)
@@ -53,7 +43,10 @@ const listMedicine = ref([])
 const isShow = ref(false)
 
 async function getListMedicine() {
-  await MedicineApis.getListMedicine().then(res => {
+  const form = {
+    keyword: '0'
+  }
+  await MedicineApis.getListMedicine(form).then(res => {
     listMedicine.value = res.content
   })
 }

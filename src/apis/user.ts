@@ -51,10 +51,13 @@ export function createUser(form): Promise<any> {
       return res.data;
     });
 }
-export function getListMedicine(): Promise<any> {
+export function getListMedicine(form): Promise<any> {
   return http
     .callApi({
       resource: 'medicine.listMedicine',
+      data: {
+        ...form,
+      },
     })
     .then((res: any) => {
       return res.data;
@@ -126,6 +129,30 @@ export function createSpecialty(form): Promise<any> {
       return res.data;
     });
 }
+export function getListAccessBooking(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'booking.listAccess',
+      data: {
+        ...form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
+export function getDetailBooking(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'booking.detailBooking',
+      data: {
+        ...form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
 export default {
   getListUser,
   getListRole,
@@ -138,5 +165,7 @@ export default {
   getListClinic,
   createClinic,
   getListSpecialty,
-  createSpecialty
+  createSpecialty,
+  getListAccessBooking,
+  getDetailBooking
 };
