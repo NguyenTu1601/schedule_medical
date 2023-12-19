@@ -46,6 +46,16 @@ const apiResources: any = {
       verb: 'POST',
       baseUrl: staticEnv.ACC_NEW_API_URL,
     },
+    editUser: {
+      url: '/api/User/editUser',
+      verb: 'POST',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+    },
+    deleteUser: {
+      url: '/api/User/deleteUser',
+      verb: 'POST',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+    },
     listHocvi: {
       url: '/api/User/getListHocVi',
       verb: 'GET',

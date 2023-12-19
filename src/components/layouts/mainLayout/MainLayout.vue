@@ -1,7 +1,7 @@
 <template lang="pug">
-.min-h-screen
+.min-h-screen.overflow-x-hidden
   Header
-  div
+  div(class='mt-[64px]')
     router-view  
 </template>
 

@@ -7,6 +7,11 @@ export default function init(routes: any[]) {
         path: '/',
         name: 'home',
         component: () => import('@/components/pages/home/HomePage.vue'),
+      },
+      {
+        path: '/specialty',
+        name: 'home',
+        component: () => import('@/components/pages/home/HomePage.vue'),
       }
     ],
   };

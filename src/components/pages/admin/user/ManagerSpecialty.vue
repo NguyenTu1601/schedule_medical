@@ -1,12 +1,12 @@
 <template lang="pug">
 div
-  div.font-bold(class='text-[18px]') Specialty Manager
+  div.font-bold(class='text-[18px]') Quản lý chuyên khoa
   div.flex.gap-2.justify-center.items-center.w-fit.mt-4(class='rounded-[10px] px-4 py-2 cursor-pointer border border-[#C80815]' @click="handleAdd")
     img.w-6.h-6.shrink-0(src='./assets/add.svg')
-    div.text-sm.font-bold(class='text-[#C80815]') Add Specialty
+    div.text-sm.font-bold(class='text-[#C80815]') Tạo mới chuyên khoa
   table.w-full.mt-4
     tr(class='bg-[#C80815] text-white text-sm font-bold')
-      td.p-2(class='') Name
+      td.p-2(class='') Tên chuyên khoa
       td.p-2(class='') Mã
       td.p-2(class='') Trạng thái
       td.p-2(class='w-[80px]') Actions

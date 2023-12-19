@@ -12,14 +12,14 @@ div.overflow-y-auto
   div.flex.gap-8.mt-2
     div.flex-1
       VueEditor(v-model='formSpecialty.shortDescription' :editorOptions="editorSettings")
-    div.flex-1.border.p-4(class='border-[#DEE3ED] rounded-[4px]')
-      div(v-html='formSpecialty.shortDescription')
+    //- div.flex-1.border.p-4(class='border-[#DEE3ED] rounded-[4px]')
+    //-   div(v-html='formSpecialty.shortDescription')
   div.mt-2.font-semibold.text-base  Description
   div.flex.gap-8.mt-2
     div.flex-1
       VueEditor(v-model='formSpecialty.description' :editorOptions="editorSettings")
-    div.flex-1.border.p-4(class='border-[#DEE3ED] rounded-[4px]')
-      div(v-html='formSpecialty.description')
+    //- div.flex-1.border.p-4(class='border-[#DEE3ED] rounded-[4px]')
+    //-   div(v-html='formSpecialty.description')
   div.flex.justify-end.gap-4.items-center.w-full.mt-4
     div.cursor-pointer.px-4.py-2.border(class='font-bold text-sm rounded-[10px]' @click="handleCancel") Cancel
     div.cursor-pointer.px-4.py-2.border(class='font-bold text-sm rounded-[10px] border-[#DA151A] text-[#DA151A] hover:bg-[#DA151A] hover:text-white' @click="handleSave")

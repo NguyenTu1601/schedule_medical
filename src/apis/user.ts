@@ -51,6 +51,30 @@ export function createUser(form): Promise<any> {
       return res.data;
     });
 }
+export function editUser(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'user.editUser',
+      data: {
+        body: form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
+export function deleteUser(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'user.deleteUser',
+      data: {
+        body: form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
 export function getListMedicine(form): Promise<any> {
   return http
     .callApi({
@@ -180,5 +204,7 @@ export default {
   createSpecialty,
   getListAccessBooking,
   getDetailBooking,
-  createHistoryByDoctor
+  createHistoryByDoctor,
+  editUser,
+  deleteUser
 };

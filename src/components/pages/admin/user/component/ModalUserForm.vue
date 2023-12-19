@@ -1,13 +1,13 @@
 <template lang="pug">
 div.overflow-y-auto
-  div.text-base.font-bold User information
+  div.text-base.font-bold Thông tin người dùng
   div.flex.gap-8.mt-8
     div.flex-1
-      div.text-sm Name
+      div.text-sm Tên người dùng
       input(type='text' v-model="formUser.name" placeholder='name' class='outline-none p-2 text-sm border border-[#DEE3ED] rounded-[4px] w-full mt-1')
     div.flex-1
-      div.text-sm Birthday
-      el-date-picker.w-full.mt-1(v-model="formUser.birthday"
+      div.text-sm Ngày sinh
+      el-date-picker.w-full.mt-1(v-model="formUser.ngaysinh"
         type="date"
         placeholder="Pick a day"
         size="large"
@@ -18,34 +18,35 @@ div.overflow-y-auto
       div.text-sm Email
       input(type='text' placeholder='email' v-model="formUser.email" class='outline-none p-2 text-sm border border-[#DEE3ED] rounded-[4px] w-full mt-1')
     div.flex-1
-      div.text-sm Phone number
-      input(type='text' placeholder='phone number' v-model="formUser.phone" class='outline-none p-2 text-sm border border-[#DEE3ED] rounded-[4px] w-full mt-1')
+      div.text-sm Số điện thoại
+      input(type='text' placeholder='phone number' v-model="formUser.phonenumber" class='outline-none p-2 text-sm border border-[#DEE3ED] rounded-[4px] w-full mt-1')
   div.flex.gap-8.mt-4
     div.flex-1
-      div.text-sm Address
+      div.text-sm Địa chỉ
       input(type='text' placeholder='address' v-model="formUser.address" class='outline-none p-2 text-sm border border-[#DEE3ED] rounded-[4px] w-full mt-1')
     div.flex-1
-      div.text-sm Gender
+      div.text-sm Giới tính
       el-select.mt-1.w-full(v-model="formUser.gender" placeholder="Gender" size="large")
         el-option(value='1' label='Nam')
         el-option(value='2' label='Nữ')
         el-option(value='3' label='Khác')
   div.flex.gap-8.mt-2
     div.flex-1.sh
-      div.text-sm Vai trò
-      el-select.mt-1.w-full(v-model="formUser.role" placeholder="Vai trò" size="large")
-        el-option(v-for='role in listRole' :value='role.id' :label='role.ten')
-    div.flex-1
-      div.text-sm Password
-      input(type='password' v-model="formUser.password" class='outline-none p-2 text-sm border border-[#DEE3ED] rounded-[4px] w-full mt-1')
-  div.flex.gap-8.mt-2
-    div.flex-1.sh
       div.text-sm Username
       input(type='text' placeholder='username' v-model="formUser.username" class='outline-none p-2 text-sm border border-[#DEE3ED] rounded-[4px] w-full mt-1')
     div.flex-1
-      div(v-if='formUser.role &&(formUser.role===2||formUser.role===3)')
+      div.text-sm(v-if='isEdit===false' ) Mật khẩu
+      input(v-if='isEdit===false' type='password' v-model="formUser.password" class='outline-none p-2 text-sm border border-[#DEE3ED] rounded-[4px] w-full mt-1')
+  div.flex.gap-8.mt-2
+    div.flex-1.sh
+      div.text-sm Vai trò
+      el-select.mt-1.w-full(v-model="formUser.roleID" placeholder="Vai trò" size="large")
+        el-option(v-for='role in listRole' :value='role.id' :label='role.ten')
+
+    div.flex-1
+      div(v-if='formUser.roleID &&(formUser.roleID===2||formUser.roleID===3)')
         div.text-sm Phòng khám
-        el-select.mt-1.w-full(v-model="formUser.clinic" placeholder="Gender" size="large")
+        el-select.mt-1.w-full(v-model="formUser.clinicId" placeholder="" size="large")
           el-option(v-for='clinic in listClinic' :value='clinic.id' :label='clinic.name')
   div.mt-2
     div.text-sm Ảnh
@@ -56,7 +57,7 @@ div.overflow-y-auto
     img.mt-4(v-if='formUser.avtimage.length>0' :src='formUser.avtimage' class='w-[100px] h-[100px] object-cover')
   div.flex.justify-end.gap-4.items-center.w-full.mt-4
     div.cursor-pointer.px-4.py-2.border(class='font-bold text-sm rounded-[10px]' @click="handleCancel") Cancel
-    div.cursor-pointer.px-4.py-2.border(class='font-bold text-sm rounded-[10px] border-[#DA151A] text-[#DA151A] hover:bg-[#DA151A] hover:text-white' @click="handleSave")
+    div.cursor-pointer.px-4.py-2.border(v-if='formUser.trangthaiId===1' class='font-bold text-sm rounded-[10px] border-[#DA151A] text-[#DA151A] hover:bg-[#DA151A] hover:text-white' @click="handleSave")
       div(v-if='!isLoadingCreate') Save
       img.w-6.h-6.shrink-0(v-else src='../assets/loading.svg')
 
@@ -104,9 +105,8 @@ const imgUrlUpload = ref('')
 const formUser = computed(() => {
   return props.formUser
 })
-
-watch(formUser, () => {
-  // console.log(formUser)
+const isEdit = computed(() => {
+  return props.isEdit
 })
 
 function customQuillClipboardMatcher(node, delta) {
@@ -138,17 +138,60 @@ async function createUser() {
   isLoadingCreate.value = true
   const form = {
     name: formUser.value.name,
-    ngaysinh: formatDate(formUser.value.birthday),
+    ngaysinh: formatDate(formUser.value.ngaysinh),
+    address: formUser.value.address,
     email: formUser.value.email,
     password: formUser.value.password,
     gender: formUser.value.gender,
     phonenumber: formUser.value.phone,
     username: formUser.value.username,
-    roleid: formUser.value.role,
-    avtimage: formUser.value.avtimage
-    // avtimage: imgUrlUpload.value
+    roleID: formUser.value.roleID,
+    avtimage: formUser.value.avtimage,
+    clinicId: formUser.value.clinicId
   }
   await UserApis.createUser(form).then(res => {
+    if (res.result === 1) {
+      ElNotification({
+        title: 'Success',
+        message: res.message,
+        type: 'success',
+      });
+      emits('cancel', 'save')
+    }
+    if (res.result === 0) {
+      ElNotification({
+        title: 'Error',
+        message: res.message,
+        type: 'error',
+      });
+    }
+
+  }).catch(err => {
+    ElNotification({
+      title: 'Error',
+      message: err,
+      type: 'error',
+    });
+  }).finally(() => {
+    isLoadingCreate.value = false
+  })
+}
+async function editUser() {
+  isLoadingCreate.value = true
+  const form = {
+    id: formUser.value.id,
+    name: formUser.value.name,
+    ngaysinh: formatDate(formUser.value.ngaysinh),
+    address: formUser.value.address,
+    email: formUser.value.email,
+    gender: formUser.value.gender,
+    phonenumber: formUser.value.phonenumber,
+    username: formUser.value.username,
+    roleID: formUser.value.roleID,
+    avtimage: formUser.value.avtimage,
+    clinicId: formUser.value.clinicId
+  }
+  await UserApis.editUser(form).then(res => {
     if (res.result === 1) {
       ElNotification({
         title: 'Success',
@@ -204,7 +247,11 @@ onMounted(() => {
 })
 
 function handleSave() {
-  createUser()
+  if (isEdit.value) {
+    editUser()
+  } else {
+    createUser()
+  }
 }
 
 function formatDate(dateStr) {
