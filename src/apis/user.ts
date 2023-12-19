@@ -153,6 +153,18 @@ export function getDetailBooking(form): Promise<any> {
       return res.data;
     });
 }
+export function createHistoryByDoctor(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'doctor.createHistory',
+      data: {
+        body: form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
 export default {
   getListUser,
   getListRole,
@@ -167,5 +179,6 @@ export default {
   getListSpecialty,
   createSpecialty,
   getListAccessBooking,
-  getDetailBooking
+  getDetailBooking,
+  createHistoryByDoctor
 };

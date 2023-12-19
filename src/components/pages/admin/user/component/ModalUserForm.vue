@@ -52,20 +52,14 @@ div.overflow-y-auto
     div.mt-2
       div.px-2.p-1.flex.justify-center(class='bg-[#DA151A] text-white text-sm w-fit cursor-pointer rounded-[10px] items-center gap-2' @click="selectFile")
         img.h-6.w-6.shrink-0(src='../assets/upload.svg')
-        div Upload
-
+        div {{formUser.avtimage.length>0?"Edit":"Upload"}}
+    img.mt-4(v-if='formUser.avtimage.length>0' :src='formUser.avtimage' class='w-[100px] h-[100px] object-cover')
   div.flex.justify-end.gap-4.items-center.w-full.mt-4
     div.cursor-pointer.px-4.py-2.border(class='font-bold text-sm rounded-[10px]' @click="handleCancel") Cancel
     div.cursor-pointer.px-4.py-2.border(class='font-bold text-sm rounded-[10px] border-[#DA151A] text-[#DA151A] hover:bg-[#DA151A] hover:text-white' @click="handleSave")
       div(v-if='!isLoadingCreate') Save
       img.w-6.h-6.shrink-0(v-else src='../assets/loading.svg')
-  input.hidden(
-    ref='fileSelect'
-    type='file'
-    @change='onSelectFile'
-    accept='image/*'
-    multiple=''
-  )
+
 </template>
 
 <script setup lang="ts">
@@ -105,20 +99,7 @@ const listRole = ref([])
 const listHocVi = ref([])
 const isLoadingCreate = ref(false)
 const listClinic = ref([])
-const img = ref()
-const fileSelect = ref(null)
-
-// const formUser = reactive({
-//   name: '',
-//   username: '',
-//   email: '',
-//   phone: '',
-//   address: '',
-//   role: '',
-//   password: '',
-//   gender: '',
-//   birthday: ''
-// })
+const imgUrlUpload = ref('')
 
 const formUser = computed(() => {
   return props.formUser
@@ -163,7 +144,9 @@ async function createUser() {
     gender: formUser.value.gender,
     phonenumber: formUser.value.phone,
     username: formUser.value.username,
-    roleid: formUser.value.role
+    roleid: formUser.value.role,
+    avtimage: formUser.value.avtimage
+    // avtimage: imgUrlUpload.value
   }
   await UserApis.createUser(form).then(res => {
     if (res.result === 1) {
@@ -192,41 +175,30 @@ async function createUser() {
     isLoadingCreate.value = false
   })
 }
-const onSelectFile = async (e: Event) => {
-  let files: File[] = [...(e.target as HTMLInputElement).files]
 
-  // isLoadingImage.value = true
+const cloudName = "dzngdre7f";
+const uploadPreset = "schedule-medical";
 
-  let avatar = new FormData()
-  avatar.append('data', files[0])
-  // avatar.append('filename', files[0].name)
-
-  let res = await FileApis.upload(avatar).then(res => {
-    console.log(res)
-  }).catch(err => {
-    console.log(err)
-  }).finally(() => {
-    // isLoadingImage.value = false
-  })
-
-  // form.avatar = res
-  // updateProfile(form).then(() => {
-  //   message.success('Avatar changed')
-  //   return getProfile()
-  // })
-}
-const selectFile = () => {
-  // if (isLoadingImage.value) return;
-  const open = () => {
-    fileSelect.value && fileSelect.value.click()
+const myWidget = window.cloudinary.createUploadWidget(
+  {
+    cloudName: cloudName,
+    uploadPreset: uploadPreset,
+  },
+  (error, result) => {
+    if (!error && result && result.event === "success") {
+      console.log("Done! Here is the image info: ", result.info);
+      imgUrlUpload.value = result.info.secure_url
+      formUser.value.avtimage = result.info.secure_url
+    }
   }
-  open()
+);
+const selectFile = () => {
+  myWidget.open()
 }
 function handleCancel() {
   emits('cancel', 'cancel')
 }
 onMounted(() => {
-  console.log('aa')
   getListRole()
   getListClinic()
 })

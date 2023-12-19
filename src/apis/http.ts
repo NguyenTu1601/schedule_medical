@@ -65,6 +65,12 @@ const apiResources: any = {
       baseUrl: staticEnv.ACC_NEW_API_URL,
       requiredToken: true,
     },
+    createHistory: {
+      url: '/api/Doctor/createHistoryByDoctor',
+      verb: 'POST',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    }
   },
   clinic: {
     listClinic: {
@@ -104,6 +110,12 @@ const apiResources: any = {
   },
   medicine: {
     listMedicine: {
+      url: '/api/Medicine/getListMedicine?keyword={keyword}',
+      verb: 'GET',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
+    listMedicineByCode: {
       url: '/api/Medicine/getListMedicine?keyword={keyword}',
       verb: 'GET',
       baseUrl: staticEnv.ACC_NEW_API_URL,

@@ -1,10 +1,13 @@
 <template lang="pug">
-router-view
+div
+  Header
+  div
+    router-view
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-
+import Header from './component/Header.vue'
 const EmptyLayout = defineComponent({});
 
 export default EmptyLayout;
