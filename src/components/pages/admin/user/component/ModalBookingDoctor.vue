@@ -78,6 +78,7 @@ import { reactive, h, ref, computed, defineEmits, watch, defineProps, onMounted 
 import UserApis from '@/apis/user'
 import dayjs from 'dayjs'
 import RowMedicineBooking from "./RowMedicineBooking.vue"
+import { ElNotification, ElPopconfirm } from 'element-plus';
 
 const emits = defineEmits(['cancel'])
 const props = defineProps(['bookingId'])
@@ -140,7 +141,21 @@ function handleSave() {
     medicines: listMedicineFilter
   }
   console.log(form)
-  UserApis.createHistoryByDoctor(form).then(() => {
+  UserApis.createHistoryByDoctor(form).then((res) => {
+    if (res.result === 1) {
+      ElNotification({
+        title: 'Success',
+        message: res.message,
+        type: 'success',
+      });
+    }
+    if (res.result === 0) {
+      ElNotification({
+        title: 'Error',
+        message: res.message,
+        type: 'error',
+      });
+    }
     isLoading.value = false
     // handleCancel('save')
     step.value = step.value + 1
