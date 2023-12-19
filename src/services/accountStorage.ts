@@ -22,7 +22,7 @@ export function saveToken(token: string) {
 
     pathDomain = '.' + splitDomain.join('.');
   }
-
+  console.log(token)
   Cookies.set(TOKEN, token, { expires: 365 * 10, domain: pathDomain });
 }
 
