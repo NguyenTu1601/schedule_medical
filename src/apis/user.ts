@@ -213,6 +213,32 @@ export function getDetailBooking(form): Promise<any> {
       return res.data;
     });
 }
+
+export function getListHistoryByDoctor(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'doctor.getHistoryByDoctor',
+      data: {
+        ...form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
+
+export function getDetailHistoryByDoctor(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'history.detailHistoryByDoctor',
+      data: {
+        ...form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
 export function createHistoryByDoctor(form): Promise<any> {
   return http
     .callApi({
@@ -245,5 +271,7 @@ export default {
   deleteUser,
   updateSpecialty,
   deleteSpecialty,
-  updateClinic
+  updateClinic,
+  getListHistoryByDoctor,
+  getDetailHistoryByDoctor
 };

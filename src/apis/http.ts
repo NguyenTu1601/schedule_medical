@@ -80,6 +80,12 @@ const apiResources: any = {
       verb: 'POST',
       baseUrl: staticEnv.ACC_NEW_API_URL,
       requiredToken: true,
+    },
+    getHistoryByDoctor: {
+      url: '/api/Doctor/getListHistoryByDoctor?keyword={keyword}',
+      verb: 'GET',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
     }
   },
   clinic: {
@@ -165,6 +171,14 @@ const apiResources: any = {
     },
     detailBooking: {
       url: '/api/Booking/getDetailBooking?bookingId={bookingId}',
+      verb: 'GET',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    }
+  },
+  history: {
+    detailHistoryByDoctor: {
+      url: '/api/Doctor/getHistorybyId?historyId={historyId}',
       verb: 'GET',
       baseUrl: staticEnv.ACC_NEW_API_URL,
       requiredToken: true,

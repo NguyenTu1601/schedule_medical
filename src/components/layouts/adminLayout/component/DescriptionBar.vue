@@ -40,7 +40,12 @@ div.h-full(class='w-[250px] pt-6 px-4 overflow-auto !h-[calc(100vh-60px-24px)] p
   div.flex.flex-col.w-full.p-4.mt-2(v-if='roleUserId===2' class='rounded-[10px] shadow-[0px_2px_12px_0px_rgba(0,0,0,0.08)] cursor-pointer border border-white' @click='handleChangeManager("/manager/booking-doctor")' :class='[{"!border-[#C52428]" : role==="booking-doctor"}]')
     div.flex.justify-center
       img.w-10.h-10.shrink-0(src='../assets/patient.svg')
-    div.text-center.font-bold(class='text-[18px] ') Quản lí lịch khám bệnh
+    div.text-center.font-bold(class='text-[18px] ') Khám bệnh
+  div.flex.flex-col.w-full.p-4.mt-2(v-if='roleUserId===2' class='rounded-[10px] shadow-[0px_2px_12px_0px_rgba(0,0,0,0.08)] cursor-pointer border border-white' @click='handleChangeManager("/manager/booking-history")' :class='[{"!border-[#C52428]" : role==="booking-history"}]')
+    div.flex.justify-center
+      img.w-10.h-10.shrink-0(src='../assets/patient.svg')
+    div.text-center.font-bold(class='text-[18px] ') Lịch sử khám bệnh
+
 
 </template>
 
