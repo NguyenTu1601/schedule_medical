@@ -9,15 +9,15 @@ div
       td.p-2(class='') Tên chuyên khoa
       td.p-2(class='') Mã
       td.p-2(class='') Trạng thái
-      td.p-2(class='w-[80px]') Actions
+      td.p-2(class='w-[80px]')
     tr(v-for='item in listSpecialty')
       td {{item.name}}
       td {{item.ma}}
       td {{item.trangthai}}
       td
         div.flex.justify-between
-          img.w-6.h-6.shrink-0.cursor-pointer(src='./assets/edit.svg' @click='handleEdit')
-          img.w-6.h-6.shrink-0.cursor-pointer(src='./assets/delete.svg')
+          img.w-6.h-6.shrink-0.cursor-pointer(src='./assets/edit.svg' @click='handleEdit(item)')
+          img.w-6.h-6.shrink-0.cursor-pointer(src='./assets/delete.svg' @click="handleDelete(item)")
   el-dialog(v-model="isShowModalFormSpecialty" title="" width='1200px')
     ModalSpecialtyForm(v-if='isShowModalFormSpecialty' @cancel='handleCancel' v-model:isEdit= 'isEdit' :formSpecialty='formSpecialty')
     div(v-else)
@@ -29,6 +29,7 @@ import ModalSpecialtyForm from './component/ModalSpecialtyForm.vue';
 import { useRoute, useRouter } from 'vue-router';
 import UserApis from '@/apis/user';
 import { onMounted } from 'vue';
+import { ElNotification } from 'element-plus';
 
 const route = useRoute();
 const router = useRouter();
@@ -38,6 +39,7 @@ const isEdit = ref(false);
 const listSpecialty = ref([]);
 
 const formDeFault = {
+  id: '',
   name: '',
   ma: '',
   trangthai: '',
@@ -47,6 +49,7 @@ const formDeFault = {
 }
 
 const formSpecialty = ref({
+  id: '',
   name: '',
   ma: '',
   trangthai: '',
@@ -60,10 +63,13 @@ function reset() {
 }
 
 function handleAdd() {
+  isEdit.value = false
   isShowModalFormSpecialty.value = true;
 }
 
-function handleEdit() {
+function handleEdit(item) {
+  isEdit.value = true
+  formSpecialty.value = item
   isShowModalFormSpecialty.value = true;
 }
 
@@ -72,6 +78,31 @@ function handleCancel(val) {
   isEdit.value = false;
   reset()
   getListSpecialty();
+}
+async function handleDelete(item) {
+  if (confirm("Bạn có muốn xóa chuyên khoa " + item.name) === true) {
+    const form = {
+      id: item.id
+    }
+    await UserApis.deleteSpecialty(form).then((res) => {
+      if (res.result === 1) {
+        ElNotification({
+          title: 'Success',
+          message: res.message,
+          type: 'success',
+        });
+      }
+      if (res.result === 0) {
+        ElNotification({
+          title: 'Error',
+          message: res.message,
+          type: 'error',
+        });
+      }
+      getListSpecialty()
+    });
+  }
+
 }
 async function getListSpecialty() {
   await UserApis.getListSpecialty().then((res) => {

@@ -1,25 +1,32 @@
 <template lang="pug">
 div.overflow-y-auto
-  div.text-base.font-bold Specialty information
+  div.text-base.font-bold Thông tin chuyên khoa
   div.flex.gap-8.mt-4
     div.flex-1
-      div.text-sm Name
+      div.text-sm Tên chuyên khoa
       input(type='text' placeholder='name' v-model="formSpecialty.name" class='outline-none p-2 text-sm border border-[#DEE3ED] rounded-[4px] w-full mt-1')
     div.flex-1
       div.text-sm Mã
       input(type='text' placeholder='mã' v-model="formSpecialty.ma" class='outline-none p-2 text-sm border border-[#DEE3ED] rounded-[4px] w-full mt-1')
-  div.mt-4.font-semibold.text-base  Short description
+  div.mt-4.font-semibold.text-base Mô tả ngắn
   div.flex.gap-8.mt-2
     div.flex-1
-      VueEditor(v-model='formSpecialty.shortDescription' :editorOptions="editorSettings")
+      VueEditor(v-model='formSpecialty.short_description' :editorOptions="editorSettings")
     //- div.flex-1.border.p-4(class='border-[#DEE3ED] rounded-[4px]')
     //-   div(v-html='formSpecialty.shortDescription')
-  div.mt-2.font-semibold.text-base  Description
+  div.mt-2.font-semibold.text-base  Mô tả chi tiết
   div.flex.gap-8.mt-2
     div.flex-1
       VueEditor(v-model='formSpecialty.description' :editorOptions="editorSettings")
     //- div.flex-1.border.p-4(class='border-[#DEE3ED] rounded-[4px]')
     //-   div(v-html='formSpecialty.description')
+  div.mt-2
+    div.font-semibold.text-base Ảnh
+    div.mt-2
+      div.px-2.p-1.flex.justify-center(class='bg-[#DA151A] text-white text-sm w-fit cursor-pointer rounded-[10px] items-center gap-2' @click="selectFile")
+        img.h-6.w-6.shrink-0(src='../assets/upload.svg')
+        div {{formSpecialty.image.length>0?"Sửa ảnh":"Thêm ảnh"}}
+    img.mt-4(v-if='formSpecialty.image.length>0' :src='formSpecialty.image' class='max-w-[800px] max-h-[300px] object-cover')
   div.flex.justify-end.gap-4.items-center.w-full.mt-4
     div.cursor-pointer.px-4.py-2.border(class='font-bold text-sm rounded-[10px]' @click="handleCancel") Cancel
     div.cursor-pointer.px-4.py-2.border(class='font-bold text-sm rounded-[10px] border-[#DA151A] text-[#DA151A] hover:bg-[#DA151A] hover:text-white' @click="handleSave")
@@ -66,22 +73,12 @@ const editorSettings = ref({
 
 const isLoadingCreate = ref(false)
 const img = ref()
-const fileSelect = ref(null)
-
-// const formUser = reactive({
-//   name: '',
-//   username: '',
-//   email: '',
-//   phone: '',
-//   address: '',
-//   role: '',
-//   password: '',
-//   gender: '',
-//   birthday: ''
-// })
 
 const formSpecialty = computed(() => {
   return props.formSpecialty
+})
+const isEdit = computed(() => {
+  return props.isEdit
 })
 
 
@@ -96,7 +93,14 @@ function customQuillClipboardMatcher(node, delta) {
 
 async function handleCreateSpecialty() {
   isLoadingCreate.value = true
-  await UserApis.createSpecialty(formSpecialty.value).then(res => {
+  const form = {
+    name: formSpecialty.value.name,
+    ma: formSpecialty.value.ma,
+    short_description: formSpecialty.value.short_description,
+    description: formSpecialty.value.description,
+    image: formSpecialty.value.image
+  }
+  await UserApis.createSpecialty(form).then(res => {
     if (res.result === 1) {
       ElNotification({
         title: 'Success',
@@ -123,43 +127,72 @@ async function handleCreateSpecialty() {
     isLoadingCreate.value = false
   })
 }
-
-const onSelectFile = async (e: Event) => {
-  let files: File[] = [...(e.target as HTMLInputElement).files]
-
-  // isLoadingImage.value = true
-
-  let avatar = new FormData()
-  avatar.append('data', files[0])
-  // avatar.append('filename', files[0].name)
-
-  let res = await FileApis.upload(avatar).then(res => {
-    console.log(res)
-  }).catch(err => {
-    console.log(err)
-  }).finally(() => {
-    // isLoadingImage.value = false
-  })
-
-  // form.avatar = res
-  // updateProfile(form).then(() => {
-  //   message.success('Avatar changed')
-  //   return getProfile()
-  // })
-}
-const selectFile = () => {
-  // if (isLoadingImage.value) return;
-  const open = () => {
-    fileSelect.value && fileSelect.value.click()
+async function handleUpdateSpecialty() {
+  isLoadingCreate.value = true
+  const form = {
+    id: formSpecialty.value.id,
+    name: formSpecialty.value.name,
+    ma: formSpecialty.value.ma,
+    short_description: formSpecialty.value.short_description,
+    description: formSpecialty.value.description,
+    image: formSpecialty.value.image
   }
-  open()
+  await UserApis.updateSpecialty(form).then(res => {
+    if (res.result === 1) {
+      ElNotification({
+        title: 'Success',
+        message: res.message,
+        type: 'success',
+      });
+      emits('cancel', 'save')
+    }
+    if (res.result === 0) {
+      ElNotification({
+        title: 'Error',
+        message: res.message,
+        type: 'error',
+      });
+    }
+
+  }).catch(err => {
+    ElNotification({
+      title: 'Error',
+      message: err,
+      type: 'error',
+    });
+  }).finally(() => {
+    isLoadingCreate.value = false
+  })
 }
+const cloudName = "dzngdre7f";
+const uploadPreset = "schedule-medical";
+
+const myWidget = window.cloudinary.createUploadWidget(
+  {
+    cloudName: cloudName,
+    uploadPreset: uploadPreset,
+  },
+  (error, result) => {
+    if (!error && result && result.event === "success") {
+      console.log("Done! Here is the image info: ", result.info);
+      formSpecialty.value.image = result.info.secure_url
+    }
+  }
+);
+const selectFile = () => {
+  myWidget.open()
+}
+
 function handleCancel() {
   emits('cancel', 'cancel')
 }
 
 function handleSave() {
-  handleCreateSpecialty()
+  if (isEdit.value === true) {
+    handleUpdateSpecialty()
+  } else {
+    handleCreateSpecialty()
+  }
 }
 onMounted(() => {
 })

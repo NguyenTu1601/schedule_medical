@@ -94,7 +94,13 @@ const apiResources: any = {
       verb: 'POST',
       baseUrl: staticEnv.ACC_NEW_API_URL,
       requiredToken: true,
-    }
+    },
+    updateClinic: {
+      url: '/api/Clinic/updateClinic',
+      verb: 'POST',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
   },
   file: {
     upload: {
@@ -114,6 +120,18 @@ const apiResources: any = {
     createSpecialty: {
       url: '/api/Specialty/createSpecialty',
       verb: 'POST',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
+    updateSpecialty: {
+      url: '/api/Specialty/updateSpecialty',
+      verb: 'POST',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
+    deleteSpecialty: {
+      url: '/api/Specialty/deleteSpecialtyById?id={id}',
+      verb: 'GET',
       baseUrl: staticEnv.ACC_NEW_API_URL,
       requiredToken: true,
     },

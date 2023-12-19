@@ -87,6 +87,18 @@ export function getListMedicine(form): Promise<any> {
       return res.data;
     });
 }
+export function deleteSpecialty(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'specialty.deleteSpecialty',
+      data: {
+        ...form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
 export function createMedicine(form): Promise<any> {
   return http
     .callApi({
@@ -132,6 +144,18 @@ export function createClinic(form): Promise<any> {
       return res.data;
     });
 }
+export function updateClinic(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'clinic.updateClinic',
+      data: {
+        body: form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
 export function getListSpecialty(): Promise<any> {
   return http
     .callApi({
@@ -145,6 +169,18 @@ export function createSpecialty(form): Promise<any> {
   return http
     .callApi({
       resource: 'specialty.createSpecialty',
+      data: {
+        body: form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
+export function updateSpecialty(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'specialty.updateSpecialty',
       data: {
         body: form,
       },
@@ -206,5 +242,8 @@ export default {
   getDetailBooking,
   createHistoryByDoctor,
   editUser,
-  deleteUser
+  deleteUser,
+  updateSpecialty,
+  deleteSpecialty,
+  updateClinic
 };
