@@ -2,6 +2,7 @@ import Cookies from 'js-cookie';
 const ACCOUNT_STORAGE_PREFIX = 'account.';
 const TOKEN = ACCOUNT_STORAGE_PREFIX + 'token';
 const REQUIRES = ACCOUNT_STORAGE_PREFIX + 'requires';
+import { useStorage } from '@vueuse/core'
 
 export function isLoggedIn() {
   let token = getToken();
@@ -23,7 +24,9 @@ export function saveToken(token: string) {
     pathDomain = '.' + splitDomain.join('.');
   }
   console.log(token)
-  Cookies.set(TOKEN, token, { expires: 365 * 10, domain: pathDomain });
+  const state = useStorage('my-token', token)
+  document.cookie = `account.token=${token}; SameSite=None; Secure`;
+  // Cookies.set(TOKEN, token, { expires: 365 * 10, domain: pathDomain });
 }
 
 export function removeToken() {
