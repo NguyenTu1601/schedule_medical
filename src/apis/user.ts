@@ -39,6 +39,15 @@ export function getListDoctor(): Promise<any> {
       return res.data;
     });
 }
+export function listDoctorByToken(): Promise<any> {
+  return http
+    .callApi({
+      resource: 'doctor.listDoctorByToken',
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
 export function createUser(form): Promise<any> {
   return http
     .callApi({
@@ -273,5 +282,6 @@ export default {
   deleteSpecialty,
   updateClinic,
   getListHistoryByDoctor,
-  getDetailHistoryByDoctor
+  getDetailHistoryByDoctor,
+  listDoctorByToken
 };

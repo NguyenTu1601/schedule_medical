@@ -69,6 +69,12 @@ const apiResources: any = {
       baseUrl: staticEnv.ACC_NEW_API_URL,
       requiredToken: true,
     },
+    listDoctorByToken: {
+      url: '/api/Doctor/getListDoctorbyToken',
+      verb: 'GET',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
     createSchedule: {
       url: '/api/Doctor/createSchedule',
       verb: 'POST',

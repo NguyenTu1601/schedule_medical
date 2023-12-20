@@ -21,6 +21,9 @@ export default function useAuthn() {
         if (account.content[0].roleID === 0) {
           router.push('/manager/user')
         }
+        if (account.content[0].roleID === 3) {
+          router.push('/manager/doctor')
+        }
       })
       .then(setAccount);
   };

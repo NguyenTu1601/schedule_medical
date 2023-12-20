@@ -27,8 +27,8 @@ div
         div.flex.justify-center
           span(title="Tạo bệnh án")
             img.w-6.h-6.shrink-0.cursor-pointer(src='./assets/add.svg' @click='handleAddBooking(item.bookingId)')
-  el-dialog(v-model="isShow" title="" width='1000px')
-    ModalBookingDoctor(v-if='isShow' @cancel='handleCancel' :bookingId='bookingId' @save='handleSave')
+  el-dialog(v-model="isShow" title="" width='1000px' @close='handleOnClose')
+    ModalBookingDoctor(v-if='isShow' @cancel='handleCancel' :bookingId='bookingId' @save='handleSave' )
     div(v-else)
 </template>
 <script setup lang="ts">
@@ -39,7 +39,7 @@ import ModalBookingDoctor from './component/ModalBookingDoctor.vue'
 
 const medicine = ref('')
 const donvi = ref()
-const listBooking= ref([])
+const listBooking = ref([])
 const isShow = ref(false)
 const bookingId = ref()
 
@@ -66,10 +66,13 @@ function handleAddBooking(id) {
 }
 
 async function handleCancel(val) {
-  if (val === 'save') {
-    await getListBooking()
-  }
+  await getListBooking()
   isShow.value = false
+}
+
+function handleOnClose() {
+  console.log('aa')
+  getListBooking()
 }
 onMounted(() => {
   getListBooking()
