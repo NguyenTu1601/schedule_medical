@@ -7,8 +7,9 @@ div.overflow-y-auto
         td.p-2(class='') Tên thuốc
         td.p-2(class='') Mã thuốc
         td.p-2(class='') Đơn vị tính
-        td.p-2(class='') Description
-        td.p-2(class='') Hành động
+        td.p-2(class='') Mô tả
+        td.p-2(class='') Giá tiền
+        td.p-2(class='w-[90px]') Hành động
       tr(v-for='(item,idx) in listMedicine')
         td.p-2(class='') 
           input(v-model='item.name' class='border border-[#DEE3ED] px-2 py-1 rounded-[4px]')
@@ -21,6 +22,8 @@ div.overflow-y-auto
             el-option(value='Tuýp' label='Tuýp')
         td.p-2(class='')
           input(v-model='item.description' class='border border-[#DEE3ED] px-2 py-1 rounded-[4px]')
+        td.p-2(class='')
+          input(type='number' v-model='item.price' class='border border-[#DEE3ED] px-2 py-1 rounded-[4px]')
         td
           div.flex.justify-between(v-if='idx===listMedicine.length-1')
             img.w-6.h-6.shrink-0.cursor-pointer(src='../assets/add-black.svg' @click='handleAdd')
@@ -45,7 +48,8 @@ const listMedicine = ref([{
   code: '',
   unit: '',
   description: '',
-  amout: 2.5
+  amout: 2.5,
+  price: ''
 }])
 const isLoading = ref(false)
 
@@ -55,7 +59,8 @@ function handleAdd() {
     code: '',
     unit: '',
     description: '',
-    amout: 2.5
+    amout: 2.5,
+    price: ''
   })
 }
 
