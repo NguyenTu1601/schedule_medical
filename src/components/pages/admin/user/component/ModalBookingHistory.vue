@@ -44,7 +44,7 @@ div.overflow-y-auto
   div.flex.justify-end.gap-4.items-center.w-full.mt-4
     div.cursor-pointer.px-4.py-2.border(class='font-bold text-sm rounded-[10px]' @click="handleCancel('cancel')") Cancel
     div.cursor-pointer.px-4.py-2.border(class='font-bold text-sm rounded-[10px] border-[#DA151A] text-[#DA151A] hover:bg-[#DA151A] hover:text-white' @click="")
-      div() in đơn thuốc
+      div(@click="handleprint(detailBooking)") in đơn thuốc
 </template>
 
 <script setup lang="ts">
@@ -77,7 +77,148 @@ async function getDetailBooking() {
 function handleCancel(type) {
   emits('cancel', type)
 }
+function handleprint(detail) {
+  const htmlContent = `
+  <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 20px;
+        }
 
+        .prescription-form {
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 20px;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+          background-color: #f9f9f9;
+        }
+
+        h2 {
+          text-align: center;
+        }
+
+        table {
+          width: 100%;
+          margin-bottom: 10px;
+          border-collapse: collapse;
+        }
+
+        th, td {
+          border: 1px solid #ddd;
+          padding: 10px;
+          text-align: left;
+        }
+
+        th {
+          background-color: #4caf50;
+          color: white;
+        }
+
+        .text-label {
+          display: flex;
+          align-items: center;
+        }
+
+        label {
+          width: 120px;
+          margin-right: 10px;
+          font-weight: bold;
+        }
+
+        button {
+          padding: 10px;
+          background-color: #4caf50;
+          color: #fff;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          display: block;
+          margin: 0 auto;
+        }
+
+        button:hover {
+          background-color: #45a049;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="prescription-form">
+        <h2>Đơn thuốc</h2>
+
+        <div class="text-label">
+          <label>Phòng khám:</label>
+          <p>${detail?.clinicName}</p>
+          <label style="margin-left:60px">Mã bệnh án:</label>
+          <p>${detail?.historyCode}</p>
+        </div>
+
+        <div class="text-label">
+          <label>Bệnh nhân:</label>
+          <p>${detail?.patientName}</p>
+        </div>
+
+        <div class="text-label">
+          <label>Bác sĩ:</label>
+          <p>${detail?.doctorName}</p>
+        </div>
+
+        <div class="text-label">
+            <label>Chẩn đoán:</label>
+            <p>${detail?.diagnostic}</p>
+          </div>
+        <div class="text-label">
+            <label>Lời dặn:</label>
+            <p>${detail?.advice}</p>
+        </div>
+        <div class="text-label">
+            <label>Ngày tái khám:</label>
+            <p>${detail?.re_examinationDate}</p>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Tên thuốc</th>
+              <th>Đơn vị tính</th>
+              <th>Số lượng</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${detail.medicines
+      .map(
+        (item, index) => `
+                                <tr key="${index}">
+                                  <td>${item.mathuoc} - ${item.name}</td>
+                                  <td>${item.unit}</td>
+                                  <td>${item.soluong}</td>
+                                </tr>
+                              `
+      )
+      .join('')}
+            <!-- Add more rows for additional medicines -->
+          </tbody>
+        </table>
+
+      </div>
+    </body>
+    </html>
+
+      `;
+
+  const printWindow = window.open('', '_blank');
+  if (printWindow) {
+    printWindow.document.write(htmlContent);
+    printWindow.document.close();
+    printWindow.print();
+  } else {
+    console.error('Unable to open print window');
+  }
+}
 onMounted(() => {
   getDetailBooking()
 })
