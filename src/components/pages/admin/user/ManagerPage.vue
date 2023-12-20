@@ -12,6 +12,7 @@ div
   ManagerBookingHistory(v-else-if='role==="booking-history"')
   ManagerBookingDoctorClinic(v-else-if='role==="plan-clinic"')
   ManagerBookingHistoryClinic(v-else-if='role==="booking-history-clinic"')
+  ManagerBookingClinic(v-else-if='role==="booking-clinic"')
 </template>
 
 <script setup lang="ts">
@@ -30,6 +31,7 @@ import ManagerBookingDoctor from './ManagerBookingDoctor.vue';
 import ManagerBookingHistory from './ManagerBookingHistory.vue';
 import ManagerBookingDoctorClinic from './ManagerBookingDoctorClinic.vue';
 import ManagerBookingHistoryClinic from './ManagerBookingHistoryClinic.vue';
+import ManagerBookingClinic from './ManagerBookingClinic.vue';
 
 const { account, getAccount } = useAccount()
 

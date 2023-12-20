@@ -6,26 +6,28 @@ div.overflow-y-auto
       div.text-sm Tên Bác sĩ
       input(type='text' v-model="formDoctor.doctorname" placeholder='name' class='outline-none p-2 text-sm border border-[#DEE3ED] rounded-[4px] w-full mt-1')
     div.flex-1
-      div.text-sm Birthday
-      el-date-picker.w-full.mt-1(v-model="formDoctor.ngaysinh"
-        type="date"
-        placeholder="Pick a day"
-        size="large"
-        )
+      div.text-sm Giá khám
+      el-select.mt-1.w-full(v-model="formDoctor.price" placeholder="chuyên khoa" size="large")
+        el-option(value='200000' label='200000')
+        el-option(value='250000' label='250000')
+        el-option(value='300000' label='300000')
+        el-option(value='350000' label='350000')
+        el-option(value='400000' label='400000')
+        el-option(value='500000' label='500000')
       //- input(type='text' v-model="formUser.last_name" placeholder='last name' class='outline-none p-2 text-sm border border-[#DEE3ED] rounded-[4px] w-full mt-1')
   div.flex.gap-8.mt-4
     div.flex-1
-      div.text-sm Email
-      input(type='text' placeholder='email' v-model="formDoctor.email" class='outline-none p-2 text-sm border border-[#DEE3ED] rounded-[4px] w-full mt-1')
+      div.text-sm Chuyên khoa
+      el-select.mt-1.w-full(v-model="selectSpecialty" placeholder="chuyên khoa" size="large")
+        el-option(v-for='item in listSpecialty' :value='item.id' :label='item.name')
     div.flex-1
       div.text-sm Số điện thoại
       input(type='text' placeholder='phone number' v-model="formDoctor.phonenumber" class='outline-none p-2 text-sm border border-[#DEE3ED] rounded-[4px] w-full mt-1')
 
-    
   div.text-sm.mt-2 Short description
   div.flex.gap-8.mt-2
     div.flex-1
-      VueEditor(v-model='formDoctor.shortDescription' :editorOptions="editorSettings")
+      VueEditor(v-model='formDoctor.short_description' :editorOptions="editorSettings")
     //- div.flex-1.border.p-4(class='border-[#DEE3ED] rounded-[4px]')
     //-   div(v-html='formUser.shortDescription')
   div.text-sm.mt-2 Description
@@ -39,8 +41,8 @@ div.overflow-y-auto
     div.mt-2
       div.px-2.p-1.flex.justify-center(class='bg-[#DA151A] text-white text-sm w-fit cursor-pointer rounded-[10px] items-center gap-2' @click="selectFile")
         img.h-6.w-6.shrink-0(src='../assets/upload.svg')
-        div {{formDoctor.avtimage.length>0?"Edit":"Upload"}}
-      img.mt-4(v-if='formDoctor.avtimage.length>0' :src='formDoctor.avtimage' class='w-[100px] h-[100px] object-cover')
+        div {{formDoctor.avtimage?.length>0?"Edit":"Upload"}}
+      img.mt-4(v-if='formDoctor.avtimage?.length>0' :src='formDoctor.avtimage' class='w-[100px] h-[100px] object-cover')
   div.flex.justify-end.gap-4.items-center.w-full.mt-4
     div.cursor-pointer.px-4.py-2.border(class='font-bold text-sm rounded-[10px]' @click="handleCancel") Cancel
     div.cursor-pointer.px-4.py-2.border(class='font-bold text-sm rounded-[10px] border-[#DA151A] text-[#DA151A] hover:bg-[#DA151A] hover:text-white' @click="handleSave")
@@ -56,16 +58,13 @@ import UserApis from '@/apis/user'
 import dayjs from 'dayjs'
 import { VueEditor } from "vue3-editor";
 import { computed } from "vue";
+import { ElNotification } from "element-plus";
 
 const emits = defineEmits(['cancel'])
 const props = defineProps({
   isEdit: {
     type: Boolean,
     default: null,
-  },
-  typeEdit: {
-    type: String,
-    default: 'user',
   },
   formDoctor: {
     type: Object,
@@ -88,6 +87,9 @@ const editorSettings = ref({
 const listRole = ref([])
 const listHocVi = ref([])
 const isLoadingCreate = ref(false)
+const listSpecialty = ref([])
+const selectSpecialty = ref([])
+
 
 
 function customQuillClipboardMatcher(node, delta) {
@@ -116,60 +118,60 @@ const myWidget = window.cloudinary.createUploadWidget(
 const selectFile = () => {
   myWidget.open()
 }
-async function getListRole() {
-  await UserApis.getListRole().then(res => {
-    listRole.value = res.content
-  })
-}
+
 async function getListHocvi() {
   await UserApis.getListHocvi().then(res => {
     listHocVi.value = res.content
   })
 }
 
-async function createUser() {
+async function editDoctor() {
   isLoadingCreate.value = true
+  const specialty = []
+  specialty.push(selectSpecialty.value.toString())
   const form = {
-    name: formDoctor.value.name,
-    ngaysinh: formatDate(formDoctor.value.birthday),
-    email: formDoctor.value.email,
-    password: formDoctor.value.password,
-    gender: formDoctor.value.gender,
-    phonenumber: formDoctor.value.phone,
-    username: formDoctor.value.username,
-    roleid: formDoctor.value.role
+    doctorId: formDoctor.value.Id,
+    name: formDoctor.value.doctorname,
+    description: formDoctor.value.description,
+    short_description: formDoctor.value.short_description,
+    image: formDoctor.value.avtimage,
+    phone: formDoctor.value.phonenumber,
+    price: formDoctor.value.price,
+    specialtyId: specialty
   }
-  await UserApis.createUser(form).then(res => {
-    emits('cancel', 'save')
+  await UserApis.createDoctor(form).then(res => {
+    if (res.result === 1) {
+      ElNotification({
+        title: 'Success',
+        message: res.message,
+        type: 'success',
+      });
+      emits('cancel', 'save')
+    }
+    if (res.result === 0) {
+      ElNotification({
+        title: 'Error',
+        message: res.message,
+        type: 'error',
+      });
+    }
   }).finally(() => {
     isLoadingCreate.value = false
   })
 }
-async function editDoctor() {
-  isLoadingCreate.value = true
-  const form = {
-    Id: formDoctor.value.Id,
-    doctorname: formDoctor.value.doctorname,
-    description: formDoctor.value.description,
-    short_description: formDoctor.value.short_description,
-    avtimage: formDoctor.value.Id,
-    ngaysinh: formDoctor.value.Id,
-    email: formDoctor.value.Id,
-    phonenumber: formDoctor.value.Id
-  }
-  await UserApis.editUser(form).then(res => {
-    emits('cancel', 'save')
-  }).finally(() => {
-    isLoadingCreate.value = false
+
+async function getListSpecialty() {
+  await UserApis.getListSpecialty().then(res => {
+    listSpecialty.value = res.content
   })
 }
 
 function handleCancel() {
   emits('cancel', 'cancel')
 }
+
 onMounted(() => {
-  console.log('aa')
-  getListRole()
+  getListSpecialty()
 })
 
 function handleSave() {

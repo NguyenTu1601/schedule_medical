@@ -92,6 +92,18 @@ const apiResources: any = {
       verb: 'GET',
       baseUrl: staticEnv.ACC_NEW_API_URL,
       requiredToken: true,
+    },
+    getListScheduleByDate: {
+      url: 'api/Doctor/getListSchedulebyDate?doctorId={doctorId}&date={date}',
+      verb: 'GET',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
+    createDoctor: {
+      url: '/api/Doctor/createDoctor',
+      verb: 'POST',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
     }
   },
   clinic: {
@@ -166,6 +178,18 @@ const apiResources: any = {
       verb: 'POST',
       baseUrl: staticEnv.ACC_NEW_API_URL,
       requiredToken: true,
+    },
+    deleteMedicine: {
+      url: '/api/Medicine/deleteMedicine',
+      verb: 'POST',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
+    updateMedicine: {
+      url: '/api/Medicine/editMedicine',
+      verb: 'POST',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
     }
   },
   booking: {
@@ -178,6 +202,24 @@ const apiResources: any = {
     detailBooking: {
       url: '/api/Booking/getDetailBooking?bookingId={bookingId}',
       verb: 'GET',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
+    listBookingNeedToPay: {
+      url: 'api/Booking/getListBookingNeedToPay?keyword={keyword}',
+      verb: 'GET',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
+    bookingAccessToPay: {
+      url: 'api/Booking/accessToPay?bookingId={bookingId}',
+      verb: 'GET',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
+    createBookingByAdmin: {
+      url: 'api/Booking/createBookingByAdmin',
+      verb: 'POST',
       baseUrl: staticEnv.ACC_NEW_API_URL,
       requiredToken: true,
     }

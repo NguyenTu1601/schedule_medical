@@ -53,6 +53,10 @@ div.h-full(class='w-[250px] pt-6 px-4 overflow-auto !h-[calc(100vh-60px-24px)] p
     div.flex.justify-center
       img.w-10.h-10.shrink-0(src='../assets/patient.svg')
     div.text-center.font-bold(class='text-[18px] ') Quản lý bệnh án
+  div.flex.flex-col.w-full.p-4.mt-2(v-if='roleUserId===3' class='rounded-[10px] shadow-[0px_2px_12px_0px_rgba(0,0,0,0.08)] cursor-pointer border border-white' @click='handleChangeManager("/manager/booking-clinic")' :class='[{"!border-[#C52428]" : role==="booking-clinic"}]')
+    div.flex.justify-center
+      img.w-10.h-10.shrink-0(src='../assets/schedule.svg')
+    div.text-center.font-bold(class='text-[18px] ') Quản lý lịch hẹn
 
 
 </template>

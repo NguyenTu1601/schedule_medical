@@ -2,10 +2,11 @@
 div
   div.flex.gap-2
     div(class='flex-[6]')
-      div.flex
+      div.flex.gap-4
         div.flex-1
           div.font-semibold.text-base Tên bác sĩ
-          div.mt-1.font-medium.text-base {{account?.name}}
+          el-select.mt-1.w-full(v-model="doctorSelect" placeholder="chuyên khoa" size="large")
+            el-option(v-for='item in listDoctor' :value='item.Id' :label='item.doctorname')
         div.flex-1.pr-4
           div.font-semibold.text-base Chọn ngày
           el-date-picker.w-full.mt-1(v-model="day"
@@ -79,12 +80,16 @@ import { computed, ref, watch } from 'vue';
 import dayjs from 'dayjs'
 import UserApis from '@/apis/user'
 import useAccount from "@/compositions/useAccount";
+import { onMounted } from 'vue';
+import { ElNotification } from 'element-plus';
 
 const { account, getAccount } = useAccount()
 
 const day = ref()
 const listTime = ref([])
 const isLoading = ref(false)
+const listDoctor = ref([])
+const doctorSelect = ref('')
 
 const nextMonday = computed(() => {
   var today = new Date();
@@ -135,16 +140,41 @@ function prev() {
 async function handleSave() {
   isLoading.value = true
   const form = {
-    doctorId: account.value.id,
+    doctorId: doctorSelect.value,
     date: dayjs(day.value).format('YYYY-MM-DD'),
     time: listTime.value
   }
+  console.log(form)
   await UserApis.createScheduleDoctor(form).then((res) => {
+    if (res.result === 1) {
+      ElNotification({
+        title: 'Success',
+        message: res.message,
+        type: 'success',
+      });
+    }
+    if (res.result === 0) {
+      ElNotification({
+        title: 'Error',
+        message: res.message,
+        type: 'error',
+      });
+    }
     isLoading.value = false
   }).catch(err => {
     isLoading.value = false
   })
 }
+
+async function getListDoctor() {
+  UserApis.listDoctorByToken().then(res => {
+    listDoctor.value = res.content
+  })
+}
+
+onMounted(() => {
+  getListDoctor()
+})
 </script>
 
 <style scoped>

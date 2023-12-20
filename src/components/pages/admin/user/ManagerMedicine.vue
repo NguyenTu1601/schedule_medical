@@ -25,10 +25,10 @@ div
       td.p-2(class='') {{ item.clinicName }}
       td
         div.flex.justify-between
-          img.w-6.h-6.shrink-0.cursor-pointer(src='./assets/edit.svg' @click='handleEdit')
-          img.w-6.h-6.shrink-0.cursor-pointer(src='./assets/delete.svg')
+          img.w-6.h-6.shrink-0.cursor-pointer(src='./assets/edit.svg' @click='handleEdit(item)')
+          img.w-6.h-6.shrink-0.cursor-pointer(src='./assets/delete.svg' @click="handleDelete(item)")
   el-dialog(v-model="isShow" title="" width='1000px')
-    ModalMedicine(v-if='isShow' @cancel='handleCancel' @save='handleSave')
+    ModalMedicine(v-if='isShow' :isEdit='isEdit' :medicineEdit='medicineEdit' @cancel='handleCancel' @save='handleSave')
     div(v-else)
 </template>
 <script setup lang="ts">
@@ -36,17 +36,32 @@ import { ref } from 'vue';
 import MedicineApis from '@/apis/user'
 import { onMounted } from 'vue';
 import ModalMedicine from './component/ModalMedicine.vue'
+import { refDebounced, useFocus } from '@vueuse/core'
+import { watch } from 'vue';
+import { ElNotification } from 'element-plus';
 
 const medicine = ref('')
-const donvi = ref()
 const listMedicine = ref([])
 const isShow = ref(false)
+const debounced = refDebounced(medicine, 300)
+const isEdit = ref(false)
+const medicineEdit = ref()
+
+watch(debounced, async () => {
+  const form = {
+    keyword: debounced.value.length > 0 ? debounced.value : '0'
+  }
+  await MedicineApis.getListMedicine(form).then(res => {
+    listMedicine.value = res.content
+  })
+})
 
 async function getListMedicine() {
   const form = {
     keyword: '0'
   }
   await MedicineApis.getListMedicine(form).then(res => {
+    // getListMedicine()
     listMedicine.value = res.content
   })
 }
@@ -54,8 +69,40 @@ async function getListMedicine() {
 function handleSave() {
 
 }
+async function handleDelete(item) {
+  const form = {
+    medicineId: item.id,
+    code: item.code
+  }
+
+  await MedicineApis.deleteMedicine(form).then(res => {
+    getListMedicine()
+    if (res.result === 1) {
+      ElNotification({
+        title: 'Success',
+        message: res.message,
+        type: 'success',
+      });
+    }
+    if (res.result === 0) {
+      ElNotification({
+        title: 'Error',
+        message: res.message,
+        type: 'error',
+      });
+    }
+  })
+
+}
+
+function handleEdit(item) {
+  isShow.value = true
+  isEdit.value = true
+  medicineEdit.value = item
+}
 
 function handleAdd() {
+  isEdit.value = false
   isShow.value = true
 }
 

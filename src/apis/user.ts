@@ -4,7 +4,7 @@ export function getListUser(form): Promise<any> {
   return http
     .callApi({
       resource: 'user.listUser',
-      data: {      
+      data: {
         ...form,
       },
     })
@@ -96,6 +96,18 @@ export function getListMedicine(form): Promise<any> {
       return res.data;
     });
 }
+export function getListScheduleByDate(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'doctor.getListScheduleByDate',
+      data: {
+        ...form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
 export function deleteSpecialty(form): Promise<any> {
   return http
     .callApi({
@@ -112,6 +124,30 @@ export function createMedicine(form): Promise<any> {
   return http
     .callApi({
       resource: 'medicine.createMedicine',
+      data: {
+        body: form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
+export function deleteMedicine(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'medicine.deleteMedicine',
+      data: {
+        body: form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
+export function updateMedicine(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'medicine.updateMedicine',
       data: {
         body: form,
       },
@@ -222,6 +258,30 @@ export function getDetailBooking(form): Promise<any> {
       return res.data;
     });
 }
+export function getListBookingNeedToPay(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'booking.listBookingNeedToPay',
+      data: {
+        ...form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
+export function getBookingAccessToPay(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'booking.bookingAccessToPay',
+      data: {
+        ...form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
 
 export function getListHistoryByDoctor(form): Promise<any> {
   return http
@@ -260,6 +320,30 @@ export function createHistoryByDoctor(form): Promise<any> {
       return res.data;
     });
 }
+export function createBookingByAdmin(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'booking.createBookingByAdmin',
+      data: {
+        body: form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
+export function createDoctor(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'doctor.createDoctor',
+      data: {
+        body: form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
 export default {
   getListUser,
   getListRole,
@@ -283,5 +367,12 @@ export default {
   updateClinic,
   getListHistoryByDoctor,
   getDetailHistoryByDoctor,
-  listDoctorByToken
+  listDoctorByToken,
+  deleteMedicine,
+  updateMedicine,
+  getListBookingNeedToPay,
+  getBookingAccessToPay,
+  getListScheduleByDate,
+  createBookingByAdmin,
+  createDoctor
 };
