@@ -57,7 +57,7 @@ div.overflow-y-auto
     img.mt-4(v-if='formUser.avtimage.length>0' :src='formUser.avtimage' class='w-[100px] h-[100px] object-cover')
   div.flex.justify-end.gap-4.items-center.w-full.mt-4
     div.cursor-pointer.px-4.py-2.border(class='font-bold text-sm rounded-[10px]' @click="handleCancel") Cancel
-    div.cursor-pointer.px-4.py-2.border(v-if='formUser.trangthaiId===1' class='font-bold text-sm rounded-[10px] border-[#DA151A] text-[#DA151A] hover:bg-[#DA151A] hover:text-white' @click="handleSave")
+    div.cursor-pointer.px-4.py-2.border(v-if='formUser.trangthaiId === 1 || !formUser.trangthaiId' class='font-bold text-sm rounded-[10px] border-[#DA151A] text-[#DA151A] hover:bg-[#DA151A] hover:text-white' @click="handleSave")
       div(v-if='!isLoadingCreate') Save
       img.w-6.h-6.shrink-0(v-else src='../assets/loading.svg')
 
