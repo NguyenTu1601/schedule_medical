@@ -3,7 +3,7 @@
   .flex.w-full.h-full.w-full.px-6.justify-between.items-center
     //- img(src='../assets/booking.svg')
     div.items-center.flex.gap-2
-      div.uppercase(class='text-[20px] font-bold whitespace-nowrap') schedule medical
+      router-link.uppercase(class='text-[20px] font-bold whitespace-nowrap cursor-pointer' to='/') schedule medical
       div(class='sm:block hidden w-[350px] ml-6 shrink-0')
         el-popover(class="sm:block hidden" trigger="click" placement='bottom-start' :show-arrow='false' popper-class='!w-[500px] !rounded-[24px] !px-0' v-model:visible='isShowSearchList')
           template(#reference)
@@ -32,12 +32,11 @@ const { focused } = useFocus(inputSearchRef)
 
 const debounced = refDebounced(inputSearch, 1000)
 
-watch(focused, () => {inputSearch
+watch(focused, () => {
+  inputSearch
   console.log(focused.value)
 })
 
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

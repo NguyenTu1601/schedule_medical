@@ -96,6 +96,18 @@ export function getListMedicine(form): Promise<any> {
       return res.data;
     });
 }
+export function getDoctorById(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'doctor.doctorById',
+      data: {
+        ...form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
 export function getListScheduleByDate(form): Promise<any> {
   return http
     .callApi({
@@ -374,5 +386,6 @@ export default {
   getBookingAccessToPay,
   getListScheduleByDate,
   createBookingByAdmin,
-  createDoctor
+  createDoctor,
+  getDoctorById
 };

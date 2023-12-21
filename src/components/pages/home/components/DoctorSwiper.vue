@@ -3,7 +3,7 @@ div
   swiper(class="mySwiper w-full " :slidesPerView="4" :spaceBetween="30"
     :freeMode="true" :pagination="{clickable: true}" :modules="modules" :allowSlideNext="true" :allowSlidePrev="true")
     swiper-slide(v-for='doctor in listDoctor' class='')
-      div.group(class='border border-[#DEE3ED] rounded-[16px] p-5 h-[270px] select-none cursor-pointer hover:border-[#C80815]')
+      div.group(class='border border-[#DEE3ED] rounded-[16px] p-5 h-[270px] select-none cursor-pointer hover:border-[#C80815]' @click='handleSelectDoctor(doctor)')
         img(:src="doctor.avtimage" @click="handleClick" class='w-[380px] h-[180px] object-cover')
         div.text-center.mt-4(class='text-[18px] font-bold group-hover:text-[#C80815]') {{ doctor.doctorname }}
 </template>
@@ -16,6 +16,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import UserApis from '@/apis/user';
+import { useRoute, useRouter } from 'vue-router';
 
 const modules = ref([Navigation, Autoplay])
 
@@ -29,6 +30,19 @@ async function getListDoctor() {
   await UserApis.getListDoctor().then((res) => {
     listDoctor.value = res.content;
   });
+}
+
+const route = useRoute()
+const router = useRouter()
+
+function handleSelectDoctor(doctor) {
+  console.log('aaa')
+  console.log(doctor)
+  router.push({
+    name: 'doctor_detail', params: {
+      id: doctor.Id
+    }
+  })
 }
 
 onMounted(() => {

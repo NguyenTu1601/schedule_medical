@@ -104,6 +104,12 @@ const apiResources: any = {
       verb: 'POST',
       baseUrl: staticEnv.ACC_NEW_API_URL,
       requiredToken: true,
+    },
+    doctorById: {
+      url: '/api/Doctor/getDoctorById?doctorId={doctorId}',
+      verb: 'GET',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
     }
   },
   clinic: {

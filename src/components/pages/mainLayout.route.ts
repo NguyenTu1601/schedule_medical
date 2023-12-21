@@ -9,9 +9,14 @@ export default function init(routes: any[]) {
         component: () => import('@/components/pages/home/HomePage.vue'),
       },
       {
-        path: '/specialty',
-        name: 'home',
+        path: '/detail/specialty/:id',
+        name: 'specialty',
         component: () => import('@/components/pages/home/HomePage.vue'),
+      },
+      {
+        path: '/detail/doctor/:id',
+        name: 'doctor_detail',
+        component: () => import('@/components/pages/doctor/DoctorDetailPage.vue'),
       }
     ],
   };
