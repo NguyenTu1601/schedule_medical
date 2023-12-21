@@ -258,6 +258,18 @@ export function getListAccessBooking(form): Promise<any> {
       return res.data;
     });
 }
+export function getDetailSpecialty(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'specialty.getDetailSpecialty',
+      data: {
+        ...form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
 export function getDetailBooking(form): Promise<any> {
   return http
     .callApi({
@@ -320,6 +332,42 @@ export function getDetailHistoryByDoctor(form): Promise<any> {
       return res.data;
     });
 }
+export function getClinicById(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'clinic.getClinicById',
+      data: {
+        ...form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
+export function listDoctorByClinic(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'doctor.listDoctorByClinic',
+      data: {
+        ...form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
+export function listDoctorBySpecialty(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'doctor.listDoctorBySpecialty',
+      data: {
+        ...form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
 export function createHistoryByDoctor(form): Promise<any> {
   return http
     .callApi({
@@ -336,6 +384,18 @@ export function createBookingByAdmin(form): Promise<any> {
   return http
     .callApi({
       resource: 'booking.createBookingByAdmin',
+      data: {
+        body: form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
+export function createBookingByPatient(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'booking.createBookingByPatient',
       data: {
         body: form,
       },
@@ -387,5 +447,10 @@ export default {
   getListScheduleByDate,
   createBookingByAdmin,
   createDoctor,
-  getDoctorById
+  getDoctorById,
+  createBookingByPatient,
+  getClinicById,
+  listDoctorByClinic,
+  getDetailSpecialty,
+  listDoctorBySpecialty
 };

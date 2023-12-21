@@ -1,8 +1,8 @@
 <template lang="pug">
 div.w-screen.py-6.min-h-screen(class='bg-[#EEEEEE]')
-  div(v-if='specialtyDetail' class='max-w-[1200px] m-auto')
-    div(class='text-[22px] font-bold') {{ specialtyDetail.name }}
-    div(class='text-[18px] mt-2' v-html='specialtyDetail?.description')
+  div(v-if='clinicDetail' class='max-w-[1200px] m-auto')
+    div(class='text-[22px] font-bold') {{ clinicDetail.name }}
+    div(class='text-[18px] mt-2' v-html='clinicDetail?.description')
     div(class='text-[18px] font-bold') Danh sách bác sĩ
     div
       DoctorSchedule(v-if='listDoctor' v-for='item in listDoctor' :doctor='item')
@@ -14,9 +14,9 @@ import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router';
 import UserApis from '@/apis/user'
 import dayjs from 'dayjs'
-import DoctorSchedule from '../clinic/component/DoctorSchedule.vue';
+import DoctorSchedule from './component/DoctorSchedule.vue'
 
-const specialtyDetail = ref()
+const clinicDetail = ref()
 const route = useRoute()
 const listDoctor = ref([])
 const now = ref(+new Date())
@@ -26,18 +26,29 @@ async function getDetailClinic() {
   const form = {
     id: route.params.id
   }
-  await UserApis.getDetailSpecialty(form).then(res => {
-    specialtyDetail.value = res.content[0]
+  await UserApis.getClinicById(form).then(res => {
+    clinicDetail.value = res.content[0]
   })
 }
 
-
-
-async function listDoctorBySpecialty() {
-  const form = {
-    specialtyId: route.params.id
+watch(dateSchedule, async () => {
+  if (dateSchedule.value) {
+    const form = {
+      doctorId: route.params.id,
+      date: formatDate(now.value + 86400000 * (dateSchedule.value - 1))
+    }
+    await UserApis.getListScheduleByDate(form).then((res) => {
+      listSchedule.value = res.content
+    })
   }
-  await UserApis.listDoctorBySpecialty(form).then(res => {
+
+})
+
+async function listDoctorByClinic() {
+    const form = {
+    clinicId: route.params.id
+  }
+  await UserApis.listDoctorByClinic(form).then(res => {
     console.log(res)
     listDoctor.value = res.content
   })
@@ -49,7 +60,7 @@ function formatDate(date) {
 
 onMounted(() => {
   getDetailClinic()
-  listDoctorBySpecialty()
+  listDoctorByClinic()
 })
 </script>
 

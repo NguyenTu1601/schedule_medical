@@ -110,6 +110,18 @@ const apiResources: any = {
       verb: 'GET',
       baseUrl: staticEnv.ACC_NEW_API_URL,
       requiredToken: true,
+    },
+    listDoctorByClinic: {
+      url: '/api/Doctor/getListDoctorByClinic?clinicId={clinicId}',
+      verb: 'GET',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
+    listDoctorBySpecialty: {
+      url: '/api/Doctor/getListDoctorBySpecialty?specialtyId={specialtyId}',
+      verb: 'GET',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
     }
   },
   clinic: {
@@ -128,6 +140,12 @@ const apiResources: any = {
     updateClinic: {
       url: '/api/Clinic/updateClinic',
       verb: 'POST',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
+    getClinicById: {
+      url: '/api/Clinic/getDetailClinicById?id={id}',
+      verb: 'GET',
       baseUrl: staticEnv.ACC_NEW_API_URL,
       requiredToken: true,
     },
@@ -161,6 +179,12 @@ const apiResources: any = {
     },
     deleteSpecialty: {
       url: '/api/Specialty/deleteSpecialtyById?id={id}',
+      verb: 'GET',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
+    getDetailSpecialty: {
+      url: '/api/Specialty/getDetailSpecialtyById?id={id}',
       verb: 'GET',
       baseUrl: staticEnv.ACC_NEW_API_URL,
       requiredToken: true,
@@ -225,6 +249,12 @@ const apiResources: any = {
     },
     createBookingByAdmin: {
       url: 'api/Booking/createBookingByAdmin',
+      verb: 'POST',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
+    createBookingByPatient: {
+      url: 'api/Booking/createBookingByPatient',
       verb: 'POST',
       baseUrl: staticEnv.ACC_NEW_API_URL,
       requiredToken: true,

@@ -10,13 +10,18 @@ export default function init(routes: any[]) {
       },
       {
         path: '/detail/specialty/:id',
-        name: 'specialty',
-        component: () => import('@/components/pages/home/HomePage.vue'),
+        name: 'specialty_detail',
+        component: () => import('@/components/pages/specialty/SpecialtyDetailPage.vue'),
       },
       {
         path: '/detail/doctor/:id',
         name: 'doctor_detail',
         component: () => import('@/components/pages/doctor/DoctorDetailPage.vue'),
+      },
+      {
+        path: '/detail/clinic/:id',
+        name: 'clinic_detail',
+        component: () => import('@/components/pages/clinic/ClinicDetailPage.vue'),
       }
     ],
   };

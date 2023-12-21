@@ -3,7 +3,7 @@ div
   swiper(class="mySwiper w-full " :slidesPerView="4" :spaceBetween="30"
     :freeMode="true" :pagination="{clickable: true}" :modules="modules" :allowSlideNext="true" :allowSlidePrev="true")
     swiper-slide(v-for='specialty in listSpecialty' class='')
-      div.group(class='border border-[#DEE3ED] rounded-[16px] p-5 h-[270px] select-none cursor-pointer hover:border-[#C80815]' @click='handleSelect')
+      div.group(class='border border-[#DEE3ED] rounded-[16px] p-5 h-[270px] select-none cursor-pointer hover:border-[#C80815]' @click='handleSelect(specialty)')
         img(:src="specialty.image" @click="handleClick" class='w-[380px] h-[180px] object-cover')
         div.text-center.mt-4(class='text-[18px] font-bold group-hover:text-[#C80815]') {{ specialty.name }}
 </template>
@@ -34,8 +34,12 @@ async function getListSpecialty() {
 
 const router = useRouter()
 
-function handleSelect() {
-  
+function handleSelect(specialty) {
+  router.push({
+    name: 'specialty_detail', params: {
+      id: specialty.id
+    }
+  })
 }
 
 onMounted(() => {
