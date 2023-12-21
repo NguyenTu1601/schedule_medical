@@ -19,7 +19,7 @@ const apiResources: any = {
       baseUrl: staticEnv.ACC_NEW_API_URL,
     },
     signUp: {
-      url: '/api/v1/user/signup',
+      url: '/api/User/Register',
       verb: 'POST',
       baseUrl: staticEnv.ACC_NEW_API_URL,
     },
@@ -28,6 +28,11 @@ const apiResources: any = {
       verb: 'GET',
       baseUrl: staticEnv.ACC_NEW_API_URL,
       requiredToken: true,
+    },
+    verifyUser: {
+      url: '/api/User/VerifyRegister',
+      verb: 'POST',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
     },
   },
   user: {

@@ -31,18 +31,6 @@ async function getDetailClinic() {
   })
 }
 
-watch(dateSchedule, async () => {
-  if (dateSchedule.value) {
-    const form = {
-      doctorId: route.params.id,
-      date: formatDate(now.value + 86400000 * (dateSchedule.value - 1))
-    }
-    await UserApis.getListScheduleByDate(form).then((res) => {
-      listSchedule.value = res.content
-    })
-  }
-
-})
 
 async function listDoctorByClinic() {
     const form = {

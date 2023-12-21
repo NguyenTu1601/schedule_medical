@@ -8,7 +8,7 @@ div.h-full(class='bg-[#F2F2F2]')
       div.text-center.w-full
         div(class='text-[20px] font-bold') Verify account
         div(class='text-[#616161] text-sm mt-2') We have sent a verify code to 
-        div(class='text-sm font-bold') nguyenvantu.qng1234@gmail.com
+        div(class='text-sm font-bold') {{ route.query.email }}
         div.flex.justify-center
           v-otp-input.mt-8(
             class='gap-x-2'
@@ -27,7 +27,7 @@ div.h-full(class='bg-[#F2F2F2]')
           span.font-semibold.text-spanish-gray.pointer-events-none(v-if="duration !== 30")
             | Resend  ({{ durationDown }})
           span.font-bold.text-cardinal.cursor-pointer(v-else="" @click="resend") Resend
-        div.flex.justify-center
+        div.flex.justify-center.cursor-pointer(@click='verifyAccount')
           div.mt-8(class='max-w-[328px] py-[10px] bg-[linear-gradient(90deg,#DA151A_0%,#BB070D_100%)] w-full text-white font-semibold text-sm rounded-[10px]') Verify
 </template>
 
@@ -39,6 +39,8 @@ import { computed } from 'vue';
 import { onMounted } from 'vue';
 import { watch } from 'vue';
 import { onUnmounted } from 'vue';
+import UserApis from '@/apis/user'
+import { ElNotification } from 'element-plus';
 
 const otpInput = ref(null)
 const code = ref('')
@@ -73,6 +75,31 @@ function handleBack() {
 
 function resend() {
 
+}
+async function verifyAccount() {
+  const form = {
+    email: route.query.email,
+    maxacnhan: code.value,
+    username: route.query.username
+  }
+  await UserApis.verifyUser(form).then(res => {
+    if (res.result === 1) {
+      ElNotification({
+        title: 'Success',
+        message: res.message,
+        type: 'success',
+      });
+      router.push('/login')
+    }
+    if (res.result === 0) {
+      ElNotification({
+        title: 'Error',
+        message: res.message,
+        type: 'error',
+      });
+    }
+    console.log(res.content)
+  })
 }
 
 watch(durationDown, () => {

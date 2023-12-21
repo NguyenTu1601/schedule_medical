@@ -26,12 +26,14 @@ div
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router';
 import useAuthn from '../compositions/useAuthn'
+import { ElNotification } from 'element-plus';
 
 const router = useRouter()
 
 const username = ref('')
 const password = ref('')
 const email = ref('')
+const name = ref('')
 
 const isLoading = ref(false)
 
@@ -41,15 +43,31 @@ const isShowConfirmPassword = ref(false)
 
 const { signup: signupAuth } = useAuthn()
 
-function handleSignUp() {
+async function handleSignUp() {
   isLoading.value = true
-  return signupAuth({
+  await signupAuth({
     username: username.value,
     email: email.value,
     password: password.value,
   })
-    .then(() => {
-      router.push({ name: 'verify', query: { username: username.value, email: email.value } })
+    .then((res) => {
+      console.log(res)
+      if (res.data.result === 1) {
+        ElNotification({
+          title: 'Success',
+          message: res.message,
+          type: 'success',
+        });
+        router.push({ name: 'verify', query: { username: username.value, email: email.value } })
+      }
+      if (res.data.result === 0) {
+        ElNotification({
+          title: 'Error',
+          message: res.message,
+          type: 'error',
+        });
+      }
+
     })
     .catch((error) => {
     })

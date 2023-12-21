@@ -26,11 +26,18 @@ function useAccount() {
       console.log(err)
     })
   }
+  const removeAccount = () => {
+    if (account.value) {
+      setAccount(null);
+      return accountStorage.removeToken();
+    }
+  };
   return {
     setAccount,
     account: readonly(account),
     isLoading: readonly(isLoading),
-    getAccount
+    getAccount,
+    removeAccount
   };
 }
 

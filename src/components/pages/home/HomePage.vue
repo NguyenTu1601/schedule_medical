@@ -13,19 +13,19 @@ div(class='w-screen overflow-x-hidden')
       div.flex.justify-between
         div(class='text-[24px] font-bold text-[#C80815]') Chuyên khoa
         div.flex.items-center.h-max
-          div(class='border border-[#C80815] text-base cursor-pointer rounded-[10px] px-2 py-1 text-[#C80815] hover:text-white hover:!bg-[#C80815]') Xem thêm
+          div(class='border border-[#C80815] text-base cursor-pointer rounded-[10px] px-2 py-1 text-[#C80815] hover:text-white hover:!bg-[#C80815]' @click="handleShowListSpecialty") Xem thêm
       ChuyenKhoaSwiper.mt-2.py-4
     div.mt-8
       div.flex.justify-between
         div(class='text-[24px] font-bold text-[#C80815]') Phòng khám
         div.flex.items-center.h-max
-          div(class='border border-[#C80815] text-base cursor-pointer rounded-[10px] px-2 py-1 text-[#C80815] hover:text-white hover:!bg-[#C80815]') Xem thêm
+          div(class='border border-[#C80815] text-base cursor-pointer rounded-[10px] px-2 py-1 text-[#C80815] hover:text-white hover:!bg-[#C80815]'  @click="handleShowListClinic") Xem thêm
       ClinicSwiper.mt-2.py-4
     div.mt-8
       div.flex.justify-between
         div(class='text-[24px] font-bold text-[#C80815]') Bác sĩ nổi bật
         div.flex.items-center.h-max
-          div(class='border border-[#C80815] text-base cursor-pointer rounded-[10px] px-2 py-1 text-[#C80815] hover:text-white hover:!bg-[#C80815]') Xem thêm
+          div(class='border border-[#C80815] text-base cursor-pointer rounded-[10px] px-2 py-1 text-[#C80815] hover:text-white hover:!bg-[#C80815]' @click="handleShowListDoctor") Xem thêm
       DoctorSwiper.mt-2.py-4
 </template>
 <script lang="ts" setup>
@@ -38,6 +38,7 @@ import { ref } from 'vue';
 import ChuyenKhoaSwiper from './components/ChuyenKhoaSwiper.vue';
 import ClinicSwiper from './components/ClinicSwiper.vue';
 import DoctorSwiper from  './components/DoctorSwiper.vue'
+import { useRouter } from 'vue-router';
 
 const modules = ref([Navigation, Autoplay, Pagination])
 
@@ -47,6 +48,18 @@ function handleClick() {
 
 function onSwiper() {
   
+}
+
+const router = useRouter()
+
+function handleShowListSpecialty() {
+  router.push('/list/specialty/')
+}
+function handleShowListClinic() {
+  router.push('/list/clinic/')
+}
+function handleShowListDoctor() {
+  router.push('/list/doctor/')
 }
 </script>
 

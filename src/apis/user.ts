@@ -60,6 +60,18 @@ export function createUser(form): Promise<any> {
       return res.data;
     });
 }
+export function verifyUser(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'account.verifyUser',
+      data: {
+        body: form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
 export function editUser(form): Promise<any> {
   return http
     .callApi({
@@ -452,5 +464,6 @@ export default {
   getClinicById,
   listDoctorByClinic,
   getDetailSpecialty,
-  listDoctorBySpecialty
+  listDoctorBySpecialty,
+  verifyUser
 };

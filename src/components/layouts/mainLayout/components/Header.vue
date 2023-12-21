@@ -15,15 +15,24 @@
             //- div.px-6.py-3(class='hover:bg-[#1F1F1F]/[0.08] cursor-pointer border-b border-[#EFE8E8] last:border-[0px] select-none' v-for='event in listSearchEvent' @click="selectEvent(event)")
             //-   div.font-semibold(class='text-[#1F1F1F] text-sm break-normal') {{ event.name }}
             //-   div.mt-1.text-sm(class='text-[#796D6D]') {{formatDay(event.begin_at)}}
-    div.h-fit.border(class='cursor-pointer border-[#DA151A] px-4 py-2 rounded-full flex gap-2')
+    div.h-fit.border(v-if='!account' class='cursor-pointer border-[#DA151A] px-4 py-2 rounded-full flex gap-2')
       img.w-5.h-5.shrink-0(src='../assets/user.svg')
       div.text-base.font-bold Sign in
+    div.flex.gap-4(v-else)
+      //- div.text-base.font-semibold {{ account.name }}
+      img.w-6.h-6.shrink-0.cursor-pointer(src='../assets/profile.svg' @click="handleProfile")
+      img.w-6.h-6.shrink-0.cursor-pointer(src='../assets/logout.svg' @click="handleLogout")
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 import { refDebounced, useFocus } from '@vueuse/core'
 import { watch } from 'vue';
+import useAccount from '@/compositions/useAccount';
+import { onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+
+const { account, getAccount, removeAccount } = useAccount()
 
 const inputSearch = ref('')
 const inputSearchRef = ref()
@@ -36,7 +45,15 @@ watch(focused, () => {
   inputSearch
   console.log(focused.value)
 })
+const router = useRouter()
+function handleLogout() {
+  removeAccount()
+  router.push('/login')
+}
 
+onMounted(() => {
+  getAccount()
+})
 </script>
 
 <style scoped></style>
