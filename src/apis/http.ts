@@ -293,7 +293,26 @@ const apiResources: any = {
       verb: 'GET',
       baseUrl: staticEnv.ACC_NEW_API_URL,
       requiredToken: true,
-    }
+    },
+    getListHistoryByAdminClinic: {
+      url: 'api/Booking/getListHistoryByAdminClinic?keyword={keyword}',
+      verb: 'GET',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
+    getDetailHistoryByAdminClinic: {
+      url: '/api/Booking/getDetailHistoryByAdminClinic?historyId={historyId}',
+      verb: 'GET',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
+    accessToPayMedicine: {
+      url: '/api/Booking/accessToPayMedicine?historyId={historyId}',
+      verb: 'GET',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
+    
   },
   history: {
     detailHistoryByDoctor: {

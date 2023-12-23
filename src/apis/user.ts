@@ -428,6 +428,42 @@ export function getListHistotyByPatient(form): Promise<any> {
       return res.data;
     });
 }
+export function getListHistoryByAdminClinic(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'booking.getListHistoryByAdminClinic',
+      data: {
+        ...form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
+export function getDetailHistoryByAdminClinic(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'booking.getDetailHistoryByAdminClinic',
+      data: {
+        ...form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
+export function accessToPayMedicine(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'booking.accessToPayMedicine',
+      data: {
+        ...form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
 export function createHistoryByDoctor(form): Promise<any> {
   return http
     .callApi({
@@ -517,5 +553,8 @@ export default {
   getListBookingByPatient,
   getListHistotyByPatient,
   getListSchedulebyDates,
-  getListSchedulebyDate
+  getListSchedulebyDate,
+  getListHistoryByAdminClinic,
+  getDetailHistoryByAdminClinic,
+  accessToPayMedicine
 };

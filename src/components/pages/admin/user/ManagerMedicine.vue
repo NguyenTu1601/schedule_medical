@@ -24,9 +24,13 @@ div
       td.p-2(class='') {{ item.trangthaitext }}
       td.p-2(class='') {{ item.clinicName }}
       td
-        div.flex.justify-between
-          img.w-6.h-6.shrink-0.cursor-pointer(src='./assets/edit.svg' @click='handleEdit(item)')
-          img.w-6.h-6.shrink-0.cursor-pointer(src='./assets/delete.svg' @click="handleDelete(item)")
+        div.flex.justify-center.gap-2(v-if='item.statusid===1')
+          span(title='Chỉnh sửa')
+            img.w-6.h-6.shrink-0.cursor-pointer(src='./assets/edit.svg' @click='handleEdit(item)')
+          span(title='Xóa')
+            img.w-6.h-6.shrink-0.cursor-pointer(src='./assets/delete.svg' @click="handleDelete(item)")
+        div.flex.justify-center(v-else)
+          img.w-6.h-6.shrink-0.cursor-pointer(src='./assets/eye.svg' @click='handleEdit(item)')
   el-dialog(v-model="isShow" title="" width='1000px')
     ModalMedicine(v-if='isShow' :isEdit='isEdit' :medicineEdit='medicineEdit' @cancel='handleCancel' @save='handleSave')
     div(v-else)
@@ -70,29 +74,30 @@ function handleSave() {
 
 }
 async function handleDelete(item) {
-  const form = {
-    medicineId: item.id,
-    code: item.code
+  if (confirm("Bạn có muốn xóa chuyên khoa " + item.name) === true) {
+    const form = {
+      medicineId: item.id,
+      code: item.code
+    }
+
+    await MedicineApis.deleteMedicine(form).then(res => {
+      getListMedicine()
+      if (res.result === 1) {
+        ElNotification({
+          title: 'Success',
+          message: res.message,
+          type: 'success',
+        });
+      }
+      if (res.result === 0) {
+        ElNotification({
+          title: 'Error',
+          message: res.message,
+          type: 'error',
+        });
+      }
+    })
   }
-
-  await MedicineApis.deleteMedicine(form).then(res => {
-    getListMedicine()
-    if (res.result === 1) {
-      ElNotification({
-        title: 'Success',
-        message: res.message,
-        type: 'success',
-      });
-    }
-    if (res.result === 0) {
-      ElNotification({
-        title: 'Error',
-        message: res.message,
-        type: 'error',
-      });
-    }
-  })
-
 }
 
 function handleEdit(item) {

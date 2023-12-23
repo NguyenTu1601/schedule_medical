@@ -15,17 +15,23 @@ div
       td.p-2(class='') Tên bệnh nhân
       td.p-2(class='') Ngày tái khám
       td.p-2(class='') Trạng thái
+      td.p-2(class='') Bác sĩ
       td.p-2(class='w-[80px]') 
     tr(v-for='item in listHistoryBooking')
-      td.p-2(class='') {{ item.mabenhan }}
+      td.p-2(class='') {{ item.historycode }}
       td.p-2(class='') {{ item.patientName }}
       td.p-2(class='') {{ item.re_examinationDate }}
       td.p-2(class='') {{ item.status }}
+      td.p-2(class='') {{ item.doctorName }}
       td
-        div.flex.justify-center
-          img.w-6.h-6.shrink-0.cursor-pointer(src='./assets/eye.svg' @click='handleViewBooking(item)')
+        div.flex.justify-center.gap-2
+          span(title='Hiển thị')
+            img.w-6.h-6.shrink-0.cursor-pointer(src='./assets/eye.svg' @click='handleViewBooking(item)')
+          span(title="Thanh toán đơn thuốc")
+            img.w-6.h-6.shrink-0.cursor-pointer(v-if="item.thanhtoanthuoc===0" src='./assets/pay.svg' @click='handlePay(item)')
+
   el-dialog(v-model="isShow" title="" width='1000px')
-    ModalBookingHistory(v-if='isShow' @cancel='handleCancel' :bookingHistory='bookingHistory')
+    ModalBookingHistory(v-if='isShow' @cancel='handleCancel' :history='bookingHistory')
     div(v-else)
 </template>
 <script setup lang="ts">
@@ -56,7 +62,7 @@ watch(debounced, async () => {
   const form = {
     keyword: debounced.value.length > 0 ? debounced.value : "0"
   }
-  await MedicineApis.getListHistoryByDoctor(form).then(res => {
+  await MedicineApis.getListHistoryByAdminClinic(form).then(res => {
     if (res.result === 0) {
       ElNotification({
         title: 'Error',
@@ -71,7 +77,7 @@ async function getListHistoryBooking() {
   const form = {
     keyword: '0'
   }
-  await MedicineApis.getListHistoryByDoctor(form).then(res => {
+  await MedicineApis.getListHistoryByAdminClinic(form).then(res => {
     listHistoryBooking.value = res.content
   })
 }
@@ -86,8 +92,35 @@ async function handleCancel(val) {
   if (val === 'save') {
     await getListHistoryBooking()
   }
+  if (val === 'pay') {
+    await getListHistoryBooking()
+  }
   isShow.value = false
 }
+
+async function handlePay(item) {
+  const form = {
+    historyId: item.historyId
+  }
+  await MedicineApis.accessToPayMedicine(form).then(async (res) => {
+    if (res.result === 1) {
+      ElNotification({
+        title: 'Success',
+        message: 'Thanh toán thành công',
+        type: 'success',
+      });
+      await getListHistoryBooking()
+    }
+    if (res.result === 0) {
+      ElNotification({
+        title: 'Error',
+        message: res.message,
+        type: 'error',
+      });
+    }
+  })
+}
+
 onMounted(() => {
   getListHistoryBooking()
 })

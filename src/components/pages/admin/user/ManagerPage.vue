@@ -1,18 +1,18 @@
 <template lang="pug">
 div
   ManagerUserPage(v-if='role==="user"')
-  ManagerDoctorPage(v-else-if='role==="doctor"')
-  ManagerDoctorPlan(v-else-if='role==="plan-doctor"')
-  ManagerMedicine(v-else-if='role==="medicine"')
-  ManagerPatient(v-else-if='role==="patient"')
-  ManagerClinicPage(v-else-if='role==="admin-clinic"')
-  ManagerAllClinic(v-else-if='role==="clinic"')
-  ManagerSpecialty(v-else-if='role==="specialty"')
-  ManagerBookingDoctor(v-else-if='role==="booking-doctor"')
-  ManagerBookingHistory(v-else-if='role==="booking-history"')
-  ManagerBookingDoctorClinic(v-else-if='role==="plan-clinic"')
-  ManagerBookingHistoryClinic(v-else-if='role==="booking-history-clinic"')
-  ManagerBookingClinic(v-else-if='role==="booking-clinic"')
+  ManagerDoctorPage(v-else-if='role==="doctor"&& account')
+  ManagerDoctorPlan(v-else-if='role==="plan-doctor"&& account')
+  ManagerMedicine(v-else-if='role==="medicine"&& account')
+  ManagerPatient(v-else-if='role==="patient"&& account')
+  ManagerClinicPage(v-else-if='role==="admin-clinic"&& account')
+  ManagerAllClinic(v-else-if='role==="clinic"&& account')
+  ManagerSpecialty(v-else-if='role==="specialty"&& account')
+  ManagerBookingDoctor(v-else-if='role==="booking-doctor"&& account')
+  ManagerBookingHistory(v-else-if='role==="booking-history"&& account')
+  ManagerBookingDoctorClinic(v-else-if='role==="plan-clinic"&& account')
+  ManagerBookingClinic(v-else-if='role==="booking-clinic"&& account')
+  ManagerBookingHistoryClinic(v-else-if='role==="booking-history-clinic"&& account')
 </template>
 
 <script setup lang="ts">
@@ -42,12 +42,7 @@ const role = computed(() => {
   return route.params.role
 })
 
-watch(role, () => {
-  console.log(role.value)
-})
-watch(account, () => {
-  console.log(account.value)
-}, { immediate: true })
+
 onMounted(async () => {
   if (!account.value) {
     await getAccount().catch(() => {

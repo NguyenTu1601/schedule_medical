@@ -23,6 +23,12 @@ div.overflow-y-auto
     div.flex-1.flex.gap-2
       div.text-base.font-semibold Chuẩn đoán:
       div.text-base {{ detailBooking?.diagnostic }}
+  div.mt-2.flex
+    div.flex-1.flex.gap-2
+      div.text-base.font-semibold Bác sĩ:
+      div.text-base {{ detailBooking?.doctorName }}
+    div.flex-1.flex.gap-2
+      d
   div
     table.w-full.mt-4
       tr(class='bg-[#C80815] text-white text-sm font-bold')
@@ -43,7 +49,11 @@ div.overflow-y-auto
         td.p-2(class='') {{ item.renevue }}
   div.flex.justify-end.gap-4.items-center.w-full.mt-4
     div.cursor-pointer.px-4.py-2.border(class='font-bold text-sm rounded-[10px]' @click="handleCancel('cancel')") Cancel
-    div.cursor-pointer.px-4.py-2.border(class='font-bold text-sm rounded-[10px] border-[#DA151A] text-[#DA151A] hover:bg-[#DA151A] hover:text-white' @click="")
+
+    div.cursor-pointer.px-4.py-2.border(v-if='detailBooking?.thanhtoanthuoc==="0"' class='font-bold text-sm rounded-[10px] border-[#DA151A] text-[#DA151A] hover:bg-[#DA151A] hover:text-white' @click='handlePay')
+      div() Thanh toán đơn thuốc
+
+    div.cursor-pointer.px-4.py-2.border(class='font-bold text-sm rounded-[10px] border-[#DA151A] text-[#DA151A] hover:bg-[#DA151A] hover:text-white')
       div(@click="handleprint(detailBooking)") in đơn thuốc
 </template>
 
@@ -52,14 +62,17 @@ import { reactive, h, ref, computed, defineEmits, watch, defineProps, onMounted 
 import UserApis from '@/apis/user'
 import dayjs from 'dayjs'
 import RowMedicineBooking from "./RowMedicineBooking.vue"
+import { ElNotification } from "element-plus";
 
 const emits = defineEmits(['cancel'])
-const props = defineProps(['bookingHistory'])
+const props = defineProps(['history'])
 const detailBooking = ref()
 
-const bookingHistory = computed(() => {
-  return props.bookingHistory
+const history = computed(() => {
+  return props.history
 })
+
+const bookingHistory = ref([])
 
 const visible = computed(() => {
   return
@@ -67,15 +80,38 @@ const visible = computed(() => {
 
 async function getDetailBooking() {
   const form = {
-    historyId: bookingHistory.value.historyId
+    historyId: history.value.historyId
   }
-  await UserApis.getDetailHistoryByDoctor(form).then(res => {
+  await UserApis.getDetailHistoryByAdminClinic(form).then(res => {
     detailBooking.value = res.content
   })
 }
 
 function handleCancel(type) {
   emits('cancel', type)
+}
+
+async function handlePay() {
+  const form = {
+    historyId: history.value.historyId
+  }
+  await UserApis.accessToPayMedicine(form).then(async (res) => {
+    if (res.result === 1) {
+      ElNotification({
+        title: 'Success',
+        message: 'Thanh toán thành công',
+        type: 'success',
+      });
+      handleCancel('pay')
+    }
+    if (res.result === 0) {
+      ElNotification({
+        title: 'Error',
+        message: res.message,
+        type: 'error',
+      });
+    }
+  })
 }
 function handleprint(detail) {
   const htmlContent = `
@@ -219,8 +255,8 @@ function handleprint(detail) {
     console.error('Unable to open print window');
   }
 }
-onMounted(() => {
-  getDetailBooking()
+onMounted(async () => {
+  await getDetailBooking()
 })
 </script>
 

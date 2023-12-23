@@ -19,9 +19,11 @@ div
         div.text-base.text-white.cursor-pointer(v-else class='bg-[#C52428] px-4 py-2 rounded-[10px] w-[130px] flex justify-center' )
           img.w-6.h-6.shrink-0(src='./assets/loading.svg')
     div(class='flex-[4]') 
-      div.flex.gap-2
-        div(class='border border-[#DEE3ED] w-fit rounded-full px-4 py-2 text-base cursor-pointer' :class='[{"!border-[#DA151A]":isExist("0")}]' @click='handleSelectTime("0")') Ca sáng
-        div(class='border border-[#DEE3ED] w-fit rounded-full px-4 py-2 text-base cursor-pointer' :class='[{"!border-[#DA151A]":isExist("1")}]' @click='handleSelectTime("1")') Ca Chiều
+      div.flex.gap-2(class='mt-[20px]')
+        div.select-none(class='border border-[#DEE3ED] w-fit rounded-full px-4 py-2 text-base cursor-pointer' :class='[{"!bg-[#DA151A] text-white":isExist("0")}]' @click='handleSelectTime("0")' ) Ca sáng
+        div.select-none(class='border border-[#DEE3ED] w-fit rounded-full px-4 py-2 text-base cursor-pointer' :class='[{"!bg-[#DA151A] text-white":isExist("1")}]' @click='handleSelectTime("1")' ) Ca chiều
+        //- div(class='border border-[#DEE3ED] w-fit rounded-full px-4 py-2 text-base cursor-pointer' :class='[{"!border-[#DA151A]":isExist("0")}]' @click='handleSelectTime("0")') Ca sáng
+        //- div(class='border border-[#DEE3ED] w-fit rounded-full px-4 py-2 text-base cursor-pointer' :class='[{"!border-[#DA151A]":isExist("1")}]' @click='handleSelectTime("1")') Ca Chiều
   div.mt-10.flex
     div(class='w-[80px] shrink-0 px-[10px] flex items-center justify-center')
       div(class='bg-[#C52428] w-[60px] h-[60px] flex items-center justify-center rounded-full shrink-0 cursor-pointer' @click="prev")
@@ -52,24 +54,14 @@ div
             div Chủ nhật
             div {{ formatDate(mondayToView+86400000*6) }}
         tr(class='h-[100px]')
-          td.fontb(align="center") Ca sáng
+          td.font-bold(align="center") Ca sáng
           td(v-for='item in 7')
-            div()
-          //- td
-          //- td
-          //- td
-          //- td
-          //- td
-          //- td
+            DateInWeek(:time='0' :listScheduleDates='listScheduleDates' :day='mondayToView+86400000*(item-1)') a
         tr(class='h-[100px]')
-          td(align="center") Ca chiều
+          td.font-bold(align="center") Ca chiều
           td(v-for='item in 7')
-          //- td
-          //- td
-          //- td
-          //- td
-          //- td
-          //- td
+            DateInWeek(:time='1' :listScheduleDates='listScheduleDates' :day='mondayToView+86400000*(item-1)') a
+
     div(class='w-[80px] shrink-0 px-[10px] flex items-center justify-center')
       div(class='bg-[#C52428] w-[60px] h-[60px] flex items-center justify-center rounded-full shrink-0 cursor-pointer' @click="next")
         img(class='w-6 h-6' src='./assets/arrow-right.svg')
@@ -81,6 +73,8 @@ import dayjs from 'dayjs'
 import UserApis from '@/apis/user'
 import useAccount from "@/compositions/useAccount";
 import { onMounted } from 'vue';
+import DateInWeek from './component/DateInWeek.vue';
+import { ElNotification } from 'element-plus';
 
 const { account, getAccount } = useAccount()
 
@@ -111,7 +105,7 @@ async function handleGetListSchedulebyDates() {
     toDate: dayjs(mondayToView.value + 86400000 * 6).format('YYYY-MM-DD'),
   }
   await UserApis.getListSchedulebyDates(form).then(res => {
-    listScheduleByDate.value = res.content
+    listScheduleDates.value = res.content
   })
 }
 
@@ -126,6 +120,14 @@ watch(day, async () => {
   }
   await UserApis.getListSchedulebyDate(form).then(res => {
     listScheduleByDate.value = res.content
+    if (listScheduleByDate.value.length > 0) {
+      listTime.value = listScheduleByDate.value.map(item => {
+        return item.timeid.toString()
+      })
+    } else {
+      listTime.value = []
+    }
+
   })
 })
 
@@ -169,16 +171,31 @@ async function handleSave() {
     date: dayjs(day.value).format('YYYY-MM-DD'),
     time: listTime.value
   }
-  await UserApis.createScheduleDoctor(form).then((res) => {
+  await UserApis.createScheduleDoctor(form).then(async (res) => {
+    if (res.result === 1) {
+      ElNotification({
+        title: 'Success',
+        message: 'Lưu lịch hẹn thành công',
+        type: 'success',
+      });
+    }
+    if (res.result === 0) {
+      ElNotification({
+        title: 'Error',
+        message: res.message,
+        type: 'error',
+      });
+    }
     isLoading.value = false
+    handleGetListSchedulebyDates()
+
   }).catch(err => {
     isLoading.value = false
   })
 }
 
 onMounted(async () => {
-  await getAccount()
-  handleGetListSchedulebyDates()
+  await handleGetListSchedulebyDates()
 })
 </script>
 
