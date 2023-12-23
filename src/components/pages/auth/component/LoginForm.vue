@@ -27,14 +27,13 @@ const { login: loginAuth} = useAuthn()
 
 function login (e: Event) {
   isLoading.value = true
-  console.log(username.value, ' ',password.value)
   return loginAuth(username.value, password.value)
-    .then(() => {
+    .then((res) => {
       // auth.password = ''
       // auth.errorMessage = ''
       // router.push({ name: 'main' })
     })
-    .catch(() => {
+    .catch((err) => {
       // auth.password = ''
       // auth.errorMessage = 'Invalid username or password'
     })

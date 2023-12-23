@@ -1,7 +1,7 @@
 <template lang="pug">
 div.h-full(class='bg-[#F2F2F2]')
   div.px-5.py-6.h-full.flex.flex-col
-    div.flex.gap-2.items-center.cursor-pointer
+    router-link.flex.gap-2.items-center.cursor-pointer(to='/')
       img.w-6.h-6.shrink-0(src='./assets/arrow-left.svg')
       dev.text-base.font-semibold Return to home
     div.mt-6.bg-white(class='flex justify-center rounded-[10px] pt-8 h-full')

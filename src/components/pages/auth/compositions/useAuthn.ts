@@ -1,5 +1,6 @@
 import AccountApis from '@/apis/account';
 import useAccount from '@/compositions/useAccount';
+import { ElNotification } from 'element-plus';
 import { useRouter } from 'vue-router';
 
 export default function useAuthn() {
@@ -13,22 +14,36 @@ export default function useAuthn() {
     };
 
     return AccountApis.login(form)
-      .then((account) => {
-        console.log(account.content)
-        if (account.content[0].roleID === 2) {
-          router.push('/manager/plan-doctor')
+      .then((res) => {
+        if (res.result === 1) {
+          ElNotification({
+            title: 'Success',
+            message: res.message,
+            type: 'success',
+          });
+          if (res.content[0].roleID === 2) {
+            router.push('/manager/plan-doctor')
+          }
+          if (res.content[0].roleID === 0) {
+            router.push('/manager/user')
+          }
+          if (res.content[0].roleID === 3) {
+            router.push('/manager/doctor')
+          }
+          if (res.content[0].roleID === 1) {
+            router.push('/')
+          }
         }
-        if (account.content[0].roleID === 0) {
-          router.push('/manager/user')
+        else {
+          ElNotification({
+            title: 'Error',
+            message: res.message,
+            type: 'error',
+          });
         }
-        if (account.content[0].roleID === 3) {
-          router.push('/manager/doctor')
-        }
-        if (account.content[0].roleID === 1) {
-          router.push('/')
-        }
+
       })
-      .then(setAccount);
+      .then(setAccount)
   };
 
   const signup = ({ username, email, password }) => {

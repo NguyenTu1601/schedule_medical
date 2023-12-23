@@ -18,6 +18,12 @@ const apiResources: any = {
       verb: 'POST',
       baseUrl: staticEnv.ACC_NEW_API_URL,
     },
+    update: {
+      url: '/api/User/editProfile',
+      verb: 'POST',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
     signUp: {
       url: '/api/User/Register',
       verb: 'POST',
@@ -124,6 +130,18 @@ const apiResources: any = {
     },
     listDoctorBySpecialty: {
       url: '/api/Doctor/getListDoctorBySpecialty?specialtyId={specialtyId}',
+      verb: 'GET',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
+    getListSchedulebyDates: {
+      url: '/api/Doctor/getListSchedulebyDates?doctorId={doctorId}&fromDate={fromDate}&toDate={toDate}',
+      verb: 'GET',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
+    getListSchedulebyDate: {
+      url: 'api/Doctor/getListSchedulebyDate?doctorId={doctorId}&date={date}',
       verb: 'GET',
       baseUrl: staticEnv.ACC_NEW_API_URL,
       requiredToken: true,
@@ -261,6 +279,18 @@ const apiResources: any = {
     createBookingByPatient: {
       url: 'api/Booking/createBookingByPatient',
       verb: 'POST',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
+    getListBookingByPatient: {
+      url: 'api/Booking/getListBookingByPatient?keyword={keyword}',
+      verb: 'GET',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
+    getListHistotyByPatient: {
+      url: '/api/Booking/getListHistotyByPatient?keyword={keyword}',
+      verb: 'GET',
       baseUrl: staticEnv.ACC_NEW_API_URL,
       requiredToken: true,
     }

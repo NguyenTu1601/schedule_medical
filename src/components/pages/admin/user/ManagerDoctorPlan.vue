@@ -53,22 +53,23 @@ div
             div {{ formatDate(mondayToView+86400000*6) }}
         tr(class='h-[100px]')
           td.fontb(align="center") Ca sáng
-          td
-          td
-          td
-          td
-          td
-          td
-          td
+          td(v-for='item in 7')
+            div()
+          //- td
+          //- td
+          //- td
+          //- td
+          //- td
+          //- td
         tr(class='h-[100px]')
           td(align="center") Ca chiều
-          td
-          td
-          td
-          td
-          td
-          td
-          td
+          td(v-for='item in 7')
+          //- td
+          //- td
+          //- td
+          //- td
+          //- td
+          //- td
     div(class='w-[80px] shrink-0 px-[10px] flex items-center justify-center')
       div(class='bg-[#C52428] w-[60px] h-[60px] flex items-center justify-center rounded-full shrink-0 cursor-pointer' @click="next")
         img(class='w-6 h-6' src='./assets/arrow-right.svg')
@@ -79,6 +80,7 @@ import { computed, ref, watch } from 'vue';
 import dayjs from 'dayjs'
 import UserApis from '@/apis/user'
 import useAccount from "@/compositions/useAccount";
+import { onMounted } from 'vue';
 
 const { account, getAccount } = useAccount()
 
@@ -95,10 +97,38 @@ const nextMonday = computed(() => {
 })
 const mondayToView = ref(nextMonday.value - 604800000)
 
-
 const disabledDate = (time) => {
   return dayjs(nextMonday.value).subtract(1, 'day') > time
 }
+
+const listScheduleByDate = ref([])
+const listScheduleDates = ref([])
+
+async function handleGetListSchedulebyDates() {
+  const form = {
+    doctorId: account.value.id,
+    fromDate: dayjs(mondayToView.value).format('YYYY-MM-DD'),
+    toDate: dayjs(mondayToView.value + 86400000 * 6).format('YYYY-MM-DD'),
+  }
+  await UserApis.getListSchedulebyDates(form).then(res => {
+    listScheduleByDate.value = res.content
+  })
+}
+
+watch(mondayToView, async () => {
+  await handleGetListSchedulebyDates()
+}, { immediate: true, deep: true })
+
+watch(day, async () => {
+  const form = {
+    doctorId: account.value.id,
+    date: dayjs(day.value).format('YYYY-MM-DD'),
+  }
+  await UserApis.getListSchedulebyDate(form).then(res => {
+    listScheduleByDate.value = res.content
+  })
+})
+
 
 function handleSelectTime(time) {
   var index = listTime.value.indexOf(time);
@@ -145,6 +175,11 @@ async function handleSave() {
     isLoading.value = false
   })
 }
+
+onMounted(async () => {
+  await getAccount()
+  handleGetListSchedulebyDates()
+})
 </script>
 
 <style scoped>

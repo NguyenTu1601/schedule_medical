@@ -12,7 +12,9 @@ export function login(form): Promise<any> {
       },
     })
     .then((res: any) => {
-      AccountStorage.saveToken(res.data.content[0].authorization);
+      if (res.data.result === 1) {
+        AccountStorage.saveToken(res.data.content[0].authorization);
+      }
       return res.data;
     });
 }
@@ -32,6 +34,18 @@ export function signUp(form: any): Promise<any> {
       const error = (res as any).response.data;
       return Promise.reject(error);
     });
+}
+export function update(form: any): Promise<any> {
+  return http
+    .callApi({
+      resource: 'account.update',
+      data: {
+        body: form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    })
 }
 
 export function getProfile(): Promise<any> {
@@ -53,5 +67,6 @@ export function getProfile(): Promise<any> {
 export default {
   login,
   signUp,
-  getProfile
+  getProfile,
+  update
 };

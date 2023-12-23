@@ -270,6 +270,30 @@ export function getListAccessBooking(form): Promise<any> {
       return res.data;
     });
 }
+export function getListSchedulebyDates(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'doctor.getListSchedulebyDates',
+      data: {
+        ...form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
+export function getListSchedulebyDate(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'doctor.getListSchedulebyDate',
+      data: {
+        ...form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
 export function getDetailSpecialty(form): Promise<any> {
   return http
     .callApi({
@@ -380,6 +404,30 @@ export function listDoctorBySpecialty(form): Promise<any> {
       return res.data;
     });
 }
+export function getListBookingByPatient(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'booking.getListBookingByPatient',
+      data: {
+        ...form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
+export function getListHistotyByPatient(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'booking.getListHistotyByPatient',
+      data: {
+        ...form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
 export function createHistoryByDoctor(form): Promise<any> {
   return http
     .callApi({
@@ -465,5 +513,9 @@ export default {
   listDoctorByClinic,
   getDetailSpecialty,
   listDoctorBySpecialty,
-  verifyUser
+  verifyUser,
+  getListBookingByPatient,
+  getListHistotyByPatient,
+  getListSchedulebyDates,
+  getListSchedulebyDate
 };

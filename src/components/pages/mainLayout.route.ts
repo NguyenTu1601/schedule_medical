@@ -37,6 +37,11 @@ export default function init(routes: any[]) {
         path: '/list/clinic/',
         name: 'clinic_list',
         component: () => import('@/components/pages/clinic/ClinicListPage.vue'),
+      },
+      {
+        path: '/profile/',
+        name: 'profile',
+        component: () => import('@/components/pages/profile/ProfilePage.vue'),
       }
     ],
   };
