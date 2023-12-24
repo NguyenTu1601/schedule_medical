@@ -66,7 +66,7 @@ div.overflow-y-auto
     div.cursor-pointer.px-4.py-2.border(v-if='step===1' class='font-bold text-sm rounded-[10px] border-[#DA151A] text-[#DA151A] hover:bg-[#DA151A] hover:text-white' @click="handleSave")
       div(v-if='!isLoadingCreate') Save
       img.w-6.h-6.shrink-0(v-else src='../assets/loading.svg')
-    div.cursor-pointer.px-4.py-2.border(v-else class='font-bold text-sm rounded-[10px] border-[#DA151A] text-[#DA151A] hover:bg-[#DA151A] hover:text-white' )
+    div.cursor-pointer.px-4.py-2.border(v-else class='font-bold text-sm rounded-[10px] border-[#DA151A] text-[#DA151A] hover:bg-[#DA151A] hover:text-white' @click="handleprint(detail)")
       div() In lịch hẹn
 
 </template>
@@ -136,13 +136,20 @@ async function createBooking() {
     address: bookingClinicAdd.value.address,
     age: bookingClinicAdd.value.age,
   }
-  await UserApis.createBookingByAdmin(form).then(res => {
+  await UserApis.createBookingByAdmin(form).then(async (res) => {
     if (res.result === 1) {
       ElNotification({
         title: 'Success',
         message: res.message,
         type: 'success',
       });
+      const form = {
+        bookingId: res.content.id
+      }
+      await UserApis.getDetailBooking(form).then(res1 => {
+        detail.value = res1.content[0]
+        
+      })
       step.value = 2
     }
     if (res.result === 0) {
@@ -164,7 +171,7 @@ async function createBooking() {
   })
 }
 
-
+const detail = ref()
 function handleCancel() {
   emits('cancel', 'cancel')
 }
@@ -181,6 +188,121 @@ function formatDate(dateStr) {
   const dateObj = +new Date(dateStr);
 
   return dayjs(dateObj).format('YYYY-MM-DD');
+}
+async function print() {
+
+}
+
+function handleprint(detail) {
+  const htmlContent = `
+  <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 20px;
+        }
+
+        .prescription-form {
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 20px;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+          background-color: #f9f9f9;
+        }
+
+        h2 {
+          text-align: center;
+        }
+
+        table {
+          width: 100%;
+          margin-bottom: 10px;
+          border-collapse: collapse;
+        }
+
+        th, td {
+          border: 1px solid #ddd;
+          padding: 10px;
+          text-align: left;
+        }
+
+        th {
+          background-color: #4caf50;
+          color: white;
+        }
+
+        .text-label {
+          display: flex;
+          align-items: center;
+        }
+
+        label {
+          width: 120px;
+          margin-right: 10px;
+          font-weight: bold;
+        }
+
+        button {
+          padding: 10px;
+          background-color: #4caf50;
+          color: #fff;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          display: block;
+          margin: 0 auto;
+        }
+
+        button:hover {
+          background-color: #45a049;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="prescription-form">
+        <h2>Phiếu khám</h2>
+
+        <div class="text-label">
+          <label>Mã lịch hẹn:</label>
+          <p>${detail?.code}</p>
+        </div>
+        <div class="text-label">
+          <label>Số thứ tự:</label>
+          <p>${detail?.stt}</p>
+        </div>
+
+        <div class="text-label">
+          <label>Bệnh nhân:</label>
+          <p>${detail?.namePatient}</p>
+        </div>
+
+        <div class="text-label">
+          <label>Bác sĩ:</label>
+          <p>${detail.doctorName ? detail?.doctorName : ""}</p>
+        </div>
+
+          
+        </table>
+
+      </div>
+    </body>
+    </html>
+
+      `;
+
+  const printWindow = window.open('', '_blank');
+  if (printWindow) {
+    printWindow.document.write(htmlContent);
+    printWindow.document.close();
+    printWindow.print();
+  } else {
+    console.error('Unable to open print window');
+  }
 }
 </script>
 

@@ -145,6 +145,30 @@ const apiResources: any = {
       verb: 'GET',
       baseUrl: staticEnv.ACC_NEW_API_URL,
       requiredToken: true,
+    },
+    getBookingInfo: {
+      url: '/api/Doctor/getBookingInfo?doctorId={doctorId}&fromDate={fromDate}&toDate={toDate}',
+      verb: 'GET',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
+    getDoanhThu: {
+      url: 'api/Doctor/getDoanhThu?doctorId={doctorId}&fromDate={fromDate}&toDate={toDate}',
+      verb: 'GET',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
+    getDataLoaiThuoc: {
+      url: 'api/Doctor/getDataLoaiThuoc?doctorId={doctorId}&fromDate={fromDate}&toDate={toDate}',
+      verb: 'GET',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
+    getDataLichHen: {
+      url: 'api/Doctor/getDataLichHen?doctorId={doctorId}&fromDate={fromDate}&toDate={toDate}',
+      verb: 'GET',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
     }
   },
   clinic: {

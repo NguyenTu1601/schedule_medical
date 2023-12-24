@@ -1,14 +1,13 @@
 <template lang="pug">
-div
-  Header
-  div
-    router-view
+.h-screen.w-screen.flex.flex-col.overflow-x-hidden(class='bg-[#F6F6F6]')
+  Navbar.z-10
+  div.h-full
+    div.w-full.manager
+      router-view
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-import Header from './component/Header.vue'
-const EmptyLayout = defineComponent({});
+<script setup lang="ts">
+import { ref } from 'vue';
+import Navbar from '../adminLayout/component/Navbar.vue';
 
-export default EmptyLayout;
 </script>

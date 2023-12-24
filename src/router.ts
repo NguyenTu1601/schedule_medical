@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import mainLayoutRoute from '@/components/pages/mainLayout.route';
 import authLayoutRoute from '@/components/pages/authLayout.route';
 import adminLayoutRoute from '@/components/pages/adminLayout.route';
+import emptyLayoutRoute from '@/components/pages/emptyLayout.route'
 // import useAccount from '@/compositions/useAccount';
 // import { init as initEnv } from '@/services/environmentVariables';
 // import LanguageStorage from '@/services/languageStorage';
@@ -26,6 +27,7 @@ function buildRoutes(): any[] {
   mainLayoutRoute(vueRoutes);
   authLayoutRoute(vueRoutes);
   adminLayoutRoute(vueRoutes);
+  emptyLayoutRoute(vueRoutes);
 
   return vueRoutes;
 }

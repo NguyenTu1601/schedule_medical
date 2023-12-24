@@ -63,6 +63,9 @@ import UserApis from '@/apis/user'
 import dayjs from 'dayjs'
 import RowMedicineBooking from "./RowMedicineBooking.vue"
 import { ElNotification } from "element-plus";
+import useAccount from "@/compositions/useAccount";
+
+const { account, getAccount } = useAccount()
 
 const emits = defineEmits(['cancel'])
 const props = defineProps(['history'])
@@ -82,9 +85,16 @@ async function getDetailBooking() {
   const form = {
     historyId: history.value.historyId
   }
-  await UserApis.getDetailHistoryByAdminClinic(form).then(res => {
-    detailBooking.value = res.content
-  })
+  if (account.value.roleID===2) {
+    
+    await UserApis.getDetailHistoryByDoctor(form).then(res => {
+      detailBooking.value = res.content
+    })
+  } else {
+        await UserApis.getDetailHistoryByAdminClinic(form).then(res => {
+      detailBooking.value = res.content
+    })
+  }
 }
 
 function handleCancel(type) {

@@ -8,6 +8,7 @@ export default function init(routes: any[]) {
         name: 'manager',
         component: () => import('@/components/pages/admin/user/ManagerPage.vue'),
       }
+      
     ],
   };
 

@@ -4,9 +4,9 @@ export default function init(routes: any[]) {
     component: () => import('@/components/layouts/emptyLayout/EmptyLayout.vue'),
     children: [
       {
-        path: '/',
-        name: 'home',
-        component: () => import('@/components/pages/emptyLayout/HomePage.vue'),
+        path: '/report',
+        name: 'report',
+        component: () => import('@/components/pages/admin/user/ReportPage.vue'),
       }
     ],
   };

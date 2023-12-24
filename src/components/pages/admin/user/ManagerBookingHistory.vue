@@ -25,7 +25,7 @@ div
         div.flex.justify-center
           img.w-6.h-6.shrink-0.cursor-pointer(src='./assets/eye.svg' @click='handleViewBooking(item)')
   el-dialog(v-model="isShow" title="" width='1000px')
-    ModalBookingHistory(v-if='isShow' @cancel='handleCancel' :bookingHistory='bookingHistory')
+    ModalBookingHistory(v-if='isShow' @cancel='handleCancel' :history='bookingHistory')
     div(v-else)
 </template>
 <script setup lang="ts">

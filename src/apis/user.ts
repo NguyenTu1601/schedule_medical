@@ -368,6 +368,54 @@ export function getDetailHistoryByDoctor(form): Promise<any> {
       return res.data;
     });
 }
+export function getBookingInfo(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'doctor.getBookingInfo',
+      data: {
+        ...form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
+export function getDoanhThu(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'doctor.getDoanhThu',
+      data: {
+        ...form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
+export function getDataLoaiThuoc(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'doctor.getDataLoaiThuoc',
+      data: {
+        ...form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
+export function getDataLichHen(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'doctor.getDataLichHen',
+      data: {
+        ...form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
 export function getClinicById(form): Promise<any> {
   return http
     .callApi({
@@ -556,5 +604,9 @@ export default {
   getListSchedulebyDate,
   getListHistoryByAdminClinic,
   getDetailHistoryByAdminClinic,
-  accessToPayMedicine
+  accessToPayMedicine,
+  getBookingInfo,
+  getDoanhThu,
+  getDataLoaiThuoc,
+  getDataLichHen
 };
