@@ -5,7 +5,7 @@ div
       div.flex.gap-4
         div.flex-1
           div.font-semibold.text-base Tên bác sĩ
-          el-select.mt-1.w-full(v-model="doctorSelect" placeholder="chuyên khoa" size="large")
+          el-select.mt-1.w-full(v-model="doctorSelect" placeholder="bác sĩ" size="large")
             el-option(v-for='item in listDoctor' :value='item.Id' :label='item.doctorname')
         div.flex-1.pr-4
           div.font-semibold.text-base Chọn ngày
@@ -20,9 +20,9 @@ div
         div.text-base.text-white.cursor-pointer(v-else class='bg-[#C52428] px-4 py-2 rounded-[10px] w-[130px] flex justify-center' )
           img.w-6.h-6.shrink-0(src='./assets/loading.svg')
     div(class='flex-[4]') 
-      div.flex.gap-2
-        div(class='border border-[#DEE3ED] w-fit rounded-full px-4 py-2 text-base cursor-pointer' :class='[{"!border-[#DA151A]":isExist("0")}]' @click='handleSelectTime("0")') Ca sáng
-        div(class='border border-[#DEE3ED] w-fit rounded-full px-4 py-2 text-base cursor-pointer' :class='[{"!border-[#DA151A]":isExist("1")}]' @click='handleSelectTime("1")') Ca Chiều
+      div.flex.gap-2(class='mt-[20px]')
+        div(class='border border-[#DEE3ED] w-fit rounded-full px-4 py-2 text-base cursor-pointer' :class='[{"!bg-[#DA151A] text-white":isExist("0")}]' @click='handleSelectTime("0")') Ca sáng
+        div(class='border border-[#DEE3ED] w-fit rounded-full px-4 py-2 text-base cursor-pointer' :class='[{"!bg-[#DA151A] text-white":isExist("1")}]' @click='handleSelectTime("1")') Ca Chiều
   div.mt-10.flex
     div(class='w-[80px] shrink-0 px-[10px] flex items-center justify-center')
       div(class='bg-[#C52428] w-[60px] h-[60px] flex items-center justify-center rounded-full shrink-0 cursor-pointer' @click="prev")
@@ -54,22 +54,12 @@ div
             div {{ formatDate(mondayToView+86400000*6) }}
         tr(class='h-[100px]')
           td.font-bold(align="center") Ca sáng
-          td
-          td
-          td
-          td
-          td
-          td
-          td
+          td(v-for='item in 7')
+            DateInWeek(:time='0' :listScheduleDates='listScheduleDates' :day='mondayToView+86400000*(item-1)') a
         tr(class='h-[100px]')
-          td(align="center") Ca chiều
-          td
-          td
-          td
-          td
-          td
-          td
-          td
+          td.font-bold(align="center") Ca chiều
+          td(v-for='item in 7')
+            DateInWeek(:time='1' :listScheduleDates='listScheduleDates' :day='mondayToView+86400000*(item-1)') a
     div(class='w-[80px] shrink-0 px-[10px] flex items-center justify-center')
       div(class='bg-[#C52428] w-[60px] h-[60px] flex items-center justify-center rounded-full shrink-0 cursor-pointer' @click="next")
         img(class='w-6 h-6' src='./assets/arrow-right.svg')
@@ -82,6 +72,7 @@ import UserApis from '@/apis/user'
 import useAccount from "@/compositions/useAccount";
 import { onMounted } from 'vue';
 import { ElNotification } from 'element-plus';
+import DateInWeek from './component/DateInWeek.vue';
 
 const { account, getAccount } = useAccount()
 
@@ -104,6 +95,47 @@ const mondayToView = ref(nextMonday.value - 604800000)
 const disabledDate = (time) => {
   return dayjs(nextMonday.value).subtract(1, 'day') > time
 }
+
+
+const listScheduleByDate = ref([])
+const listScheduleDates = ref([])
+
+async function handleGetListSchedulebyDates() {
+  if (doctorSelect.value) {
+    const form = {
+      doctorId: doctorSelect.value,
+      fromDate: dayjs(mondayToView.value).format('YYYY-MM-DD'),
+      toDate: dayjs(mondayToView.value + 86400000 * 6).format('YYYY-MM-DD'),
+    }
+    await UserApis.getListSchedulebyDates(form).then(res => {
+      listScheduleDates.value = res.content
+    })
+  }
+}
+
+watch([mondayToView, doctorSelect], async () => {
+  await handleGetListSchedulebyDates()
+}, { immediate: true, deep: true })
+
+watch([day, doctorSelect], async () => {
+  if (doctorSelect.value && day.value) {
+    const form = {
+      doctorId: doctorSelect.value,
+      date: dayjs(day.value).format('YYYY-MM-DD'),
+    }
+    await UserApis.getListSchedulebyDate(form).then(res => {
+      listScheduleByDate.value = res.content
+      if (listScheduleByDate.value.length > 0) {
+        listTime.value = listScheduleByDate.value.map(item => {
+          return item.timeid.toString()
+        })
+      } else {
+        listTime.value = []
+      }
+
+    })
+  }
+})
 
 function handleSelectTime(time) {
   var index = listTime.value.indexOf(time);
@@ -161,6 +193,7 @@ async function handleSave() {
       });
     }
     isLoading.value = false
+    handleGetListSchedulebyDates()
   }).catch(err => {
     isLoading.value = false
   })

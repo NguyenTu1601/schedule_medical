@@ -46,8 +46,9 @@ export default function useAuthn() {
       .then(setAccount)
   };
 
-  const signup = ({ username, email, password }) => {
+  const signup = ({ name, username, email, password }) => {
     return AccountApis.signUp({
+      name: name,
       username: username,
       email: email,
       password: password,

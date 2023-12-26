@@ -3,12 +3,12 @@ div.h-full(class='bg-[#F2F2F2]')
   div.px-5.py-6.h-full.flex.flex-col
     router-link.flex.gap-2.items-center.cursor-pointer(to='/')
       img.w-6.h-6.shrink-0(src='./assets/arrow-left.svg')
-      dev.text-base.font-semibold Return to home
+      dev.text-base.font-semibold Trang chủ
     div.mt-6.bg-white(class='flex justify-center rounded-[10px] pt-8 h-full')
       div(class='max-w-[454px] w-full')
         div.flex.border-b(class='border-[#DEE3ED] relative')
-          div(class='text-[20px] cursor-pointer flex-1 w-[200px] text-center pb-3 font-semibold' @click='changeLink("login")' :class='[{"text-[#DA151A]":status==="/login"}]') Login
-          div(class='text-[20px] cursor-pointer flex-1 w-[200px] text-center pb-3 font-semibold' @click='changeLink("sign-up")' :class='[{"text-[#DA151A]":status!=="/login"}]') Sign Up
+          div(class='text-[20px] cursor-pointer flex-1 w-[200px] text-center pb-3 font-semibold' @click='changeLink("login")' :class='[{"text-[#DA151A]":status==="/login"}]') Đăng nhập
+          div(class='text-[20px] cursor-pointer flex-1 w-[200px] text-center pb-3 font-semibold' @click='changeLink("sign-up")' :class='[{"text-[#DA151A]":status!=="/login"}]') Đăng ký
 
           div.absolute.bar(class='h-[2px] w-1/2 bg-[#DA151A] -bottom-[1px] left-0' :class='[{"!left-1/2":status!=="/login"}]')
         div.pt-8

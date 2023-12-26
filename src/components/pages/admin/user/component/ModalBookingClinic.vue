@@ -110,7 +110,7 @@ async function handleSave() {
       bookingId: bookingClinic.value.bookingId
     }
     await UserApis.getDetailBooking(form).then(res => {
-      detail.value = res.content
+      detail.value = res.content[0]
       handleprint(detail.value)
     })
   }

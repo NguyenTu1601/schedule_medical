@@ -1,17 +1,17 @@
 <template lang="pug">
 div
-  div.text-sm Username
+  div.text-sm Tên đăng nhập
   input.p-4(type="text" placeholder='Username' class='mt-[6px] rounded-[10px] outline-none border border-[#DEE3ED] w-full text-base' v-model='username')
-  div.text-sm.mt-3 Password
+  div.text-sm.mt-3 Mật khẩu
   div.p-4(class='mt-[6px] rounded-[10px] border border-[#DEE3ED] w-full flex gap-2 items-center')
     input(:type='isShowPassword?"text":"password"' placeholder='Password' class='outline-none text-base w-full' v-model='password')
     img.w-5.h-5.shrink-0.cursor-pointer(v-if='isShowPassword' src='../assets/eye.svg' @click='()=>isShowPassword= !isShowPassword')
     img.w-5.h-5.shrink-0.cursor-pointer(v-else src='../assets/eye-close.svg'  @click='()=>isShowPassword= !isShowPassword')
-  div.cursor-pointer.text-base.font-semibold.mt-6(class='text-[#C52428]') Forgot your password?
+  //- div.cursor-pointer.text-base.font-semibold.mt-6(class='text-[#C52428]') Forgot your password?
 
   div.flex.gap-2(class='p-[10px] bg-[linear-gradient(90deg,#DA151A_0%,#BB070D_100%)] text-whisper cursor-pointer rounded-[10px] flex justify-center mt-8' @click='login')
     img(src='../assets/sign-in.svg')
-    div.text-base.font-semibold Login
+    div.text-base.font-semibold Đăng nhập
 </template>
 
 <script setup lang="ts">

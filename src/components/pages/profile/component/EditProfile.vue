@@ -66,7 +66,7 @@ watch(account, () => {
   formUser.value.email = account?.value?.email
   formUser.value.phonenumber = account?.value?.phonenumber
   formUser.value.address = account?.value?.address
-  formUser.value.gender = account?.value?.gender.toString()
+  formUser.value.gender = account?.value?.gender?.toString()
   formUser.value.ngaysinh = account?.value?.ngaysinh
   formUser.value.avtimage = account?.value?.avtimage
 }, { immediate: true, deep: true })
