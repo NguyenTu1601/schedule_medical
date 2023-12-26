@@ -6,7 +6,7 @@ div
     //-   div(class='px-4 py-2 text-lg font-semibold text-white bg-[#C80815] rounded-[10px] cursor-pointer' @click="handleAdd") Tạo bệnh án
     div.flex.justify-end
       div.mt-2.flex(class='border border-[#DEE3ED] px-4 py-2 rounded-[4px] w-[600px]')
-        input.outline-none.text-base.w-full(v-model='medicine')
+        input.outline-none.text-base.w-full(v-model='searchInput')
         img(class='w-6 h-6 shrink-0' src='./assets/search.svg')
 
   table.w-full.mt-4
@@ -32,17 +32,36 @@ div
     div(v-else)
 </template>
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref ,watch} from 'vue';
 import MedicineApis from '@/apis/user'
 import { onMounted } from 'vue';
 import ModalBookingDoctor from './component/ModalBookingDoctor.vue'
+import { refDebounced, useFocus } from '@vueuse/core'
+import { ElNotification } from 'element-plus';
 
-const medicine = ref('')
+const searchInput = ref('')
 const donvi = ref()
 const listBooking = ref([])
 const isShow = ref(false)
 const bookingId = ref()
 
+const debounced = refDebounced(searchInput, 500)
+
+watch(debounced, async () => {
+  const form = {
+    macode: debounced.value.length > 0 ? debounced.value : "0"
+  }
+  await MedicineApis.getListAccessBooking(form).then(res => {
+    if (res.result === 0) {
+      ElNotification({
+        title: 'Error',
+        message: res.message,
+        type: 'error',
+      });
+    }
+    listBooking.value = res.content
+  })
+})
 async function getListBooking() {
   const form = {
     macode: '0'

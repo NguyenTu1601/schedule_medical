@@ -1,5 +1,5 @@
 <template lang="pug">
-div
+div.w-full.h-full
   ManagerUserPage(v-if='role==="user"')
   ManagerDoctorPage(v-else-if='role==="doctor"&& account')
   ManagerDoctorPlan(v-else-if='role==="plan-doctor"&& account')
@@ -13,6 +13,7 @@ div
   ManagerBookingDoctorClinic(v-else-if='role==="plan-clinic"&& account')
   ManagerBookingClinic(v-else-if='role==="booking-clinic"&& account')
   ManagerBookingHistoryClinic(v-else-if='role==="booking-history-clinic"&& account')
+  ManagerRevenuePage(v-else-if='role==="revenue"&& account')
 </template>
 
 <script setup lang="ts">
@@ -32,6 +33,7 @@ import ManagerBookingHistory from './ManagerBookingHistory.vue';
 import ManagerBookingDoctorClinic from './ManagerBookingDoctorClinic.vue';
 import ManagerBookingHistoryClinic from './ManagerBookingHistoryClinic.vue';
 import ManagerBookingClinic from './ManagerBookingClinic.vue';
+import ManagerRevenuePage from './ManagerRevenuePage.vue';
 
 const { account, getAccount } = useAccount()
 

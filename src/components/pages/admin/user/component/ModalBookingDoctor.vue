@@ -30,12 +30,12 @@ div.overflow-y-auto
 
   div.mt-4.text-lg.font-bold Đơn thuốc:
   div.mt-4
-    div.text-sm.whitespace-nowrap Triệu chứng
-    textarea(type='text' rows="4" placeholder='' v-model="diagnostic" class='outline-none p-2 text-sm border border-[#DEE3ED] rounded-[4px] w-full mt-1')
+    div.text-sm.whitespace-nowrap Chẩn đoán
+    textarea(type='text' rows="4" placeholder='bác sĩ ghi chẩn đoán' v-model="diagnostic" class='outline-none p-2 text-sm border border-[#DEE3ED] rounded-[4px] w-full mt-1')
 
   div.mt-4
     div.text-sm.whitespace-nowrap Lời dặn
-    textarea(type='text' rows="4" placeholder='' v-model="advice" class='outline-none p-2 text-sm border border-[#DEE3ED] rounded-[4px] w-full mt-1')
+    textarea(type='text' rows="4" placeholder='bác sĩ ghi lời dặn' v-model="advice" class='outline-none p-2 text-sm border border-[#DEE3ED] rounded-[4px] w-full mt-1')
   div.items-center.mt-4
     div.text-sm.whitespace-nowrap Ngày tái khám
     el-date-picker.w-full.mt-1(v-model="taikhamDate"
