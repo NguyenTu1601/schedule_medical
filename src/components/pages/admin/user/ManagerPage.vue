@@ -14,6 +14,7 @@ div.w-full.h-full
   ManagerBookingClinic(v-else-if='role==="booking-clinic"&& account')
   ManagerBookingHistoryClinic(v-else-if='role==="booking-history-clinic"&& account')
   ManagerRevenuePage(v-else-if='role==="revenue"&& account')
+  ManagerSwitchShift(v-else-if='role==="switch-shift"&& account')
 </template>
 
 <script setup lang="ts">
@@ -34,6 +35,7 @@ import ManagerBookingDoctorClinic from './ManagerBookingDoctorClinic.vue';
 import ManagerBookingHistoryClinic from './ManagerBookingHistoryClinic.vue';
 import ManagerBookingClinic from './ManagerBookingClinic.vue';
 import ManagerRevenuePage from './ManagerRevenuePage.vue';
+import ManagerSwitchShift from './ManagerSwitchShift.vue';
 
 const { account, getAccount } = useAccount()
 

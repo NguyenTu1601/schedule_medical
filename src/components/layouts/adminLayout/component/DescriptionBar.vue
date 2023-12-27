@@ -33,6 +33,10 @@ div.h-full(class='w-[250px] pt-6 px-4 overflow-auto !h-[calc(100vh-60px-24px)] p
     div.flex.justify-center
       img.w-10.h-10.shrink-0(src='../assets/plan.svg')
     div.text-center.font-bold(class='text-[18px] ') Quản lý kế hoạch khám bệnh(admin)
+  div.flex.flex-col.w-full.p-4.mt-2(v-if='roleUserId===3' class='rounded-[10px] shadow-[0px_2px_12px_0px_rgba(0,0,0,0.08)] cursor-pointer border border-white' @click='handleChangeManager("/manager/switch-shift")' :class='[{"!border-[#C52428]" : role==="switch-shift"}]')
+    div.flex.justify-center
+      img.w-10.h-10.shrink-0(src='../assets/switch-shift.svg')
+    div.text-center.font-bold(class='text-[18px] ') Đổi ca
   div.flex.flex-col.w-full.p-4.mt-2(v-if='roleUserId===2 || roleUserId===3' class='rounded-[10px] shadow-[0px_2px_12px_0px_rgba(0,0,0,0.08)] cursor-pointer border border-white' @click='handleChangeManager("/manager/medicine")' :class='[{"!border-[#C52428]" : role==="medicine"}]')
     div.flex.justify-center
       img.w-10.h-10.shrink-0(src='../assets/medicine.svg')

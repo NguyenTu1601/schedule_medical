@@ -32,15 +32,15 @@ div.overflow-y-auto
   div
     table.w-full.mt-4
       tr(class='bg-[#C80815] text-white text-sm font-bold')
-        td.p-2(class='') Mã thuốc
-        td.p-2(class='') Tên thuốc
-        td.p-2(class='') Thông tin
-        td.p-2(class='') Số liều 1 ngày
-        td.p-2(class='') Đơn vị
-        td.p-2(class='') Đơn giá
-        td.p-2(class='') Thành tiền
+        td.p-2(class='whitespace-nowrap') Mã thuốc
+        td.p-2(class='whitespace-nowrap') Tên thuốc
+        td.p-2(class='whitespace-nowrap') Thông tin
+        td.p-2(class='whitespace-nowrap') Số liều 1 ngày
+        td.p-2(class='whitespace-nowrap') Đơn vị
+        td.p-2(class='whitespace-nowrap') Đơn giá
+        td.p-2(class='whitespace-nowrap') Thành tiền
       tr(v-if='detailBooking && detailBooking.medicines' v-for='item in detailBooking.medicines')
-        td.p-2(class='') {{ item.mathuoc }}
+        td.p-2(class='break-keep') {{ item.mathuoc }}
         td.p-2(class='') {{ item.name }}
         td.p-2(class='') {{ item.description }}
         td.p-2(class='') {{ item.solieungay }}
@@ -52,6 +52,8 @@ div.overflow-y-auto
 
     div.cursor-pointer.px-4.py-2.border(v-if='detailBooking?.thanhtoanthuoc==="0"' class='font-bold text-sm rounded-[10px] border-[#DA151A] text-[#DA151A] hover:bg-[#DA151A] hover:text-white' @click='handlePay')
       div() Thanh toán đơn thuốc
+    div.cursor-pointer.px-4.py-2.border(v-if='detailBooking?.thanhtoanthuoc==="1"' class='font-bold text-sm rounded-[10px] border-[#DA151A] text-[#DA151A] hover:bg-[#DA151A] hover:text-white' @click='handlePrintBill')
+      div() In hóa đơn
 
     div.cursor-pointer.px-4.py-2.border(class='font-bold text-sm rounded-[10px] border-[#DA151A] text-[#DA151A] hover:bg-[#DA151A] hover:text-white')
       div(@click="handleprint(detailBooking)") in đơn thuốc
@@ -85,16 +87,20 @@ async function getDetailBooking() {
   const form = {
     historyId: history.value.historyId
   }
-  if (account.value.roleID===2) {
-    
+  if (account.value.roleID === 2) {
+
     await UserApis.getDetailHistoryByDoctor(form).then(res => {
       detailBooking.value = res.content
     })
   } else {
-        await UserApis.getDetailHistoryByAdminClinic(form).then(res => {
+    await UserApis.getDetailHistoryByAdminClinic(form).then(res => {
       detailBooking.value = res.content
     })
   }
+}
+
+function handlePrintBill() {
+  window.open("http://1.53.252.173:7754/api/invoice/generate?historyId="+ history.value.historyId);
 }
 
 function handleCancel(type) {

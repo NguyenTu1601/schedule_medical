@@ -109,7 +109,20 @@ async function handlePay(item) {
         message: 'Thanh toán thành công',
         type: 'success',
       });
-      await getListHistoryBooking()
+      // await getListHistoryBooking()
+      const form = {
+        keyword: debounced.value.length > 0 ? debounced.value : "0"
+      }
+      await MedicineApis.getListHistoryByAdminClinic(form).then(res => {
+        if (res.result === 0) {
+          ElNotification({
+            title: 'Error',
+            message: res.message,
+            type: 'error',
+          });
+        }
+        listHistoryBooking.value = res.content
+      })
     }
     if (res.result === 0) {
       ElNotification({

@@ -169,6 +169,30 @@ const apiResources: any = {
       verb: 'GET',
       baseUrl: staticEnv.ACC_NEW_API_URL,
       requiredToken: true,
+    },
+    getListChangeSchedule: {
+      url: '/api/Doctor/getListChangeSchedule?keyword={keyword}',
+      verb: 'GET',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
+    getScheduleToChange: {
+      url: '/api/Doctor/getScheduleToChange?fromdoctorId={fromdoctorId}',
+      verb: 'GET',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
+    getDoctorFreeTime: {
+      url: '/api/Doctor/getDoctorFreeTime?scheduleId={scheduleId}',
+      verb: 'GET',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
+    },
+    createChangeScheduleByDoctor: {
+      url: '/api/Doctor/createChangeScheduleByDoctor',
+      verb: 'POST',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
     }
   },
   clinic: {

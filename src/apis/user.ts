@@ -180,6 +180,18 @@ export function updateMedicine(form): Promise<any> {
       return res.data;
     });
 }
+export function createChangeScheduleByDoctor(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'doctor.createChangeScheduleByDoctor',
+      data: {
+        body: form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
 export function createScheduleDoctor(form): Promise<any> {
   return http
     .callApi({
@@ -262,6 +274,42 @@ export function getListAccessBooking(form): Promise<any> {
   return http
     .callApi({
       resource: 'booking.listAccess',
+      data: {
+        ...form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
+export function getListChangeSchedule(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'doctor.getListChangeSchedule',
+      data: {
+        ...form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
+export function getScheduleToChange(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'doctor.getScheduleToChange',
+      data: {
+        ...form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
+export function getDoctorFreeTime(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'doctor.getDoctorFreeTime',
       data: {
         ...form,
       },
@@ -608,5 +656,9 @@ export default {
   getBookingInfo,
   getDoanhThu,
   getDataLoaiThuoc,
-  getDataLichHen
+  getDataLichHen,
+  getListChangeSchedule,
+  getScheduleToChange,
+  getDoctorFreeTime,
+  createChangeScheduleByDoctor
 };
