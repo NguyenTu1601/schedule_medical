@@ -193,6 +193,12 @@ const apiResources: any = {
       verb: 'POST',
       baseUrl: staticEnv.ACC_NEW_API_URL,
       requiredToken: true,
+    },
+    approveChangeSchedule: {
+      url: 'api/Doctor/approcheChangeSchedule?changeid={changeid}',
+      verb: 'GET',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
+      requiredToken: true,
     }
   },
   clinic: {

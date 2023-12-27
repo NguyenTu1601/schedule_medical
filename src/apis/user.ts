@@ -330,6 +330,18 @@ export function getListSchedulebyDates(form): Promise<any> {
       return res.data;
     });
 }
+export function approveChangeSchedule(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'doctor.approveChangeSchedule',
+      data: {
+        ...form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
 export function getListSchedulebyDate(form): Promise<any> {
   return http
     .callApi({
@@ -660,5 +672,6 @@ export default {
   getListChangeSchedule,
   getScheduleToChange,
   getDoctorFreeTime,
-  createChangeScheduleByDoctor
+  createChangeScheduleByDoctor,
+  approveChangeSchedule
 };

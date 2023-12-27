@@ -1,5 +1,5 @@
 <template lang="pug">
-div
+div.relative.h-full
   div.gap-4
     div.text-base.font-semibold.mt-4 Đổi ca
     div.flex.justify-start.mt-4
@@ -26,16 +26,14 @@ div
       td.p-2(class='') {{ item.timedt + ' ' + convertDay(item.date)}}
       td.p-2(class='') {{ item.reason }}
       td
-        div.flex.justify-center.gap-2(v-if='item.statusid===1')
-          span(title='Chỉnh sửa')
-            img.w-6.h-6.shrink-0.cursor-pointer(src='./assets/edit.svg' @click='handleEdit(item)')
-          span(title='Xóa')
-            img.w-6.h-6.shrink-0.cursor-pointer(src='./assets/delete.svg' @click="handleDelete(item)")
-        div.flex.justify-center(v-else)
-          img.w-6.h-6.shrink-0.cursor-pointer(src='./assets/eye.svg' @click='handleEdit(item)')
+        div.flex.justify-center.gap-2(v-if="item.statusid===0" @click="handleApprove(item)")
+          span(title='Duyệt')
+            img.w-6.h-6.shrink-0.cursor-pointer(src='./assets/approve.svg')
   el-dialog(v-model="isShow" title="" width='1000px')
-    ModalSwitchShift(v-if='isShow' @cancel='handleCancel')
+    ModalSwitchShift(v-if='isShow' @cancel='handleCancel' @save='handleSave')
     div(v-else)
+  div.absolute.w-full.h-full.bg-white.top-0.opacity-50.flex.justify-center.items-center(v-if='isLoadingApprove')
+    img(class='animate-spin w-[50px] h-[50px]' src='./assets/loading-approve.svg')
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
@@ -50,6 +48,7 @@ import dayjs from 'dayjs';
 const inputSearch = ref('')
 const listSchedule = ref([])
 const isShow = ref(false)
+const isLoadingApprove = ref(false)
 
 const debounced = refDebounced(inputSearch, 300)
 
@@ -64,6 +63,44 @@ watch(debounced, async () => {
     listSchedule.value = res.content
   })
 })
+
+async function handleApprove(item) {
+  isLoadingApprove.value = true
+  const form = {
+    changeid: item.changeId
+  }
+  await MedicineApis.approveChangeSchedule(form).then(async (res) => {
+    isLoadingApprove.value = false
+    if (res.result === 1) {
+      ElNotification({
+        title: 'Success',
+        message: res.message,
+        type: 'success',
+      });
+      const form1 = {
+        keyword: debounced.value.length > 0 ? debounced.value : '0'
+      }
+      await MedicineApis.getListChangeSchedule(form1).then(res => {
+        listSchedule.value = res.content
+      })
+    }
+    if (res.result === 0) {
+      ElNotification({
+        title: 'Error',
+        message: res.message,
+        type: 'error',
+      });
+    }
+  }).catch((err) => {
+    ElNotification({
+      title: 'Error',
+      message: err,
+      type: 'error',
+    });
+  }).finally(() => {
+    isLoadingApprove.value = false
+  })
+}
 
 async function getListSchedule() {
   const form = {
