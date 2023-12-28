@@ -22,11 +22,15 @@ div.overflow-y-auto
   div.mt-2.flex
     div.flex-1.flex.gap-2
       div.text-base.font-semibold Tên bệnh nhân:
-      div.text-base {{ detailBooking?.patientName }}
+      div.text-base {{ detailBooking?.namePatient }}
     div.flex-1.flex.gap-2
       div.text-base.font-semibold Tái khám:
       img.w-5.h-5(v-if='detailBooking && detailBooking?.isTaikham===1' src='../assets/check.svg')
-      //- div.text-base {{ detailBooking?.isTaikham }}
+  div.mt-2.flex
+    div.flex-1.flex.gap-2
+      div.text-base.font-semibold ID bệnh nhân:
+      div.text-base {{ detailBooking?.patientId }}
+    div.flex-1.flex.gap-2
 
   div.mt-4.text-lg.font-bold Đơn thuốc:
   div.mt-4
@@ -150,6 +154,7 @@ function handleSave() {
         message: res.message,
         type: 'success',
       });
+      step.value = step.value + 1
       const form1 = {
         historyId: res.content.id
       }
@@ -166,7 +171,6 @@ function handleSave() {
     }
     isLoading.value = false
     // handleCancel('save')
-    step.value = step.value + 1
   }).finally(() => {
     isLoading.value = false
     // handleCancel('save')
