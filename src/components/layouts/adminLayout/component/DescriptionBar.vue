@@ -66,7 +66,15 @@ div.h-full(class='w-[250px] pt-6 px-4 overflow-auto !h-[calc(100vh-60px-24px)] p
       img.w-10.h-10.shrink-0(src='../assets/schedule.svg')
     div.text-center.font-bold(class='text-[18px] ') Quản lý doanh thu
 
+  div.flex.flex-col.w-full.p-4.mt-2(v-if='roleUserId===3' class='rounded-[10px] shadow-[0px_2px_12px_0px_rgba(0,0,0,0.08)] cursor-pointer border border-white' @click='handleChangeManager("/manager/medicine-statistics")' :class='[{"!border-[#C52428]" : role==="medicine-statistics"}]')
+    div.flex.justify-center
+      img.w-10.h-10.shrink-0(src='../assets/statistics.svg')
+    div.text-center.font-bold(class='text-[18px] ') Thống kê lượng thuốc
 
+  div.flex.flex-col.w-full.p-4.mt-2(v-if='roleUserId===3 || roleUserId===2' class='rounded-[10px] shadow-[0px_2px_12px_0px_rgba(0,0,0,0.08)] cursor-pointer border border-white' @click='handleChangeManager("/manager/schedule-detail")' :class='[{"!border-[#C52428]" : role==="schedule-detail"}]')
+    div.flex.justify-center
+      img.w-10.h-10.shrink-0(src='../assets/schedule.svg')
+    div.text-center.font-bold(class='text-[18px] ') Báo cáo chi tiết lịch hẹn
 </template>
 
 <script setup lang="ts">

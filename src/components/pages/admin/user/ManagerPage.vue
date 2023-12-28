@@ -15,6 +15,9 @@ div.w-full.h-full
   ManagerBookingHistoryClinic(v-else-if='role==="booking-history-clinic"&& account')
   ManagerRevenuePage(v-else-if='role==="revenue"&& account')
   ManagerSwitchShift(v-else-if='role==="switch-shift"&& account')
+  ManagerMedicineStatistics(v-else-if='role==="medicine-statistics"&& account')
+  ManagerScheduleDetail(v-else-if='role==="schedule-detail"&& account')
+
 </template>
 
 <script setup lang="ts">
@@ -36,6 +39,8 @@ import ManagerBookingHistoryClinic from './ManagerBookingHistoryClinic.vue';
 import ManagerBookingClinic from './ManagerBookingClinic.vue';
 import ManagerRevenuePage from './ManagerRevenuePage.vue';
 import ManagerSwitchShift from './ManagerSwitchShift.vue';
+import ManagerMedicineStatistics from './ManagerMedicineStatistics.vue';
+import ManagerScheduleDetail from './ManagerScheduleDetail.vue';
 
 const { account, getAccount } = useAccount()
 
