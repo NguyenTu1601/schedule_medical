@@ -39,9 +39,9 @@ div.overflow-y-auto
       input(v-if='isEdit===false' type='password' v-model="formUser.password" class='outline-none p-2 text-sm border border-[#DEE3ED] rounded-[4px] w-full mt-1')
   div.flex.gap-8.mt-2
     div.flex-1.sh
-      div.text-sm Vai trò
+      div.text-sm.whitespace-nowrap Vai trò
       el-select.mt-1.w-full(v-model="formUser.roleID" placeholder="Vai trò" size="large")
-        el-option(v-for='role in listRole' :value='role.id' :label='role.ten')
+          el-option(v-for='role in listRole' :value='role.id' :label='role.ten')
 
     div.flex-1
       div(v-if='formUser.roleID &&(formUser.roleID===2||formUser.roleID===3)')
@@ -53,8 +53,8 @@ div.overflow-y-auto
     div.mt-2
       div.px-2.p-1.flex.justify-center(class='bg-[#DA151A] text-white text-sm w-fit cursor-pointer rounded-[10px] items-center gap-2' @click="selectFile")
         img.h-6.w-6.shrink-0(src='../assets/upload.svg')
-        div {{formUser.avtimage.length>0?"Edit":"Upload"}}
-    img.mt-4(v-if='formUser.avtimage.length>0' :src='formUser.avtimage' class='w-[100px] h-[100px] object-cover')
+        div {{formUser.avtimage?.length>0?"Edit":"Upload"}}
+    img.mt-4(v-if='formUser.avtimage?.length>0' :src='formUser.avtimage' class='w-[100px] h-[100px] object-cover')
   div.flex.justify-end.gap-4.items-center.w-full.mt-4
     div.cursor-pointer.px-4.py-2.border(class='font-bold text-sm rounded-[10px]' @click="handleCancel") Cancel
     div.cursor-pointer.px-4.py-2.border(v-if='formUser.trangthaiId === 1 || !formUser.trangthaiId' class='font-bold text-sm rounded-[10px] border-[#DA151A] text-[#DA151A] hover:bg-[#DA151A] hover:text-white' @click="handleSave")

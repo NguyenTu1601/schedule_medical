@@ -129,6 +129,7 @@ function handleAddUser() {
 
 function handleEdit(user) {
   formUser.value = user
+  formUser.value.gender = formUser.value.gender?.toString()
   isEdit.value = true
   isShowModalFormUser.value = true
 }

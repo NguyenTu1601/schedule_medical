@@ -100,7 +100,8 @@ async function createBooking() {
     healthstatus: bookingClinicAdd.value.healthstatus,
     nhommau: bookingClinicAdd.value.nhommau,
     isTaiKham: bookingClinicAdd.value.isTaiKham ? '1' : '0',
-    namePatient: bookingClinicAdd.value.namePatient,
+    // namePatient: bookingClinicAdd.value.namePatient,
+    namePatient: account.value.name,
     age: bookingClinicAdd.value.age,
   }
   await UserApis.createBookingByPatient(form).then(res => {
