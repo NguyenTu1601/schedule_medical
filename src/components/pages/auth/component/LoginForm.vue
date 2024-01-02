@@ -9,7 +9,10 @@ div
     img.w-5.h-5.shrink-0.cursor-pointer(v-else src='../assets/eye-close.svg'  @click='()=>isShowPassword= !isShowPassword')
   //- div.cursor-pointer.text-base.font-semibold.mt-6(class='text-[#C52428]') Forgot your password?
 
-  div.flex.gap-2(class='p-[10px] bg-[linear-gradient(90deg,#DA151A_0%,#BB070D_100%)] text-whisper cursor-pointer rounded-[10px] flex justify-center mt-8' @click='login')
+  div.flex.gap-2(v-if='isLoading' class='p-[10px] bg-[linear-gradient(90deg,#DA151A_0%,#BB070D_100%)] text-whisper cursor-pointer rounded-[10px] flex justify-center mt-8')
+    img(src='../assets/loading.svg')
+    div.text-base.font-semibold Loding
+  div.flex.gap-2(v-else class='p-[10px] bg-[linear-gradient(90deg,#DA151A_0%,#BB070D_100%)] text-whisper cursor-pointer rounded-[10px] flex justify-center mt-8' @click='login')
     img(src='../assets/sign-in.svg')
     div.text-base.font-semibold Đăng nhập
 </template>

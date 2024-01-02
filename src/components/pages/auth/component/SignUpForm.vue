@@ -19,7 +19,10 @@ div
   //-   img.w-5.h-5.shrink-0.cursor-pointer(v-else src='../assets/eye-close.svg'  @click='()=>isShowConfirmPassword= !isShowConfirmPassword')
 
 
-  div.flex.gap-2(class='p-[10px] bg-[linear-gradient(90deg,#DA151A_0%,#BB070D_100%)] text-whisper cursor-pointer rounded-[10px] flex justify-center mt-8' @click='handleSignUp')
+  div.flex.gap-2(v-if='isLoading' class='p-[10px] bg-[linear-gradient(90deg,#DA151A_0%,#BB070D_100%)] text-whisper cursor-pointer rounded-[10px] flex justify-center mt-8')
+    img(src='../assets/loading.svg')
+    div.text-base.font-semibold Loading
+  div.flex.gap-2(v-else class='p-[10px] bg-[linear-gradient(90deg,#DA151A_0%,#BB070D_100%)] text-whisper cursor-pointer rounded-[10px] flex justify-center mt-8' @click='handleSignUp')
     img(src='../assets/sign-in.svg')
     div.text-base.font-semibold Đăng ký
 </template>
@@ -77,9 +80,10 @@ async function handleSignUp() {
           type: 'error',
         });
       }
-
+      isLoading.value = false
     })
     .catch((error) => {
+      isLoading.value = false
     })
     .finally(() => {
       isLoading.value = false

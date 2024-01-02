@@ -111,7 +111,7 @@ async function createBooking() {
         message: res.message,
         type: 'success',
       });
-      emits('cancel')
+      emits('cancel','save')
     }
     if (res.result === 0) {
       ElNotification({

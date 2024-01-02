@@ -65,6 +65,15 @@ const route = useRoute()
 
 function handleCancel(val) {
   isShow.value = false
+  if (val === 'save') {
+    router.push({
+      name: 'profile', query: {
+        tab: 'booking'
+      }
+    })
+  } else {
+
+  }
 }
 
 const doctorId = computed(() => {
