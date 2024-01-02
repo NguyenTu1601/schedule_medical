@@ -108,6 +108,18 @@ export function getListMedicine(form): Promise<any> {
       return res.data;
     });
 }
+export function search(form): Promise<any> {
+  return http
+    .callApi({
+      resource: 'user.search',
+      data: {
+        ...form,
+      },
+    })
+    .then((res: any) => {
+      return res.data;
+    });
+}
 export function getDoctorById(form): Promise<any> {
   return http
     .callApi({
@@ -673,5 +685,6 @@ export default {
   getScheduleToChange,
   getDoctorFreeTime,
   createChangeScheduleByDoctor,
-  approveChangeSchedule
+  approveChangeSchedule,
+  search
 };

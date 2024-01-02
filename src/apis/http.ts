@@ -71,6 +71,11 @@ const apiResources: any = {
       url: '/api/User/getListHocVi',
       verb: 'GET',
       baseUrl: staticEnv.ACC_NEW_API_URL,
+    },
+    search: {
+      url: '/api/User/getDataSearch?keyword={keyword}',
+      verb: 'GET',
+      baseUrl: staticEnv.ACC_NEW_API_URL,
     }
   },
   doctor: {
