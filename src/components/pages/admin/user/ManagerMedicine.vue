@@ -112,9 +112,11 @@ function handleAdd() {
 }
 
 async function handleCancel(val) {
-  if (val === 'save') {
-    await getListMedicine()
-  }
+  // if (val === 'save') {
+  //   await getListMedicine()
+  // }
+  await getListMedicine()
+  medicineEdit.value = null
   isShow.value = false
 }
 onMounted(() => {
